@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>게시판 목록</title>
+</head>
+<body>
+	<h1>게시판 목록</h1>
+	<h2 th:text="${data}"></h2>
+	<div th:utext="${tagData}"></div>
+	<div th:text="${tagData}"></div>
+</body>
+</html>

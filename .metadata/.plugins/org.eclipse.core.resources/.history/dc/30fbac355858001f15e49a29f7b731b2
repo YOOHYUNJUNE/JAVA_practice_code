@@ -1,0 +1,25 @@
+package com.board.service;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.board.dto.BoardDTO;
+import com.board.mapper.BoardMapper;
+
+@AutoConfigureTestDatabase(replace = Autoconfi)
+public class BoardServiceTest {
+	
+	@Autowired
+	private BoardMapper boardmapper;
+	
+	@Test
+	@DisplayName("SELECT ALL BOARD TEST")
+	public void selectAllBoard() throws Exception {
+		List<BoardDTO> boardList = boardMapper.selectBoardList();
+		assertThat(boardList.size()).isEqualTo(1);
+	}
+	
+}

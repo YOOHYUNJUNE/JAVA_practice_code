@@ -1,0 +1,16 @@
+package com.board.service;
+
+import java.util.List;
+
+import com.board.dto.BoardDTO;
+import com.board.mapper.BoardMapper;
+
+public class BoardServiceTest {
+
+	private BoardMapper boardmapper;
+	
+	public void selectAllBoard() throws Exception {
+		List<BoardDTO> boardList = boardMapper.selectBoardList();
+	}
+	
+}
