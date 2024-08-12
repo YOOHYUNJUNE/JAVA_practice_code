@@ -9,4 +9,9 @@ import com.board.dto.BoardDTO;
 @Mapper // MyBatis mapper 인터페이스임을 선언
 public interface BoardMapper {
 	List<BoardDTO> selectBoardList() throws Exception;
+	void insertBoard(BoardDTO boardDTO) throws Exception;
+	BoardDTO selectBoardById(int id) throws Exception;
+	void updateBoard(BoardDTO boardDTO) throws Exception;
+	void updateHit(int id) throws Exception;
+	void deleteBoardById(int id) throws Exception;
 }

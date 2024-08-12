@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org">
+
 <head>
 <meta charset="UTF-8">
 <title>게시판 목록</title>
@@ -30,7 +31,12 @@
 			</thead>
 			<tbody>
 				<!-- 게시물이 있는 경우, 반복문으로 출력 -->
-				<tr th:if="${list.size > 0}" th:each="item : ${list}">
+				<tr th:if="${list.size > 0}"
+					th:each="item : ${list}"
+					th:onclick="|location.href='detail?id=${item.id}'|"
+					role="button"
+					
+				>
 					<td class="text-center" th:text="${item.id}"></td>
 					<td th:text="${item.title}"></td>		
 					<td class="text-center" th:text="${item.hit}"></td>
@@ -47,6 +53,10 @@
 			</tbody>
 			
 		</table>
+		
+		<!-- 글쓰기 버튼 -->
+		<a href="insert" class="btn btn-primary">글쓰기</a>
+		
 	</div>
 
 	
