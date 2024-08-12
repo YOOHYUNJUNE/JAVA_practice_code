@@ -1,0 +1,12 @@
+package com.example.demo.controller;
+
+import org.springframework.web.bind.annotation.RestController;
+
+// 해당 클래스가 RestController 기능을 수행 : Bean 주입
+@RestController
+public class HelloController {
+	@RequestMapping("/")
+	public String hello() {
+		return "안녕~ 스프링아 고맙다~";
+	}
+}

@@ -1,0 +1,45 @@
+plugins {
+	id 'java' // 플러그인
+	id 'org.springframework.boot' version '3.3.2'
+	id 'io.spring.dependency-management' version '1.1.6' // Spring 의존성 관리 플러그인
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor // 애너테이션을 통한 설정
+	}
+}
+
+repositories {
+	mavenCentral() // 프로젝트의 의존성을 다운로드할 중앙 저장소 지정
+}
+
+dependencies {
+	// Spring Boot 웹 스타터 (Spring web)
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	// Lombok 추가
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	
+	// Spring Boot Dev Tools 추가 (서버 재시작 없이 수정을 반영해 자동 재시작)
+	developmentOnly 'org.springframework.book:spring-boot-devtools'
+	
+	
+	// Spring Boot 테스트 스타터 (Spring web)
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	// 테스트 실행 시 사용되는 Junit 의존성 추가
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
