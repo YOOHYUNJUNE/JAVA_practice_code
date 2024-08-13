@@ -1,7 +1,3 @@
-<!-- 함수사용 -->
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
-
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
@@ -78,21 +74,19 @@
 									<a class="text-link" href="detail?id=${item.id}">
 										<img src="/img/${coffee.getImg()}" alt="커피 이미지" /> <br/>
 										
-										<!-- 제품 설명에 따라 ICE, HOT 오버레이 이미지 구분 -->
-										<!--  <c:choose>
-	   											<c:when test="${fn:contains(coffee.getDetail(), '아이스')}">
-		   											<div class="overlay">
-														<img src="/img/아이콘_ICE.png" alt="핫" class="over-img">
-		   											</div>
-												</c:when>
+										<!-- 제품 설명에 따라 ICE, HOT 오버레이 이미지 구분 -->										
+   											<div th:if="${item.detail.contains('아이스')}" class="overlay">
+												<img src="/img/아이콘_ICE.png" alt="핫" class="over-img">
+   											</div>
+									
+									
+									
+											<div class="overlay">
+												<img src="/img/아이콘_HOT.png" alt="아이스" class="over-img">
+											</div>
 											
-												<c:otherwise>
-													<div class="overlay">
-														<img src="/img/아이콘_HOT.png" alt="아이스" class="over-img">
-													</div>
-												</c:otherwise>
-											</c:choose>
-										-->
+										
+										
 									</a>
 								</div>
 								<br/><br/>

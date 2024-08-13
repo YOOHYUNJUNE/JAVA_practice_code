@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<div th:fragment="header">
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<div class="container px-4 px-lg-5">
+				<span>
+					<a class="navbar-brand" href="/">
+						<img src="assets/img/자바아이콘.png" style="width:75px; height:50px;" alt="로고">
+					</a>
+				</span>
+				
+				<button 
+					class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarBtn" 
+					aria-controls="navbarBtn" aria-expanded="false" aria-label="Toggle nav">
+					<span class="navbar-toggler-icon"></span>	
+				</button>
+				
+				<div class="navbar-collapse collapse" id="navbarBtn">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+						<li class="nav-item">
+							<a class="nav-link" href="#">공지사항</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#">회원관리</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#">게시판</a>
+						</li>
+					</ul>
+					
+					<!-- 로그인버튼 -->
+					<form class="d-flex">
+						<button class="btn btn-outline-dark">
+							로그인
+						</button>
+					</form>
+									
+				</div>			
+				
+			</div>
+		
+		</nav>
+		
+		<header class="bg-dark py-5">
+			<div class="container px-4 px-lg-5 my-5 text-white">
+				<h1 class="display-4 fw-bolder">MY WEB PAGE</h1>
+				<p class="lead fw-normal text-white-50 mb-0">
+					안녕하세요. 이 곳은 제 웹페이지입니다.
+				</p>
+				
+			</div>
+		
+		
+		
+		</header>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+	
+</html>

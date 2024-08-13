@@ -63,12 +63,13 @@
 				</div>
 			</div>	
 			
-			<!-- 첨부 파일 보여주기 -->
+			<!-- 첨부 파일 보여주기, 클릭 시 다운로드 -->
 			<div class="mb-3">
 				<a 
-					href="#" 
+					class="mx-2 btn btn-outline-dark"
 					th:each="file : ${board.fileList}" 
-					th:text="${file.originFileName}">
+					th:href="@{download(id=${file.id}, boardId=${file.boardId})}"
+					th:text="|${file.originFileName} (${file.fileSize}KB)|">
 				</a>
 			</div>
 			

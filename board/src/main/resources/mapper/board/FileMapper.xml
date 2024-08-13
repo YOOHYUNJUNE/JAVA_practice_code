@@ -19,4 +19,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where board_id = #{boardId} and is_deleted = 'n'
 	</select>	
 	
+	<!-- 파일 다운로드 id, boardId를 map으로 만들어서 보냄 -->
+	<select id="selectFileByIds" parameterType="map" resultType="com.board.dto.FileDTO">
+		select origin_file_name, stored_file_path, file_size from file_tbl
+		where id = #{id} and board_id = #{boardId} and is_deleted = 'n'
+	</select>
+	
+	
+	
+	
 </mapper>
