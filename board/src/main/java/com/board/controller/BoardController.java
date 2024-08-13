@@ -7,15 +7,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.board.dto.BoardDTO;
 import com.board.service.BoardService;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 
@@ -48,15 +47,15 @@ public class BoardController {
 
 	@GetMapping("/insert")
 	public String boardInsertView() throws Exception {
-		log.warn("글쓰기 페이지로 이동");
+		log.info("글쓰기 페이지로 이동");
 		return "board/write";
 	}
 	
 
 	@PostMapping("/insert")
-	public String boardInsert(BoardDTO boardDTO) throws Exception {
+	public String boardInsert(BoardDTO boardDTO, @RequestParam(value="files", required=false) List<MultipartFile> files) throws Exception {
 		// 글쓰기 비즈니스 로직
-		bs.insertBoard(boardDTO);
+		bs.insertBoard(boardDTO, files);
 		return "redirect:/board/list"; // 글 작성후 board/list로 이동
 	}
 	
@@ -83,6 +82,18 @@ public class BoardController {
 		bs.deleteBoard(id);
 		return "redirect:/board/list";
 	}
+	
+	
+	
+//	// 예외처리
+//	@ExceptionHandler(Exception.class)
+//	public ModelAndView handleException(Exception e) {
+//		log.error("예외 발생 : {} ", e.getMessage());
+//		ModelAndView mv = new ModelAndView("board/error");
+//		mv.addObject("errorMsg", e.getMessage());
+//		return mv;
+//	}
+	
 	
 	
 	

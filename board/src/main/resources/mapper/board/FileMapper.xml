@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.board.mapper.FileMapper">
+
+	<!-- 파일 데이터를 DB로 보내기 -->
+	<insert id="insertFile" parameterType="com.board.dto.FileDTO">
+		insert into file_tbl (board_id, origin_file_name, stored_file_path, file_size, creator) values 
+		<foreach collection="list" item="item" separator=",">
+			(#{item.boardId}, #{item.originFileName}, #{item.storedFilePath}, #{item.fileSize}, "유현준")
+		</foreach>
+	</insert>
+	
+	<!-- 게시글의 파일 목록 보여주기 -->
+	<select id="selectFileListByBoardId" parameterType="int" resultType="com.board.dto.FileDTO">
+		select id, board_id, origin_file_name, format(round(file_size / 1024), 0) as file_size from file_tbl
+		where board_id = #{boardId} and is_deleted = 'n'
+	</select>	
+	
+</mapper>

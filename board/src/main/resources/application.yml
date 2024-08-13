@@ -30,7 +30,7 @@ logging:
  level:
   jdbc:
    sqlonly: info
-   resultsettable: info
+   resultsettable: off
    sqltiming: off
    resultset: off
    audit: off
