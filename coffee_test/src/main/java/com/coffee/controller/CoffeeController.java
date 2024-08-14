@@ -26,6 +26,7 @@ public class CoffeeController {
 		ModelAndView mv = new ModelAndView("coffee/list");
 		// 비즈니스 로직 수행
 		List<CoffeeDTO> coffeeList = cs.selectCoffeeList();
+		mv.addObject("list", coffeeList);
 		return mv;
 		
 		

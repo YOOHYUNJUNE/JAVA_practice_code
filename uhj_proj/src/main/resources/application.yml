@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: uhj_proj
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mybatis_proj_db
+    username: root
+    password: 1234
+  mvc: 
+    hiddenmethod: 
+      filter:
+        enabled: true
+    
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: mapper/**/*.xml

@@ -9,6 +9,6 @@ import com.coffee.dto.CoffeeDTO;
 @Mapper // MyBatis mapper 인터페이스임을 선언
 public interface CoffeeMapper {
 
-	public List<CoffeeDTO> selectCoffeeList() throws Exception;
+	List<CoffeeDTO> selectCoffeeList() throws Exception;
 	
 }

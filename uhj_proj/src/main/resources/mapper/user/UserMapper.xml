@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kosta.mapper.CoffeeMapper">
+    
+    <resultMap type="com.kosta.dto.CoffeeDTO" id="CoffeeMap">
+        <result property="com.kosta.dto.UserDTO.id" column="creator_id"></result>
+    </resultMap>
+    
+    <!-- 커피 관련 -->
+    <select id="selectAllCoffee" resultMap="CoffeeMap">
+        select ct.id, ct.name, ct.price, ct.caffeine, ct.sugar, ct.detail, ct.ice, ct.created_at, ct.creator_id, ut.id, ut.name, ut.email, ut.created_at
+        from coffee_tbl ct
+        left join
+        users_tbl ut on ct.creator_id = ut.id        
+    </select>
+
+    <insert id="insertCoffee" parameterType="com.kosta.dto.CoffeeDTO">
+        insert into coffee_tbl
+            (name, price, caffeine, sugar, detail, ice, creator_id)
+        values
+            (#{name}, #{price}, #{caffeine}, #{sugar}, #{detail}, #{ice}, #{creator_id})
+            
+    </insert>
+
+    <select id="selectCoffeeById" resultType="com.kosta.dto.CoffeeDTO" parameterType="int">
+        select ct.id, ct.name, ct.price, ct.caffeine, ct.sugar, ct.detail, ct.ice, ct.created_at, ct.creator_id ut.id, ut.name, ut.email, ut.created_at
+        from coffee_tbl ct
+        left join
+        users_tbl ut on ct.creator_id = ut.id
+        where ct.id = #{id} and is_deleted = 'n'
+    </select>
+    
+    <update id="updateCoffee" parameterType="com.kosta.dto.CoffeeDTO">
+        update coffee_tbl set name = #{name}, caffeine = #{caffeine}, sugar = #{sugar}, detail = #{detail}, ice = #{ice}
+        where id = #{id} and is_deleted = 'n'
+    </update>
+    
+    <update id="deleteCoffee" parameterType="int">
+        update coffee_tbl set is_deleted = 'y' where id = #{id}
+    </update>
+    
+    
+    <!-- 파일 관련 -->
+    <select id="selectAllFileByCoffeeId" resultType="com.kosta.dto.FileDTO" parameterType="int">
+        select id, coffee_id, origin_file_name, stored_file_path, file_size from coffee_file_tbl where id = #{id}
+    </select>
+    
+    <insert id="insertFile" parameterType="com.kosta.dto.FileDTO">
+        insert into coffee_file_tbl (coffee_id, origin_file_name, stored_file_path, file_size)
+        values (#{coffeeId}, #{originFileName}, #{storedFilePath}, #{fileSize})
+    </insert>
+    
+    <delete id="deleteFileByCoffeeId">
+        update coffee_file_tbl set is_deleted = 'y' where id = #{id}        
+    </delete>
+    
+
+</mapper>
