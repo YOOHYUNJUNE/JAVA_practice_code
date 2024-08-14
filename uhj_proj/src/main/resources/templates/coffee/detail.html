@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layouts/default}">
+        
+        <div layout:fragment="content" class="container my-4">
+                 <div class="card shadow-sm">
+        <div class="card-header">
+            <h2 class="mt-2" th:text="${coffee.name}"></h2>
+        </div>
+        <div class="card-body">
+            <div class="mt-2">
+                <p th:text="${coffee.detail}" class="text-justify"></p>
+            </div>
+            <div class="mt-2">
+                <p th:text="${coffee.creator.name}" class="text-justify"></p>
+            </div>
+            <div th:if="${!coffee.fileList.isEmpty()}" class="mt-5">
+                <h5 class="font-weight-bold">첨부된 파일:</h5>
+                <ul class="list-group">
+                    <li th:each="file : ${coffee.fileList}" class="list-group-item">
+                        <img th:src="@{'/img/' + ${file.storedFilePath} }" th:alt="${file.originFileName}" />
+                    
+                        <a 
+                            th:href="@{${file.storedFilePath}}"
+                            th:text="${file.originFileName}"
+                            class="btn btn-outline-dark"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="card-footer">
+            <button class='btn btn-primary' onclick="location.href='/coffee'">목록으로</button>
+            <button class='btn btn-success'>수정</button>
+            <button class='btn btn-danger'>삭제</button>
+        </div>
+        
+    </div>
+        </div>
+</html>

@@ -10,5 +10,4 @@ public class UserDTO {
 	private int id;
 	private String name, email;
 	private LocalDateTime createdAt;
-	// 나머지는 안보여줄 것임
 }

@@ -31,5 +31,12 @@ public class UserServiceImpl implements UserService{
 		um.deleteUser(id);
 	}
 
+
+	// 유저 정보 가져오기
+	@Override
+	public UserDTO getUserById(int id) throws Exception {
+		return um.selectUserById(id);
+	}
+
 	
 }

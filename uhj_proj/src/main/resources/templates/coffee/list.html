@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/default}"
+>
+
+	<div layout:fragment="content" class="container my-4">
+	
+		<table class="table table-striped">
+           <thead>
+               <tr>
+                   <th>상품명</th>
+                   <th>가격</th>
+                   <th>카페인함량</th>
+                   <th>당류 함량</th>
+                   <th>상세설명</th>
+               </tr>
+           
+           </thead>
+           
+           <tbody>
+               <tr th:each="c : ${list}" th:onclick="'location.href=\'/coffee/detail/' + ${c.id} + '\''">
+                   <td th:text="${c.id}"></td>
+                   <td th:text="${c.name}"></td>
+                   <td th:text="${c.caffeine}"></td>
+                   <td th:text="${c.sugar}"></td>
+                   <td th:text="${c.detail}"></td>
+                   
+                   <td>
+                     <form th:action="@{/coffee/delete(id=${c.id})}" th:method="delete">
+                        <button class="btn btn-danger">삭제</button>
+                     </form>                    
+                   </td>
+               </tr>           
+           </tbody>        
+       </table>
+       
+       
+       <a href="/coffee/write" class="btn btn-primary">메뉴 추가</a>
+       
+       
+	</div>
+</html>
