@@ -21,7 +21,24 @@
 
         </association>
     </resultMap>
+    
+    <!-- 게시글 상세보기 -->
+    <select id="findById" resultMap="communityMap" parameterType="int">
+        select
+            ct.id as comm_id, ct.title, ct.content, ct.hit, ct.creator_id, ct.created_at as comm_created_at,
+            ut.name, ut.email, ut.created_at as user_created_at
+        from community_tbl ct
+        left join users_tbl ut on ct.creator_id = ut.id
+        where ct.is_deleted = 'n' and ct.id = #{id}
+    </select>
+    
+    
+    <select id="findFileByCommunityId" resultType="com.kosta.dto.CommunityFile" parameterType="int">
+        select * from community_file_tbl where community_id = #{id}
+    </select>
+    
 
+    <!-- 게시글 전체 목록 -->
     <select id="findAll" resultMap="communityMap">
         select
             ct.id as comm_id, ct.title, ct.content, ct.hit, ct.creator_id, ct.created_at as comm_created_at,
@@ -45,6 +62,9 @@
         </foreach>
     </insert>
     
+    
+    
+
 
 
 

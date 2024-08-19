@@ -16,4 +16,8 @@ public interface CommunityMapper {
 
 	List<Community> findAll() throws Exception;
 
+	Community findById(int id) throws Exception;
+
+	List<CommunityFile> findFileByCommunityId(int id) throws Exception;
+
 }

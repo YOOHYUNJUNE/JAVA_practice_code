@@ -12,5 +12,7 @@ public interface CommunityService {
 
 	public List<Community> getAllCommunity() throws Exception;
 
+	public Community getCommunityById(int id) throws Exception;
+
 
 }

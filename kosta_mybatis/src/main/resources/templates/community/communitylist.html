@@ -18,13 +18,13 @@
           </thead>
           
           <tbody>
-              <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-              </tr>              
+              <tr th:each="community : ${list}" th:onclick="|location.href='/community/detail/${community.id}'|" role="button">
+                   <td>[[${community.id}]]</td>
+                   <td>[[${community.title}]]</td>
+                   <td>[[${community.creator.name}]]</td>
+                   <td>[[${community.hit}]]</td>
+                   <td>[[${#temporals.format(community.createdAt, 'yyyy년 MM월 dd일')}]]</td>
+              </tr>             
           </tbody>
        
        </table>

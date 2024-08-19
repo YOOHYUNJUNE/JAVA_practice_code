@@ -31,6 +31,17 @@ public class ICommunityService implements CommunityService {
 	}
 	
 	
+	// 게시글 상세보기
+	@Override
+	public Community getCommunityById(int id) throws Exception {
+		Community community = cm.findById(id);
+		List<CommunityFile> fileList = cm.findFileByCommunityId(id);
+		community.setFileList(fileList);
+		
+		return community;
+	}
+	
+	
 
 	
 	// 게시글 작성
@@ -84,6 +95,11 @@ public class ICommunityService implements CommunityService {
 		
 		
 	}
+
+
+
+
+
 
 
 
