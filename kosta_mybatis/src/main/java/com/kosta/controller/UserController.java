@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -28,6 +29,7 @@ public class UserController {
 	@GetMapping("/add")
 	public ModelAndView addForm() {
 		ModelAndView mv = new ModelAndView("user/userform");
+		mv.addObject("menu", "user");
 		return mv;
 	}
 	
@@ -39,7 +41,7 @@ public class UserController {
 		if (isAdd) {
 			return "redirect:/user/list";			
 		}
-			return "error";			
+		return "error";			
 	}
 	
 	
@@ -50,7 +52,7 @@ public class UserController {
 		if (isDelete) {
 			return "redirect:/user/list";			
 		}
-			return "error";		
+		return "error";		
 	}
 	
 	
@@ -58,6 +60,7 @@ public class UserController {
 	@GetMapping("/detail/{id}")
 	public ModelAndView detail(@PathVariable("id") int id) throws Exception {
 		ModelAndView mv = new ModelAndView("user/userdetail");
+		mv.addObject("menu", "user");
 		User user = us.getUserById(id);
 		mv.addObject("user", user);
 		return mv;
@@ -68,9 +71,8 @@ public class UserController {
 	@GetMapping("/list")
 	public ModelAndView list() throws Exception {
 		ModelAndView mv = new ModelAndView("user/userlist");
-		List<User> userList = us.getAll();
-		
-	
+		mv.addObject("menu", "user");
+		List<User> userList = us.getAll();		
 		mv.addObject("userList", userList);
 		return mv;
 	}
@@ -80,6 +82,7 @@ public class UserController {
 	@GetMapping("/modify")
 	public ModelAndView modify(@RequestParam("id") int id) throws Exception {
 		ModelAndView mv = new ModelAndView("user/userform");
+		mv.addObject("menu", "user");
 		User user = us.getUserById(id);
 		mv.addObject("user", user);
 		return mv;
@@ -89,8 +92,11 @@ public class UserController {
 	// 회원 수정
 	@PatchMapping("/modify")
 	public String modify(User user) {
-		us.modifyUser(user);
-		return "redirect:/user/detail?id=" + user.getId();
+		User u = us.modifyUser(user);
+		if (u == null) {
+			return "redirect:/user/list";
+		}
+		return "redirect:/user/detail/" + user.getId();
 	}
 	
 	

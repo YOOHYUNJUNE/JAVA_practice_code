@@ -6,10 +6,45 @@
 
 <mapper namespace="com.kosta.mapper.CommunityMapper">
 
+    <resultMap type="com.kosta.dto.Community" id="communityMap">
+        <id property="id" column="comm_id" />
+        <result property="title" column="title" />
+        <result property="content" column="content" />
+        <result property="hit" column="hit" />
+        <result property="createdAt" column="comm_created_at" />
+        
+        <association property="creator" javaType="com.kosta.dto.User">
+            <id property="id" column="creator_id" />
+	        <result property="name" column="name" />
+	        <result property="email" column="email" />
+            <result property="createdAt" column="user_created_at" />
+
+        </association>
+    </resultMap>
+
+    <select id="findAll" resultMap="communityMap">
+        select
+            ct.id as comm_id, ct.title, ct.content, ct.hit, ct.creator_id, ct.created_at as comm_created_at,
+            ut.name, ut.email, ut.created_at as user_created_at
+        from community_tbl ct
+        left join users_tbl ut on ct.creator_id = ut.id
+        where ct.is_deleted = 'n'
+    </select>
 
 
 
-
+    <insert id="save" parameterType="com.kosta.dto.Community" useGeneratedKeys="true" keyProperty="id">
+        insert into community_tbl (title, content, creator_id) values (#{title}, #{content}, #{creator.id})
+    </insert>
+        
+    <insert id="insertFiles" parameterType="com.kosta.dto.CommunityFile">
+        insert into community_file_tbl (community_id, origin_file_name, stored_file_path, file_size)
+        values
+        <foreach collection="list" item="f" separator=",">
+        (#{f.communityId}, #{f.originFileName}, #{f.storedFilePath}, #{f.fileSize})     
+        </foreach>
+    </insert>
+    
 
 
 

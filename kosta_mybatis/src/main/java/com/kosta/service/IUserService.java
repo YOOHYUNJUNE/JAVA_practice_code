@@ -53,9 +53,14 @@ public class IUserService implements UserService {
 	
 
 	@Override
-	public User modifyUser(User user) {
-		// TODO Auto-generated method stub
-		return null;
+	public User modifyUser(User user) {		
+		try {
+			um.updateUser(user);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		return user;
 	}
 
 	
