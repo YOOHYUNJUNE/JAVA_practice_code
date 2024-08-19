@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html 
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layouts/default}"
+>
+    <div layout:fragment="contents" class="container my-4" style="padding-top: 60px">
+    
+        <h2 class="mb-4">사용자 추가</h2>
+        
+        <form action="/user/add" method="POST">
+            <div class="mb-3">
+                <label for="name" class="form-label">이름</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="이름을 입력하세요" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">이메일</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="이메일을 입력하세요" required>
+            </div>
+            <button type="submit" class="btn btn-success">가입하기</button>
+            <button type="reset" class="btn btn-danger">초기화</button>
+            <button type="button" class="btn btn-primary" onclick="location.href='/user/list'">돌아가기</button>
+        </form>
+	    
+    </div>
+    
+</html>

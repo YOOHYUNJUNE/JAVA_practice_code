@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kosta.dto.CoffeeDTO;
+import com.kosta.dto.FileDTO;
 import com.kosta.dto.UserDTO;
 import com.kosta.service.CoffeeService;
 import com.kosta.service.UserService;
@@ -102,8 +103,8 @@ public class CoffeeController {
 		// 상세정보
 		CoffeeDTO coffeeDTO = cs.getCoffeePost(id);
 	
+		//
 		System.out.println(coffeeDTO);
-		
 		mav.addObject("coffee", coffeeDTO);
 		return mav;
 	}

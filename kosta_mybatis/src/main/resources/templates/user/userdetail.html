@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html 
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layouts/default}"
+>
+    <div layout:fragment="contents" class="container my-4" style="padding-top: 60px">
+       <div class="ard shadow-sm">
+       
+          <div class="card-header">
+              <h2>[[${user.name}]]</h2>
+          </div>
+          <div class="card-body">
+              <h3>[[${user.email}]]</h3>
+          </div>
+          
+       </div>
+       
+          <div class="card-footer mt-3">
+              <button class="btn btn-success" th:onclick="|location.href='@{/user/modify(id=${user.id})}'|">수정하기</button>
+              <button class="btn btn-primary" onclick="location.href='/user/list'">목록으로</button>
+          </div>
+          
+          
+       
+       
+    </div>
+    
+</html>

@@ -15,17 +15,22 @@
             <div class="mt-2">
                 <p th:text="${coffee.creator.name}" class="text-justify"></p>
             </div>
-            <div th:if="${!coffee.fileList.isEmpty()}" class="mt-5">
-                <h5 class="font-weight-bold">첨부된 파일:</h5>
+            <div th:if="${!coffee.fileList.isEmpty()}" class="mt-5" >
+                <h5 class="font-weight-bold">메뉴 이미지:</h5>
                 <ul class="list-group">
-                    <li th:each="file : ${coffee.fileList}" class="list-group-item">
-                        <img th:src="@{'/img/' + ${file.storedFilePath} }" th:alt="${file.originFileName}" />
+                    <div style="text-align:center;">
                     
-                        <a 
-                            th:href="@{${file.storedFilePath}}"
-                            th:text="${file.originFileName}"
-                            class="btn btn-outline-dark"></a>
-                    </li>
+	                    <li th:each="file : ${coffee.fileList}" class="list-group-item" >
+	                        <img th:src="@{'/img/' + ${file.storedFilePath} }" th:alt="${file.originFileName}" 
+	                             style="width:500px; height:500px;" />
+		                    <div>
+		                        <a 
+		                            th:href="@{${file.storedFilePath}}"
+		                            th:text="${file.originFileName}"
+		                            class="btn btn-outline-dark"></a>
+		                    </div>
+                        </li>
+                    </div>
                 </ul>
             </div>
         </div>
