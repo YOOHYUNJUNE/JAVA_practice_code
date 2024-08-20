@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kosta.dto.Community;
+import com.kosta.dto.CommunityFile;
 
 public interface CommunityService {
 
@@ -13,6 +14,10 @@ public interface CommunityService {
 	public List<Community> getAllCommunity() throws Exception;
 
 	public Community getCommunityById(int id) throws Exception;
+
+	public CommunityFile getCommunityFileById(int id) throws Exception;
+
+	public void delete(int id) throws Exception;
 
 
 }

@@ -4,32 +4,77 @@
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     layout:decorate="~{layouts/default}"
 >
+    <!-- 
     <div layout:fragment="contents" class="container my-4" style="padding-top: 60px">
+     -->
+    <div layout:fragment="contents" class="container w-90 mt-5 mx-auto" style="padding-top: 60px">
+	    <h4 style="font-size:20px; opacity:0.7;" class="text-center mb-4">기가GGC커피의 엄선된 메뉴</h4>
+	    <h1 style="font-size:60px; font-weight:bold;" class="text-center mb-4">GIGA MENU</h1>
+	    <br/>
+	    <h6 style="font-size:11px; opacity:0.5;" class="text-center mb-4">※메뉴 이미지는 연출컷이라 실물과 다를 수 있습니다.</h6>
+        <br/><br/><br/>
+
+			<!-- 
+		     <div>
+			   <p th:text="${community.id}"></p>
+			   <p th:text="${community.title}"></p>
+			   <p th:text="${community.creator.name}"></p>
+			   <p th:text="${community.hit}"></p>
+	   		   <p th:text="${#temporals.format(community.createdAt, 'yyyy년 MM월 dd일')}"></p>
+		  
+	        </div>
+
+			 -->
+
+    <div class="container mb-3">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <div 
+           class="col-md-4 community-item"
+           th:each="community : ${list}">
+                 
+          <div class="card shadow-sm">
+              <img th:onclick="|location.href='/community/detail/${community.id}'|" role="button" 
+                   th:src="@{'/img/' + ${community.fileList[0].storedFilePath}}"
+                   class="bd-placeholder-img card-img-top" 
+                   width="100%" height="300" alt="섬네일"/>
        
-       <table class="table table-striped">
-          <thead>
-              <tr>
-                  <th>번호</th>
-                  <th>제목</th>
-                  <th>작성자</th>
-                  <th>조회수</th>
-                  <th>작성일</th>
-              </tr>
-          </thead>
-          
-          <tbody>
-              <tr th:each="community : ${list}" th:onclick="|location.href='/community/detail/${community.id}'|" role="button">
-                   <td>[[${community.id}]]</td>
-                   <td>[[${community.title}]]</td>
-                   <td>[[${community.creator.name}]]</td>
-                   <td>[[${community.hit}]]</td>
-                   <td>[[${#temporals.format(community.createdAt, 'yyyy년 MM월 dd일')}]]</td>
-              </tr>             
-          </tbody>
-       
-       </table>
-       
+            <div class="card-body">
+              <p class="card-text" th:text="${community.title}"></p>
+              <p class="card-text text-end" th:text="${community.creator.name}"></p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-outline-secondary btn-info text-dark">Edit</button>
+                  <form th:action="@{/community/delete(id=${community.id})}" th:method="DELETE">
+                     <button type="button" class="btn btn-sm btn-outline-secondary btn-danger text-warning">Delete</button>
+                  </form>
+                </div>
+                 <p class="text-body-secondary" th:text=" '[' + ${#temporals.format(community.createdAt, 'yyyy.MM.dd HH:mm')} + ']'"></p>
+  
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>  
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
        <a href="/community/add" class="btn btn-primary">글쓰기</a>
-       
     </div>
 </html>

@@ -24,10 +24,23 @@ public class ICommunityService implements CommunityService {
 	private UserMapper um;
 	
 	
-	// 게시글 전체 목록
+//	// 게시글 전체 목록
+//	@Override
+//	public List<Community> getAllCommunity() throws Exception {
+//		return cm.findAll();
+//	}
+//	
+	
+	// 게시글 전체 목록(섬네일)
 	@Override
 	public List<Community> getAllCommunity() throws Exception {
-		return cm.findAll();
+		List<Community> communityList = cm.findAll();
+		for (Community community : communityList) {
+			List<CommunityFile> fileList = cm.findFileByCommunityId(community.getId());
+			community.setFileList(fileList);
+		}
+		return communityList;
+		
 	}
 	
 	
@@ -91,9 +104,22 @@ public class ICommunityService implements CommunityService {
 			
 		}
 		
-		
-		
-		
+	}
+
+
+	// 이미지 다운로드
+	@Override
+	public CommunityFile getCommunityFileById(int id) throws Exception {
+		return cm.findFileById(id);
+	}
+
+	
+	// 게시글 삭제
+	@Override
+	public void delete(int id) throws Exception {
+		// community_file_tbl 에서, 게시물에 있는 file먼저 삭제해야함
+		cm.deleteFilesByCommunityId(id);
+		cm.delete(id); // community_tbl에서 삭제
 	}
 
 

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html 
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layouts/default}"
+>
+    <div layout:fragment="contents" class="container my-4" style="padding-top: 60px">
+       <section class="py-5 text-center">
+          <div class="row py-lg-5">
+              <div class="col-lg-6 col-md-8 mx-auto">
+                  <h1>[[${community.title}]]</h1>
+                  <p class="text-body-secondary">[[${community.content}]]</p>
+	              <p>[[${community.creator.name}]]</p>
+	              <p>[[${#temporals.format(community.createdAt, 'yyyy-MM-dd')}]]</p>
+	              <div>
+                     <a href="/community/list" class="btn btn-secondary my-2">목록으로</a>
+                     <form th:action="@{/community/delete(id=${community.id})}" th:method="DELETE">
+                         <button class="btn btn-danger my-2">삭제</button>
+                     </form>
+	              </div>
+              </div>
+          </div>
+          
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+              <div class="col" th:each="f : ${community.fileList}">
+                  <div class="card shadow-sm" >
+                      <img th:src="@{'/img/' + ${f.storedFilePath}}" th:alt="${f.originFileName}"
+                           th:onclick="|location.href='/community/download/${f.id}'|" role="button"/>                      
+                  </div>
+              </div>
+          </div>
+       
+       </section>
+    </div>
+</html>

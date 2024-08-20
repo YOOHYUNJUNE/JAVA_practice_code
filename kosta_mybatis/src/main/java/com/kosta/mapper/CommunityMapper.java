@@ -20,4 +20,10 @@ public interface CommunityMapper {
 
 	List<CommunityFile> findFileByCommunityId(int id) throws Exception;
 
+	CommunityFile findFileById(int id) throws Exception;
+
+	void delete(int id) throws Exception;
+
+	void deleteFilesByCommunityId(int id) throws Exception;
+
 }
