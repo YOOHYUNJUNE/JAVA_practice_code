@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: blog_proj
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/blog_db
+    username: root
+    password: 1234
+  jpa:
+    database: mysql
+    generate-ddl: true
+    show-sql: true
+    open-in-view: false # DB 자원 반납(즉시 로딩)
+  sql:
+    init:
+      mode: never
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+       

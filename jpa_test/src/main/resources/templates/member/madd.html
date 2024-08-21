@@ -16,8 +16,7 @@
 	       <input type="hidden" name="id" th:if="${member != null}" th:value="${member.id}" />
 	       
 	       <input name="name" placeholder="이름을 입력하세요." th:value="${member == null ? '' : member.name}" required />
-	       <button class="btn btn-success">[[${member == null ? '추가' : '수정'}]]</button>
-	    
+	       <button class="btn btn-success">[[${member == null ? '추가' : '수정'}]]</button>	    
 	    </form>
 	    
 	    <div class="text-end m-3">
