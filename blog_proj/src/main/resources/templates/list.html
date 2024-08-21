@@ -17,6 +17,29 @@
         </a>
     </p>
     
+    
+    <!-- 제목||내용 검색(/search가 아니라 /list에 포함되게)-->
+    <form action="/list">
+        <input name="keyword" placeholder="검색어 입력" />
+        <button>검색</button>
+    </form>
+    
+    
+    
+    <!-- 제목 기준 정렬 -->
+    <form action="/list">
+        <select name="order">
+            <option value="asc">오름차순</option>
+            <option value="desc">내림차순</option>
+        </select>
+        <button>정렬</button>
+    </form>
+    
+    
+    
+    
+    
+    
     <div class="text-center">
 	    <a class="btn btn-primary m-5" href="/add">게시글 추가</a>
     </div>

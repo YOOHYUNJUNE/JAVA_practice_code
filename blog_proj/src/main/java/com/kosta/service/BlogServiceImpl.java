@@ -43,6 +43,7 @@ public class BlogServiceImpl implements BlogService {
 		blogRepository.deleteById(article.getId()); // 없는 ID가 있는 경우 방지
 	}
 
+	// 수정
 	@Override
 	public Article update(Article article) throws Exception {
 		Article originArticle = findById(article.getId());
@@ -51,6 +52,20 @@ public class BlogServiceImpl implements BlogService {
 		
 		Article updateArticle = blogRepository.save(originArticle);
 		return updateArticle;
+	}
+
+	// 검색
+	@Override
+	public List<Article> searchInTitleAndContent(String keyword) {
+		return blogRepository.findByTitleContainsOrContentContains(keyword, keyword);
+	}
+
+	
+	// 정렬
+	@Override
+	public List<Article> orderingArticleList(String order) {
+		if (order.equals("desc")) return blogRepository.findAllByOrderByTitleDesc();		
+		return blogRepository.findAllByOrderByTitleAsc(); // 기본 오름차순 정렬
 	}
 	
 	

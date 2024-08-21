@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kosta.entity.Article;
 import com.kosta.service.BlogService;
@@ -39,8 +40,18 @@ public class BlogController {
 	
 	// 게시글 전체 목록
 	@GetMapping("/list")
-	public String listPage(Model model) {
-		List<Article> articleList = blogService.findAll();
+	public String listPage(
+			@RequestParam(required = false, name = "keyword") String keyword, // 검색
+			@RequestParam(required = false, name = "order") String order, // 정렬
+			Model model) {
+		List<Article> articleList;
+		if (keyword != null) {
+			articleList = blogService.searchInTitleAndContent(keyword);
+		} else if (order != null) {
+			articleList = blogService.orderingArticleList(order);
+		} else {
+			articleList = blogService.findAll();
+		}	
 		model.addAttribute("list", articleList);
 		return "list";
 	}

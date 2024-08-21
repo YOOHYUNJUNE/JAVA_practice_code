@@ -127,7 +127,26 @@ public class BlogRepositoryTest {
 	
 	
 	
-	
+	@Test
+	@DisplayName("제목 또는 내용 검색")
+	public void searchByTitleOrContent() {
+		// Given
+		Article article1 = Article.builder().title("QWER").content("대관람차").build();
+		blogRepository.save(article1);
+		
+		Article article2 = Article.builder().title("ㅇㅇㅇ").content("QWER").build();
+		blogRepository.save(article2);
+		
+		
+		// When
+		List<Article> result = blogRepository.findByTitleContainsOrContentContains("QWER", "QWER");
+			
+		// Then
+		assertThat(result).isNotNull();
+		assertThat(result.size()).isEqualTo(2);
+		
+		
+	}
 	
 	
 	
