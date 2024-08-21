@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>회원 추가 페이지</title>
+
+    <!-- 부트 스트랩 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    
+    <div class="text-center m-4">
+	    <form th:action="${member == null ? '/add' : '/edit'}" method="POST">
+	       <input type="hidden" name="id" th:if="${member != null}" th:value="${member.id}" />
+	       
+	       <input name="name" placeholder="이름을 입력하세요." th:value="${member == null ? '' : member.name}" required />
+	       <button class="btn btn-success">[[${member == null ? '추가' : '수정'}]]</button>
+	    
+	    </form>
+	    
+	    <div class="text-end m-3">
+    	    <a href="/list" class="btn btn-primary">돌아가기</a>
+	    </div>
+    </div>
+    
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: jpa_test
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/jpa_db
+    username: root
+    password: 1234
+  jpa:
+    database: mysql
+    generate-ddl: true # DB 자동생성
+    show-sql: true
+    open-in-view: false
+  sql:
+    init:
+      mode: never # data.sql 파일 실행하지 않음

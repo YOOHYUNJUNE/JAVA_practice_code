@@ -10,4 +10,12 @@ public interface MemberService {
 
 	void insertMember(Member member) throws Exception;
 
+	void deleteMemberById(int id) throws Exception;
+
+	Member getMemberById(int id) throws Exception;
+
+	void modifyMember(Member member) throws Exception;
+
+	List<Member> searchMember(String keyword) throws Exception;
+
 }

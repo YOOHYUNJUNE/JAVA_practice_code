@@ -13,7 +13,7 @@ spring:
     open-in-view: false
   sql:
     init:
-      mode: never # data.sql 파일 실행하지 않음
+      mode: never # never : data.sql 파일 실행하지 않음
       
         
       

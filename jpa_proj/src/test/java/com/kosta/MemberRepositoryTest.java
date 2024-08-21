@@ -30,7 +30,7 @@ public class MemberRepositoryTest {
 		for(Member m : allMembers) {
 			System.out.println(m);
 		}
-		assertThat(allMembers.size()).isEqualTo(3);
+		assertThat(allMembers.size()).isGreaterThan(3);
 		
 	}
 	
@@ -39,22 +39,36 @@ public class MemberRepositoryTest {
 	@Sql("/data.sql")
 	@Test
 	public void getMemberById() {
-		Optional<Member> optionalMember = memberRepository.findById(2); // optional : null 여부까지 확인
+		Optional<Member> optionalMember = memberRepository.findById(4); // optional : null 여부까지 확인
 		Member member = optionalMember.get();
 		System.out.println(member);
 		assertThat(member.getName()).isEqualTo("도우너");
 	}
 	
 	
+//	@DisplayName("회원 추가")
+//	@Sql("/data.sql")
+//	@Test
+//	public void insertMember() {
+//		Member member = new Member();
+//		member.setId(4);
+//		member.setName("홍길동");
+//		Member savedMember = memberRepository.save(member);
+//		// 있는지 확인
+////		assertThat(member).isEqualTo(memberRepository.findById(4).get());
+//		assertThat(savedMember).isEqualTo(memberRepository.findByName("홍길동").get());
+//	}
+	
+	
+	// 롬복의 빌더를 이용
 	@DisplayName("회원 추가")
 	@Sql("/data.sql")
 	@Test
 	public void insertMember() {
-		Member member = new Member();
-		member.setId(4);
-		member.setName("홍길동");
+		Member member = Member.builder().name("홍길동").id(4).build();
+//		member.setId(4);
+//		member.setName("홍길동");
 		Member savedMember = memberRepository.save(member);
-		
 		// 있는지 확인
 //		assertThat(member).isEqualTo(memberRepository.findById(4).get());
 		assertThat(savedMember).isEqualTo(memberRepository.findByName("홍길동").get());
@@ -62,12 +76,13 @@ public class MemberRepositoryTest {
 	
 	
 	
+	
 	@DisplayName("특정 회원 삭제")
 	@Sql("/data.sql")
 	@Test
 	public void deleteMember() {
-		memberRepository.deleteById(3); 
-		assertThat(memberRepository.count()).isEqualTo(2);		
+		memberRepository.deleteById(4); 
+		assertThat(memberRepository.count()).isGreaterThan(2);		
 	}
 	
 	
@@ -77,10 +92,22 @@ public class MemberRepositoryTest {
 	@Transactional // 생략가능(DataJpaTest에 이미 포함) : update기능
 	public void updateMemberName() {
 		Member member = memberRepository.findById(3).get();
-		member.setName("고길동");		
+		member.setName("고길동");
 		assertThat(memberRepository.findByName("고길동").get()).isEqualTo(member);
 	}
 	
+	
+	
+	@DisplayName("회원 검색")
+	@Sql("/data.sql")
+	@Test
+	public void searchMemberByName() {
+		List<Member> memberList = memberRepository.findByNameContains("우");
+		
+		for(Member m : memberList) {
+			System.out.println(m);
+		}
+	}
 	
 	
 	

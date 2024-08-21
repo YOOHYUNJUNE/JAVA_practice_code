@@ -1,0 +1,1 @@
+insert into member_tbl (id, name) values (1, "홍길동"), (2, "손흥민"), (3, "손홍민");
