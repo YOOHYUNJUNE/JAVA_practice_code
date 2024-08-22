@@ -25,7 +25,7 @@ public class MemberController {
 	// 전체 페이지
 	@GetMapping("/list")
 	public ModelAndView listPage() throws Exception {
-		ModelAndView mv = new ModelAndView("member/mlist");
+		ModelAndView mv = new ModelAndView("/mlist");
 		List<Member> memberList = ms.getAll();
 		mv.addObject("list", memberList);
 		return mv;
@@ -35,7 +35,7 @@ public class MemberController {
 	// 회원 추가 페이지
 	@GetMapping("/add")
 	public ModelAndView addPage() throws Exception {
-		ModelAndView mv = new ModelAndView("member/madd");
+		ModelAndView mv = new ModelAndView("/madd");
 		return mv;
 	}
 	
@@ -64,7 +64,7 @@ public class MemberController {
 	public String editPage(@PathVariable("id") int id, Model model) throws Exception {
 		Member mb = ms.getMemberById(id);
 		model.addAttribute("member", mb);
-		return "member/madd";
+		return "/madd";
 	}
 	
 	
@@ -81,7 +81,7 @@ public class MemberController {
 	public String searchMember(@RequestParam("keyword") String keyword, Model model) throws Exception {
 		List<Member> memberSearch = ms.searchMember(keyword);
 		model.addAttribute("list", memberSearch);
-		return "member/mlist";
+		return "/mlist";
 	}
 	
 	

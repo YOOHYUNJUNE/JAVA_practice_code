@@ -14,3 +14,7 @@ spring:
   sql:
     init:
       mode: never # data.sql 파일 실행하지 않음
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true

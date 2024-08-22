@@ -23,13 +23,13 @@ public class WebSecurityConfig {
 
 	private final UserDetailsService userDetailsService;
 	
-	// 특정 부분에 스프링 시큐리티 비활성화
-	@Bean
-	WebSecurityCustomizer configure() {
-		return (web) -> web.ignoring().requestMatchers(
-						new AntPathRequestMatcher("/static/**/")
-						);
-	}
+//	// 특정 부분에 스프링 시큐리티 비활성화
+//	@Bean
+//	WebSecurityCustomizer configure() {
+//		return (web) -> web.ignoring().requestMatchers(
+//						new AntPathRequestMatcher("/static/**/")
+//						);
+//	}
 	
 	
 	// HTTP 요청에 따른 보안 구성
@@ -39,7 +39,9 @@ public class WebSecurityConfig {
 			auth.requestMatchers(
 				// 인증, 인가 설정 : 특정 URL 엑세스 설정
 				new AntPathRequestMatcher("/login"),
-				new AntPathRequestMatcher("/join")			
+				new AntPathRequestMatcher("/join"),
+				new AntPathRequestMatcher("/static/**/")			
+
 			).permitAll()
 				// 나머지 URL은 인증 필요
 			.anyRequest().authenticated()

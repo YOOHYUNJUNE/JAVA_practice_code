@@ -25,7 +25,7 @@ import lombok.RequiredArgsConstructor;
 @EntityListeners(AuditingEntityListener.class)
 @RequiredArgsConstructor
 @Data
-public class User implements UserDetails{
+public class User implements UserDetails {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
