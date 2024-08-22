@@ -1,6 +1,7 @@
 package com.kosta.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.content;
 
 import java.util.List;
@@ -128,25 +129,30 @@ public class BlogRepositoryTest {
 	
 	
 	@Test
-	@DisplayName("제목 또는 내용 검색")
+	@DisplayName("제목 또는 내용 검색 & 정렬")
 	public void searchByTitleOrContent() {
 		// Given
 		Article article1 = Article.builder().title("QWER").content("대관람차").build();
-		blogRepository.save(article1);
+		Article savedArticle1 = blogRepository.save(article1);
 		
-		Article article2 = Article.builder().title("ㅇㅇㅇ").content("QWER").build();
-		blogRepository.save(article2);
+		Article article2 = Article.builder().title("Aㅇㅇㅇ").content("QWER").build();
+		Article savedArticle2 = blogRepository.save(article2);
 		
+		String keyword = "QWER";
 		
 		// When
-		List<Article> result = blogRepository.findByTitleContainsOrContentContains("QWER", "QWER");
-			
+		List<Article> resultList = blogRepository.findByTitleContainsOrContentContainsOrderByTitleAsc(keyword, keyword);
+				
 		// Then
-		assertThat(result).isNotNull();
-		assertThat(result.size()).isEqualTo(2);
-		
-		
+		System.out.println(resultList.indexOf(savedArticle1));
+		System.out.println(resultList.indexOf(savedArticle2));
+		assertThat(resultList.indexOf(savedArticle1)).isGreaterThan(resultList.indexOf(savedArticle2));
+		assertThat(resultList.stream().allMatch(article -> {
+			return article.getTitle().contains(keyword) || article.getContent().contains(keyword);
+		})).isTrue();
 	}
+		
+	
 	
 	
 	

@@ -20,10 +20,14 @@ public interface BlogService {
 	// ID로 특정 게시물 수정
 	Article update(Article article) throws Exception;
 	
-	// 검색
-	List<Article> searchInTitleAndContent(String keyword);
+//	// 검색
+//	List<Article> searchInTitleAndContent(String keyword);
+//	// 정렬
+//	List<Article> orderingArticleList(String order);
 
-	// 정렬
-	List<Article> orderingArticleList(String order);
+	// 검색 & 정렬
+	List<Article> searchAndOrder(String keyword, String order);
+	
+	
 	
 }

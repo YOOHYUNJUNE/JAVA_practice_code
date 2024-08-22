@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kosta.entity.Article;
@@ -18,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/blog")
 public class BlogController {
 
 	private final BlogService blogService;
@@ -34,7 +36,7 @@ public class BlogController {
 	@PostMapping("/add")
 	public String addArticle(Article article) {
 		blogService.save(article);
-		return "redirect:/list"; // redirect: 리프레시할 때 중복된 요청 방지
+		return "redirect:/blog/list"; // redirect: 리프레시할 때 중복된 요청 방지
 	}
 	
 	
@@ -45,10 +47,8 @@ public class BlogController {
 			@RequestParam(required = false, name = "order") String order, // 정렬
 			Model model) {
 		List<Article> articleList;
-		if (keyword != null) {
-			articleList = blogService.searchInTitleAndContent(keyword);
-		} else if (order != null) {
-			articleList = blogService.orderingArticleList(order);
+		if (keyword != null || order != null) {
+			articleList = blogService.searchAndOrder(keyword, order);
 		} else {
 			articleList = blogService.findAll();
 		}	
@@ -76,7 +76,7 @@ public class BlogController {
 	public String deleteArticle(@PathVariable("id") Long id, Model model) {
 		try {
 			blogService.deleteById(id);
-			return "redirect:/list";
+			return "redirect:/blog/list";
 		} catch (Exception e) {
 			model.addAttribute("errMsg", e.getMessage());
 			return "error";
@@ -103,7 +103,7 @@ public class BlogController {
 	public String modifyArticle(Article article, Model model) {
 		try {
 			blogService.update(article);
-			return "redirect:/detail/" + article.getId();
+			return "redirect:/blog/detail/" + article.getId();
 		} catch (Exception e) {
 			model.addAttribute("errMsg", e.getMessage());
 			return "error";
