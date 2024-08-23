@@ -20,6 +20,9 @@
                 <tr>
 	                <th>ID</th>
 	                <th>이름</th>
+	                <th>자기소개</th>
+                    <th>로그인횟수</th>
+                    <th>가입일</th>
 	                <th>수정</th>
 	                <th>삭제</th>
                 </tr>
@@ -30,6 +33,9 @@
                 
                     <td th:text="${member.id}"></td>
                     <td th:text="${member.name}" style="font-weight:bold; color:#555; font-size:20px;"></td>
+                    <td th:text="${member.info}"></td>
+                    <td th:text="${member.loginCount}"></td>
+                    <td th:text="${#temporals.format(member.updatedAt, 'yy년 MM월 dd일')}"></td>
                     <td><a th:href="@{'/edit/' + ${member.id}}" class="btn btn-primary">수정</a></td>
                     <td><a th:href="@{'/delete/' + ${member.id}}" class="btn btn-danger">삭제</a></td>
                   
@@ -52,7 +58,7 @@
                 <a href="/list" class="btn btn-primary me-3">돌아가기</a>
             </div>
                      
-            <a href="/add" class="btn btn-primary">회원 추가</a>
+            <a href="/join" class="btn btn-primary">회원 추가</a>
             
         </div>
     

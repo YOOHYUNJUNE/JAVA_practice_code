@@ -13,9 +13,11 @@
     
     <div class="text-center m-4">
 	    <form th:action="${member == null ? '/add' : '/edit'}" method="POST">
-	       <input type="hidden" name="id" th:if="${member != null}" th:value="${member.id}" />
+           <input type="hidden" name="id" th:if="${member != null}" th:value="${member.id}" />
 	       
-	       <input name="name" placeholder="이름을 입력하세요." th:value="${member == null ? '' : member.name}" required />
+           <input name="name" placeholder="이름을 입력하세요." th:value="${member == null ? '' : member.name}" required />
+           <textarea name="info" placeholder="자기소개를 입력하세요.">[[${member == null ? '' : member.info}]]</textarea>
+	       
 	       <button class="btn btn-success">[[${member == null ? '추가' : '수정'}]]</button>	    
 	    </form>
 	    

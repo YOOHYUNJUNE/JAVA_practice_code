@@ -35,6 +35,7 @@ public class User implements UserDetails {
 	@Column(nullable = false)
 	private String name;
 	
+	@Column
 	private String info;
 	
 	@Column(nullable = false, unique = true)
@@ -42,6 +43,13 @@ public class User implements UserDetails {
 	
 	@Column(nullable = false)
 	private String password;
+	
+	// 로그인 횟수
+	@Column(name = "login_count")
+	private Long loginCount = 0L;
+	
+	
+	
 	
 	@CreatedDate
 	@Column(name = "created_at")

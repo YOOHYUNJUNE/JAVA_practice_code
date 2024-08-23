@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kosta.entity.Member;
+import com.kosta.entity.User;
 import com.kosta.repository.MemberRepository;
 
 
@@ -18,34 +19,34 @@ public class IMemberService implements MemberService {
 
 	// 모든 회원 리스트 가져오기
 	@Override
-	public List<Member> getAll() throws Exception {
+	public List<User> getAll() throws Exception {
 		return mp.findAll();
 	}
 
 	// 회원 추가(저장)
 	@Override
-	public void addMember(Member member) throws Exception {
+	public void addMember(User member) throws Exception {
 		mp.save(member);
 	}
 
 	// 회원 삭제
 	@Override
-	public void deleteMemberById(int id) throws Exception {
+	public void deleteMemberById(Long id) throws Exception {
 		mp.deleteById(id);
 	}
 
 	// 회원 찾기(수정을 위해)
 	@Override
-	public Member getMemberById(int id) throws Exception {
-		Optional<Member> om = mp.findById(id);
-		Member member = om.orElseThrow(() -> new Exception("회원 정보 없음"));
+	public User getMemberById(Long id) throws Exception {
+		Optional<User> om = mp.findById(id);
+		User member = om.orElseThrow(() -> new Exception("회원 정보 없음"));
 		return member;			
 	}
 
 	// 회원 수정
 	@Override
-	public void editMember(Member member) throws Exception {
-		Member eMember = getMemberById(member.getId()); // 수정하려는 회원의 ID를 가져옴
+	public void editMember(User member) throws Exception {
+		User eMember = getMemberById(member.getId()); // 수정하려는 회원의 ID를 가져옴
 		eMember.setName(member.getName());
 		mp.save(eMember);
 	}
@@ -53,7 +54,7 @@ public class IMemberService implements MemberService {
 	
 	// 회원 검색
 	@Override
-	public List<Member> searchMember(String keyword) throws Exception {
+	public List<User> searchMember(String keyword) throws Exception {
 		return mp.findByNameContains(keyword);
 	}
 

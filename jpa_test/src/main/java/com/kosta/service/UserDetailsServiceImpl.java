@@ -18,7 +18,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	public User loadUserByUsername(String email) throws UsernameNotFoundException {
 		User user = ur.findByEmail(email).orElseThrow(() -> new IllegalArgumentException(email));
-		return user;
+		
+		// 로그인 횟수 기능
+		user.setLoginCount(user.getLoginCount() + 1L);
+		
+		return ur.save(user);
 	}
 
 }

@@ -3,19 +3,20 @@ package com.kosta.service;
 import java.util.List;
 
 import com.kosta.entity.Member;
+import com.kosta.entity.User;
 
 public interface MemberService {
 
-	List<Member> getAll() throws Exception;
+	List<User> getAll() throws Exception;
 
-	void addMember(Member member) throws Exception;
+	void addMember(User member) throws Exception;
 
-	void deleteMemberById(int id) throws Exception;
+	void deleteMemberById(Long id) throws Exception;
 
-	Member getMemberById(int id) throws Exception;
+	User getMemberById(Long id) throws Exception;
 
-	void editMember(Member member) throws Exception;
+	void editMember(User member) throws Exception;
 
-	List<Member> searchMember(String keyword) throws Exception;
+	List<User> searchMember(String keyword) throws Exception;
 
 }

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.kosta.entity.Member;
+import com.kosta.entity.User;
 import com.kosta.service.MemberService;
 
 
@@ -26,7 +26,7 @@ public class MemberController {
 	@GetMapping("/list")
 	public ModelAndView listPage() throws Exception {
 		ModelAndView mv = new ModelAndView("/mlist");
-		List<Member> memberList = ms.getAll();
+		List<User> memberList = ms.getAll();
 		mv.addObject("list", memberList);
 		return mv;
 	}
@@ -42,7 +42,7 @@ public class MemberController {
 	
 	// 회원 추가
 	@PostMapping("/add")
-	public String addMember(Member member) throws Exception {	
+	public String addMember(User member) throws Exception {	
 //		if (member.getName().isEmpty()) {
 //			member.setName(null);
 //		}
@@ -53,7 +53,7 @@ public class MemberController {
 	
 	// 회원 삭제
 	@GetMapping("/delete/{id}")
-	public String deleteMember(@PathVariable("id") int id) throws Exception {
+	public String deleteMember(@PathVariable("id") Long id) throws Exception {
 		ms.deleteMemberById(id);
 		return "redirect:/list";
 	}
@@ -61,8 +61,8 @@ public class MemberController {
 	
 	// 회원 수정 페이지
 	@GetMapping("/edit/{id}")
-	public String editPage(@PathVariable("id") int id, Model model) throws Exception {
-		Member mb = ms.getMemberById(id);
+	public String editPage(@PathVariable("id") Long id, Model model) throws Exception {
+		User mb = ms.getMemberById(id);
 		model.addAttribute("member", mb);
 		return "/madd";
 	}
@@ -70,7 +70,7 @@ public class MemberController {
 	
 	// 회원 수정
 	@PostMapping("/edit")
-	public String editMember(Member member) throws Exception {
+	public String editMember(User member) throws Exception {
 		ms.editMember(member);
 		return "redirect:/list";
 	}
@@ -79,7 +79,7 @@ public class MemberController {
 	// 회원 찾기
 	@GetMapping("/search")
 	public String searchMember(@RequestParam("keyword") String keyword, Model model) throws Exception {
-		List<Member> memberSearch = ms.searchMember(keyword);
+		List<User> memberSearch = ms.searchMember(keyword);
 		model.addAttribute("list", memberSearch);
 		return "/mlist";
 	}

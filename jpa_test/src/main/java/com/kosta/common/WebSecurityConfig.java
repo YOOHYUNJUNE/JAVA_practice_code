@@ -34,7 +34,7 @@ public class WebSecurityConfig {
 				//나머지 URL은 인증 필요
 				.anyRequest().authenticated()
 				// form 기반 로그인 설정: login.html에서 성공시 blog.list
-				).formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/blog/list"))
+				).formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/list"))
 				// 로그아웃시 login으로 + 세션 만료
 				.logout(logout -> logout.logoutSuccessUrl("/login").invalidateHttpSession(true))
 				// CSRF 공격 방지 설정
