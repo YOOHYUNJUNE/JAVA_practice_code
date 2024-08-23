@@ -83,7 +83,7 @@ public class CommunityController {
 	
 	
 	// 게시글 삭제
-	@DeleteMapping("/delete")
+	@DeleteMapping("/delete/{id}")
 	public String delete(@RequestParam("id") int id) throws Exception {
 		cs.delete(id);
 		return "redirect:/community/list";

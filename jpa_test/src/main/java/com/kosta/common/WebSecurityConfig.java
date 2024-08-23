@@ -11,58 +11,78 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class WebSecurityConfig {
-
-	private final UserDetailsService uds;
+	private final UserDetailsService userDetailsSerivce;
+	private final LoginSuccessHandler loginSuccessHandler;
+//	// 특정 부분에 스프링 시큐리티 기능 비활성화
+//	@Bean
+//	WebSecurityCustomizer configure() {
+//		return (web) -> web.ignoring()
+//			.requestMatchers(
+//					new AntPathRequestMatcher("/static/**")
+//			);
+//	}
 	
 	// HTTP 요청에 따른 보안 구성
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		return http.authorizeHttpRequests(auth -> auth.requestMatchers(
-				// 인증, 인가 설정 : 특정 URL 엑세스
+		http.authorizeHttpRequests(auth -> 
+			auth.requestMatchers(
+				// 인증, 인가 설정 (특정한 URL 액세스를 설정)
 				new AntPathRequestMatcher("/login"),
 				new AntPathRequestMatcher("/join"),
-				new AntPathRequestMatcher("/static/**/")
-				).permitAll()
-				//나머지 URL은 인증 필요
-				.anyRequest().authenticated()
-				// form 기반 로그인 설정: login.html에서 성공시 blog.list
-				).formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/list"))
-				// 로그아웃시 login으로 + 세션 만료
-				.logout(logout -> logout.logoutSuccessUrl("/login").invalidateHttpSession(true))
-				// CSRF 공격 방지 설정
-				.csrf(AbstractHttpConfigurer::disable)
-				// CORS 비활성화
-				.cors(AbstractHttpConfigurer::disable)
-				.build();
+				new AntPathRequestMatcher("/blog/list")
+			).permitAll()
+			// 나머지 URL은 인증이 필요
+			.anyRequest().authenticated()		
+		);
 		
+		// 폼 기반 로그인 설정 (로그인은 login.html로 이동하고, 성공 시 "/blog/list"로 연결
+		http.formLogin(form -> 
+			form
+			.loginPage("/login")
+			.successHandler(loginSuccessHandler)
+//			.defaultSuccessUrl("/blog/list", true)
+		);
+		// 로그아웃 설정 (로그아웃이 성공적으로 되면 "/login"으로 연결, 동시에 세션 만료)
+		http.logout(logout -> logout.logoutSuccessUrl("/blog/list").invalidateHttpSession(true));
+		
+		// continue 파라미터를 null로 설정
+		HttpSessionRequestCache requestCache = new HttpSessionRequestCache();
+		requestCache.setMatchingRequestParameterName(null);
+		http.requestCache((cache) -> cache
+			.requestCache(requestCache)
+		);
+
+		// CSRF 공격 방지 설정
+		http.csrf(AbstractHttpConfigurer::disable);
+		
+		// CORS 비활성화
+		http.cors(AbstractHttpConfigurer::disable);
+		
+		return http.getOrBuild(); 
 	}
-	
-	
-	// 인증 관리자 설정
+
+	// 인증 관리자(AuthenticationManager) 설정
 	@Bean
-	AuthenticationManager authenticationManager(HttpSecurity http, BCryptPasswordEncoder bCrypt) throws Exception {
+	AuthenticationManager authenticationManager(HttpSecurity http, BCryptPasswordEncoder bCrypt, UserDetailsService uds) throws Exception {
 		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-		authProvider.setUserDetailsService(uds);
+		authProvider.setUserDetailsService(userDetailsSerivce);
 		authProvider.setPasswordEncoder(bCrypt);
-		return new ProviderManager(authProvider);			
+		return new ProviderManager(authProvider);
 	}
 	
-	
-	// 비밀번호 암호화
+	// 비밀번호 암호화를 위한 사용 설정
 	@Bean
 	BCryptPasswordEncoder bCryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
-	
-	
-	
 }

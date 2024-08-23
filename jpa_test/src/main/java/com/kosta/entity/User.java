@@ -70,11 +70,14 @@ public class User implements UserDetails {
 	
 	
 	// 사용자 권한 목록
+	// 항상 "ROLE_~~~"형태로 작성
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return List.of(new SimpleGrantedAuthority("user"));
+//		return List.of(new SimpleGrantedAuthority("user"));
+		return List.of(new SimpleGrantedAuthority("ROLE_USER"));
 	}
 
+	
 	// 사용자 식별값 : email(unique)로 구분
 	@Override
 	public String getUsername() {

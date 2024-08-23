@@ -32,8 +32,9 @@
               <p class="card-text text-end" th:text="${community.creator.name}"></p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary btn-info text-dark">Edit</button>
-                  <form th:action="@{/community/delete(id=${community.id})}" th:method="DELETE">
+                  <button type="button" class="btn btn-sm btn-outline-secondary btn-info text-dark">수정</button>
+                  <form th:action="@{/community/delete/(id=${community.id}}" th:method="DELETE">
+
                      <button type="button" class="btn btn-sm btn-outline-secondary btn-danger text-warning">Delete</button>
                   </form>
                 </div>

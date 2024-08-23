@@ -16,42 +16,33 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequiredArgsConstructor
 public class UserController {
-	
 	private final UserService userService;
-	
 	
 	// "/login" 화면
 	@GetMapping("/login")
 	public String loginPage() {
-		return "login";
+		return userService.islogin() ? "redirect:/blog/list" : "/user/login";
 	}
-	
 	
 	// "/join" 화면
 	@GetMapping("/join")
 	public String joinPage() {
-		return "join";
+		return userService.islogin() ? "redirect:/blog/list" : "/user/join";
 	}
-	
 	
 	// "/logout" 동작
 	@GetMapping("/logout")
 	public String logout(HttpServletRequest req, HttpServletResponse res) {
-		new SecurityContextLogoutHandler().logout(req, res, SecurityContextHolder.getContext().getAuthentication());
+		new SecurityContextLogoutHandler()
+			.logout(req, res, SecurityContextHolder.getContext().getAuthentication());
 		return "redirect:/login";
 	}
 	
-	
-	// 회원가입
+	// "/join" 동작
 	@PostMapping("/join")
 	public String join(User user) {
 		userService.save(user);
 		return "redirect:/login";
 	}
 	
-	
-	
-	
-	
-
 }

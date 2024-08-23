@@ -31,7 +31,7 @@ public class CoffeeController {
 	UserService us;
 
 	// 커피 메뉴 전체 화면
-	@RequestMapping(value = { "", "/", "list"})
+	@RequestMapping(value = { "", "/", "/list"})
 	public ModelAndView showCoffeeList() throws Exception {
 		ModelAndView mav = new ModelAndView("coffee/list");
 		// 메뉴 전체 가져오기

@@ -23,8 +23,18 @@ public class UserController {
 	// 로그인 화면
 	@GetMapping("/login")
 	public String loginPage() {
-		return "/login";
+		return us.islogin() ? "redirect:/blog/list" : "/login";
 	}
+	
+	
+	// 로그아웃
+	@GetMapping("/logout")
+	public String logout(HttpServletRequest req, HttpServletResponse res) {
+		new SecurityContextLogoutHandler().logout(req, res, SecurityContextHolder.getContext().getAuthentication());
+		return us.islogin() ? "redirect:/blog/list" : "/join";
+	}
+	
+	
 	
 	
 	// 회원가입 화면
@@ -33,12 +43,6 @@ public class UserController {
 		return "/join";
 	}
 	
-	// 로그아웃
-	@GetMapping("/logout")
-	public String logout(HttpServletRequest req, HttpServletResponse res) {
-		new SecurityContextLogoutHandler().logout(req, res, SecurityContextHolder.getContext().getAuthentication());
-		return "redirect:/login";
-	}
 	
 	
 	// 회원가입

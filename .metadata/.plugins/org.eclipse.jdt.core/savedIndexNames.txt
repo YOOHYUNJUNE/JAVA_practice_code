@@ -65,7 +65,6 @@ INDEX VERSION 1.134+C:\Users\WD\Documents\유현준\spring_workspace\.metadata\.
 2913271560.index
 276345797.index
 1503615692.index
-2606683309.index
 1960723183.index
 718104608.index
 1545281236.index

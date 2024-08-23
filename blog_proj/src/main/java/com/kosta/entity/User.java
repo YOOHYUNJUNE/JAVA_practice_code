@@ -26,13 +26,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Data
 public class User implements UserDetails {
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(updatable = false)
 	private Long id;
 	
-	@Column(nullable = false, unique = true) // 후보키
+	@Column(nullable = false, unique = true)
 	private String email;
 	
 	@Column(nullable = false)
@@ -46,59 +47,57 @@ public class User implements UserDetails {
 	@Column(name = "updated_at")
 	private LocalDateTime updatedAt;
 
+	@Column(name = "login_count")
+	private Long loginCount = 0L;
 	
-	@Builder
-	public User(String email, String password) {
-		this.email = email;
-		this.password = password;
-	}
-
-	
-	
-	
-	// 사용자들이 가질 수 있는 권한 목록을 반환 ("사용자"라는 권한만 부여)
+	// getAuthorities() : 권한들을 가져오자!
+	// 사용자들이 가질 수 있는 권한 목록을 반환한다.
+	// 여기서는 "사용자"라는 권한만 부여할 것임.
+	// 항상 ROLE_~~~ 형태로 작성할 것!
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return List.of(new SimpleGrantedAuthority("user"));
+		return List.of(new SimpleGrantedAuthority("ROLE_USER"));
 	}
 
-
-	// 사용자 식별값을 가져옴 : email
+	// getUsername() : 사용자 식별값 가져오자!
+	// 여기서는 사용자의 식별 가능한 이름은 email이다.
 	@Override
 	public String getUsername() {
 		return email;
 	}
 
-
-	// 계정 만료 여부. true:만료 아님 / false:만료 
+	
+	// isAccountNonExpired() : 계정 만료 여부
+	// true: 만료 아님 | false: 만료
 	@Override
 	public boolean isAccountNonExpired() {
 		return true;
 	}
 
-
-	// 계정 잠금 여부. true:사용 / false:잠김
+	// isAccountNonLocked() : 계정 잠금 여부
+	// true: 잠기지 않음(열림) | false: 잠김
 	@Override
 	public boolean isAccountNonLocked() {
 		return true;
 	}
 
-
-	// 비밀번호 만료 여부. true:사용 / false:잠김
-	// "90일 이후에 비밀번호 변경" 등
+	// isCredentialsNonExpired() : 비밀번호 만료 여부
+	// true: 만료 아님 | false: 만료
 	@Override
 	public boolean isCredentialsNonExpired() {
 		return true;
 	}
 
-
-	// 계정 만료 여부. true:활성화 / false:비활성화
-	// "30일 이내 재가입시 데이터 보존" 등
+	// isEnabled() : 계정 활성화(만료) 여부
+	// true: 만료 아님 | false: 만료
 	@Override
 	public boolean isEnabled() {
 		return true;
 	}
-	
-	
-	
+
+	@Builder
+	public User(String email, String password) {
+		this.email = email;
+		this.password = password;
+	}
 }

@@ -8,14 +8,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kosta.entity.User;
 import com.kosta.service.MemberService;
 
+import lombok.RequiredArgsConstructor;
+
 
 @Controller
+@RequestMapping("/blog/*")
+@RequiredArgsConstructor
 public class MemberController {
 
 	@Autowired
@@ -47,7 +52,7 @@ public class MemberController {
 //			member.setName(null);
 //		}
 		ms.addMember(member);
-		return "redirect:/list";
+		return "redirect:/blog/list";
 	}
 	
 	
@@ -55,7 +60,7 @@ public class MemberController {
 	@GetMapping("/delete/{id}")
 	public String deleteMember(@PathVariable("id") Long id) throws Exception {
 		ms.deleteMemberById(id);
-		return "redirect:/list";
+		return "redirect:/blog/list";
 	}
 	
 	
@@ -72,7 +77,7 @@ public class MemberController {
 	@PostMapping("/edit")
 	public String editMember(User member) throws Exception {
 		ms.editMember(member);
-		return "redirect:/list";
+		return "redirect:/blog/list";
 	}
 	
 	

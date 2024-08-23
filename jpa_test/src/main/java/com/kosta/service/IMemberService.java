@@ -48,6 +48,7 @@ public class IMemberService implements MemberService {
 	public void editMember(User member) throws Exception {
 		User eMember = getMemberById(member.getId()); // 수정하려는 회원의 ID를 가져옴
 		eMember.setName(member.getName());
+		eMember.setInfo(member.getInfo());
 		mp.save(eMember);
 	}
 

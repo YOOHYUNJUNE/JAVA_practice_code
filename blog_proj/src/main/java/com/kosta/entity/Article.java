@@ -12,20 +12,22 @@ import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-@Entity // table 이름 안 적어주면 클래스명으로 자동
-@EntityListeners(AuditingEntityListener.class) // Entity의 생성 및 수정 시간을 자동으로 감시
+@Entity
+// 엔티티의 생성 및 수정 시간을 자동으로 감시
+@EntityListeners(AuditingEntityListener.class)
 @RequiredArgsConstructor
 @Data
 public class Article {
-
 	// 기본키 설정
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(updatable = false) // update시 이 컬럼은 변경하지 않음
+	@Column(updatable = false) // UPDATE 시에 ID 컬럼은 제외
 	private Long id;
 	
 	@Column(nullable = false)
@@ -33,6 +35,12 @@ public class Article {
 	
 	@Column(nullable = false)
 	private String content;
+	
+	// 작성자 정보(User의 ID 가져오기)
+	@ManyToOne
+	@JoinColumn(name = "creator_id", referencedColumnName = "id")
+	private User creator;
+		
 
 	@CreatedDate
 	@Column(name = "created_at")
@@ -43,15 +51,10 @@ public class Article {
 	private LocalDateTime updatedAt;
 	
 	
-	
-	// 빌더 패턴
 	@Builder
 	public Article(Long id, String title, String content) {
 		this.id = id;
 		this.title = title;
 		this.content = content;
 	}
-	
-	
-	
 }

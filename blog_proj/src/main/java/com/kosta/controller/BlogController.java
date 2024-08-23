@@ -2,6 +2,7 @@ package com.kosta.controller;
 
 import java.util.List;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,69 +14,59 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kosta.entity.Article;
+import com.kosta.entity.User;
 import com.kosta.service.BlogService;
 
 import lombok.RequiredArgsConstructor;
 
 @Controller
+@RequestMapping("/blog/*")
 @RequiredArgsConstructor
-@RequestMapping("/blog")
 public class BlogController {
-
 	private final BlogService blogService;
 	
-	
-	// 게시글 추가 페이지
-	@GetMapping("/add")	
+	@GetMapping("/add")
 	public String addPage() {
-		return "form";
+		return "/blog/form";
 	}
 	
-	
-	// 게시글 추가
 	@PostMapping("/add")
-	public String addArticle(Article article) {
-		blogService.save(article);
-		return "redirect:/blog/list"; // redirect: 리프레시할 때 중복된 요청 방지
+	public String addArticle(Article article, @AuthenticationPrincipal User user) {
+		blogService.save(article, user);
+		return "redirect:/blog/list";
 	}
 	
-	
-	// 게시글 전체 목록
-	@GetMapping("/list")
+	@RequestMapping("/list")
 	public String listPage(
-			@RequestParam(required = false, name = "keyword") String keyword, // 검색
-			@RequestParam(required = false, name = "order") String order, // 정렬
+			@RequestParam(required = false, name = "keyword") String keyword,
+			@RequestParam(required = false, name = "order") String order,
 			Model model) {
 		List<Article> articleList;
 		if (keyword != null || order != null) {
 			articleList = blogService.searchAndOrder(keyword, order);
 		} else {
 			articleList = blogService.findAll();
-		}	
+		}
 		model.addAttribute("list", articleList);
-		return "list";
+		return "/blog/list";
 	}
 	
-	
-	// 특정 게시물 찾기
 	@GetMapping("/detail/{id}")
 	public String detailPage(@PathVariable("id") Long id, Model model) {
 		try {
 			Article article = blogService.findById(id);
 			model.addAttribute("article", article);
-			return "detail";
-		} catch (Exception e) {			
+			return "/blog/detail";
+		} catch (Exception e) {
 			model.addAttribute("errMsg", e.getMessage());
 			return "error";
 		}
 	}
 	
-	
-	// 게시물 삭제
 	@DeleteMapping("/delete/{id}")
-	public String deleteArticle(@PathVariable("id") Long id, Model model) {
+	public String deleteArticle(@PathVariable("id") Long id, Model model, @AuthenticationPrincipal User user) {
 		try {
-			blogService.deleteById(id);
+			blogService.deleteById(id, user);
 			return "redirect:/blog/list";
 		} catch (Exception e) {
 			model.addAttribute("errMsg", e.getMessage());
@@ -83,37 +74,26 @@ public class BlogController {
 		}
 	}
 	
-	
-	// 게시물 수정 화면
 	@GetMapping("/modify/{id}")
 	public String modifyPage(@PathVariable("id") Long id, Model model) {
 		try {
 			Article article = blogService.findById(id);
 			model.addAttribute("article", article);
-			return "form";
+			return "/blog/form";
 		} catch (Exception e) {
 			model.addAttribute("errMsg", e.getMessage());
 			return "error";
 		}
 	}
 	
-	
-	// 게시물 수정
 	@PatchMapping("/modify")
-	public String modifyArticle(Article article, Model model) {
+	public String modifyArticle(Article article, Model model, @AuthenticationPrincipal User user) {
 		try {
-			blogService.update(article);
+			blogService.update(article, user);
 			return "redirect:/blog/detail/" + article.getId();
 		} catch (Exception e) {
 			model.addAttribute("errMsg", e.getMessage());
 			return "error";
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
 }

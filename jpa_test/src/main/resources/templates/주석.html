@@ -1,0 +1,31 @@
+
+<h2 class="m-3">🚧 로그인 유저 정보 출력 🚧</h2>
+<!-- user email -->
+<h3>🛩 user email</h3>
+<p sec:authentication="name"></p>
+<!-- 
+<p th:text="${#authentication.name}"></p>
+<p>[[${#authentication.name}]]</p>
+ -->
+
+<!-- 역할 -->
+<h3>🛩 역할</h3>
+<p th:text="${#authentication.authorities}"></p>
+
+<!-- 로그인 사용자 정보(User 객체) -->
+<h3>🛩 로그인 사용자 정보</h3>
+<p sec:authentication="principal"></p>
+<!-- 
+<p th:text="${#authentication.principal}"></p>
+-->
+
+<!-- 로그인 여부에 따른 분기 -->
+<h3>🛩 로그인 여부</h3>
+<p sec:authorize="isAuthenticated()">로그인 상태에요</p>
+<p sec:authorize="!isAuthenticated()">로그인 해주세요.</p>
+
+<!-- 권한에 따른 분기 -->
+<h3>🛩 권한</h3>
+<div sec:authorize="hasRole('ROLE_USER')">USER 권한만 보여요</div>
+<div sec:authorize="!hasRole('ROLE_USER')">anonymousUser에요</div>
+

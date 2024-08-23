@@ -6,5 +6,7 @@ public interface UserService {
 
 	Long save(User user);
 
+	boolean islogin();
+
 	
 }

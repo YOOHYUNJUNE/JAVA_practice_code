@@ -12,7 +12,7 @@
 <body>
     
     <div class="text-center m-4">
-	    <form th:action="${member == null ? '/add' : '/edit'}" method="POST">
+	    <form th:action="${member == null ? '/blog/add' : '/blog/edit'}" method="POST">
            <input type="hidden" name="id" th:if="${member != null}" th:value="${member.id}" />
 	       
            <input name="name" placeholder="이름을 입력하세요." th:value="${member == null ? '' : member.name}" required />
@@ -22,7 +22,7 @@
 	    </form>
 	    
 	    <div class="text-end m-3">
-    	    <a href="/list" class="btn btn-primary">돌아가기</a>
+    	    <a href="/blog/list" class="btn btn-primary">돌아가기</a>
 	    </div>
     </div>
     
