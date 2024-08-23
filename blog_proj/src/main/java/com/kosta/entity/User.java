@@ -11,9 +11,13 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.kosta.domain.Role;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -33,6 +37,8 @@ public class User implements UserDetails {
 	@Column(updatable = false)
 	private Long id;
 	
+	// 이름 추가
+	
 	@Column(nullable = false, unique = true)
 	private String email;
 	
@@ -50,13 +56,21 @@ public class User implements UserDetails {
 	@Column(name = "login_count")
 	private Long loginCount = 0L;
 	
+	// 권한 관련 컬럼
+	@Column
+	@Enumerated(EnumType.STRING)
+	private Role role = Role.ROLE_USER; // ROLE_USER
+	
+	
+	
+	
 	// getAuthorities() : 권한들을 가져오자!
 	// 사용자들이 가질 수 있는 권한 목록을 반환한다.
 	// 여기서는 "사용자"라는 권한만 부여할 것임.
 	// 항상 ROLE_~~~ 형태로 작성할 것!
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+		return List.of(new SimpleGrantedAuthority(this.getRole().toString()));
 	}
 
 	// getUsername() : 사용자 식별값 가져오자!

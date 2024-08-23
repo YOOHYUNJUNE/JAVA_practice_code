@@ -35,12 +35,16 @@ public class WebSecurityConfig {
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests(auth -> 
-			auth.requestMatchers(
+			auth
+			.requestMatchers(
 				// 인증, 인가 설정 (특정한 URL 액세스를 설정)
 				new AntPathRequestMatcher("/login"),
 				new AntPathRequestMatcher("/join"),
 				new AntPathRequestMatcher("/blog/list")
 			).permitAll()
+			.requestMatchers(
+					new AntPathRequestMatcher("/admin/**")
+			).hasRole("ADMIN")
 			// 나머지 URL은 인증이 필요
 			.anyRequest().authenticated()		
 		);

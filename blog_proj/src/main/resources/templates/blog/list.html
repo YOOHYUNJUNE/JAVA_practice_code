@@ -22,8 +22,15 @@
 
 		<a sec:authorize="isAuthenticated()" href="/blog/add"
 			class='btn btn-success btn align-self-center'>글쓰기</a>
+			
 	</div>
 
+
+			<!-- 임시 admin버튼 -->
+	<div class="text-center">
+		<a class="btn bg-danger-subtle" href="/admin">임시 ADMIN 가기 버튼</a>
+	</div>
+	
 
 	<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 		<div class="col" th:each="article : ${list}">

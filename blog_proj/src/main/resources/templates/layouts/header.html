@@ -4,7 +4,9 @@
 
 <header th:fragment="h" class="p-5 mb-5 text-center bg-dark-subtle">
 	<h1 class="mb-3">My Blog</h1>
-	<h4 class="mb-3">환영합니다.</h4>
+	
+    <div sec:authorize="isAuthenticated()">반갑습니다. [[${#authentication.principal.email}]]님</div>
+
 
 	<button sec:authorize="isAuthenticated()"
 		class="btn btn-secondary btn-lg mt-3"
