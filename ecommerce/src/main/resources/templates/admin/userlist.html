@@ -1,10 +1,65 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>유저 전체 목록</title>
-</head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layouts/template}"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    >
 
-</body>
+
+<main layout:fragment="main" class="container my-5">
+    <div class="d-flex justify-content-between">
+    
+    <!-- 
+        <form action="/list" class="d-flex">
+            <div class="d-flex flex-column">
+                <input class="form-control form-control-sm mb-1" name="keyword"
+                    placeholder="검색어를 입력하세요" /> <select name="order"
+                    class="form-control form-control-sm d-inline-block">
+                    <option value="asc" selected>오름차순</option>
+                    <option value="desc">내림차순</option>
+                </select>
+            </div>
+            <button class="btn btn-outline-dark btn-sm mx-2 align-self-center">검색</button>
+        </form>
+     -->
+    </div>
+
+    <h2 class="mb-4">회원 리스트</h2>
+       <table class="table table-striped">
+           <thead>
+               <tr>
+                   <th>아이디</th>
+                   <th>이름</th>
+                   <th>닉네임</th>
+                   <th>이메일</th>
+                   <th>권한</th>
+                   <th>가입일</th>
+                   <th>삭제</th>
+               </tr>
+           </thead>
+           <tbody>
+               <tr th:each="user : ${user}">
+                   <td th:text="${user.id}"></td>
+                   <td th:text="${user.name}"></td>
+                   <td th:text="${user.nickname}"></td>
+                   <td th:text="${user.email}"></td>
+                   <td th:text="${user.role}"></td>
+                   <td th:text="${#temporals.format(user.createdAt, 'yyyy년 MM월 dd일')}"></td>
+                   <td>
+                       <form th:action="@{/admin/userlist/delete(id=${user.id})}" th:method="DELETE">
+                           <button class='btn btn-danger'>삭제</button>
+                       </form>
+                   </td>
+               </tr>
+           </tbody>
+       </table>
+       
+    
+       <div class="text-center mt-5">
+           <a class="btn btn-lg btn-primary" href="/index">메인메뉴</a>
+       </div>
+    
+    
+</main>
+
 </html>

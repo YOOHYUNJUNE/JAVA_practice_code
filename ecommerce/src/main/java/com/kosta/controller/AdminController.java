@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/admin/**")
+//@RequestMapping("/admin")
 public class AdminController {
 	
 	// admin(관리자 고유 역할)
@@ -36,19 +36,18 @@ public class AdminController {
 	@GetMapping("/userlist")
 	public String userList(Model model) {
 		List<User> userList = us.findAllUser();
-		model.addAttribute("userlist", userList);
-		return "userlist";
+		model.addAttribute("user", userList);
+		return "admin/userlist";
 	}
 	
 		
 	// 상품 추가 페이지
 	@GetMapping("/add")
 	public String addPage() {
-		return "/form";
+		return "product/form";
 	}
 	
 	// 상품 추가
-	
 	@PostMapping("/add")
 	public String addProduct(Product product, @AuthenticationPrincipal User user) {
 		ps.save(product, user);
@@ -58,23 +57,23 @@ public class AdminController {
 	
 	// 상품 수정 페이지
 	@GetMapping("/modify/{id}")
-	public String ModifyPage(@PathVariable("id") Long id, Model model) {
+	public String ModifyPage(@PathVariable("id") Long id, Model model) throws Exception {
 		Product product = ps.findById(id);
 		model.addAttribute("product", product);
-		return "/from";
+		return "product/form";
 	}
 	
 	
 	// 상품 수정
 	@PatchMapping("/modify")
-	public String modifyProduct(Product product, Model model, @AuthenticationPrincipal User user) {
+	public String modifyProduct(Product product, Model model, @AuthenticationPrincipal User user) throws Exception {
 		ps.update(product, user);
-		return "redirect:/detail" + product.getId();
+		return "redirect:/detail/" + product.getId();
 	}
 	
 	// 상품 삭제
 	@DeleteMapping("/delete/{id}")
-	public String deleteProduct(@PathVariable("id") Long id, Model model, @AuthenticationPrincipal User user) {
+	public String deleteProduct(@PathVariable("id") Long id, Model model, @AuthenticationPrincipal User user) throws Exception {
 		ps.deleteById(id, user);
 		return "redirect:/list";
 	}

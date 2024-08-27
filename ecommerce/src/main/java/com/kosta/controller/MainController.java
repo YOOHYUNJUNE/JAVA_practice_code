@@ -1,16 +1,18 @@
 package com.kosta.controller;
 
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.kosta.domain.UserDTO;
+import com.kosta.entity.Product;
+import com.kosta.service.ProductService;
 import com.kosta.service.UserService;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -18,8 +20,8 @@ import lombok.RequiredArgsConstructor;
 public class MainController {
 
 	// 비 로그인 유저(로그아웃 포함)
-	
 	private final UserService us;
+	private final ProductService ps;
 	
 	
 	// 메인화면
@@ -27,6 +29,26 @@ public class MainController {
 	public String mainPage() {
 		return "index";
 	}
+	
+	
+	// 상품 전체 화면
+	@GetMapping("/list")
+	public String productList(Model model) {
+		List<Product> prodList = ps.findAllProduct();
+		model.addAttribute("list", prodList);
+		return "product/list";
+	}
+	
+	
+	// 상품 상세
+	@GetMapping("/detail/{id}")
+	public String detailPage(@PathVariable("id") Long id, Model model) throws Exception {
+		Product product = ps.findById(id);
+		model.addAttribute("product", product);
+		return "product/detail";
+	}
+	
+	
 	
 	// /login 화면
 	@GetMapping("/login")

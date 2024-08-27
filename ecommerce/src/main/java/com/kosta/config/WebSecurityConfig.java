@@ -41,12 +41,14 @@ public class WebSecurityConfig {
 				new AntPathRequestMatcher("/logout"),
 				
 				new AntPathRequestMatcher("/err"),
-				new AntPathRequestMatcher("/list/**")
+				new AntPathRequestMatcher("/list/**"),
+				new AntPathRequestMatcher("/detail/**"),
+				new AntPathRequestMatcher("/admin/**")
 				).permitAll()
-				.requestMatchers(
-						new AntPathRequestMatcher("/admin/**")
-						).hasRole("ADMIN")
-						// 나머지 URL은 인증 필요
+//				.requestMatchers(
+//						new AntPathRequestMatcher("/admin/**")
+//						).hasRole("ADMIN")
+//						// 나머지 URL은 인증 필요
 						.anyRequest().authenticated()				
 				);
 		

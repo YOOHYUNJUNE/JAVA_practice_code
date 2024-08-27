@@ -1,10 +1,58 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>제품 전체 목록</title>
-</head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layouts/template}"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    >
 
-</body>
+
+<main layout:fragment="main" class="container my-5">
+    <div class="d-flex justify-content-between">
+    
+    <!-- 
+        <form action="/list" class="d-flex">
+            <div class="d-flex flex-column">
+                <input class="form-control form-control-sm mb-1" name="keyword"
+                    placeholder="검색어를 입력하세요" /> <select name="order"
+                    class="form-control form-control-sm d-inline-block">
+                    <option value="asc" selected>오름차순</option>
+                    <option value="desc">내림차순</option>
+                </select>
+            </div>
+            <button class="btn btn-outline-dark btn-sm mx-2 align-self-center">검색</button>
+        </form>
+     -->
+
+        <a sec:authorize="isAuthenticated()" href="/add"
+            class='btn btn-success btn align-self-center'>제품등록</a>
+            
+    </div>
+
+
+
+    <div class="row row-cols-1 row-cols-sm-4 row-cols-md-12 g-3">
+        <div class="col" th:each="product : ${list}">
+            <div class="card mt-4 border border-2 border-success" style="height: 400px"
+                th:onclick="|location.href='/detail/'+${product.id}|" role='button'>
+                <div class="card-header bg-primary-subtle">[[${product.name}]]</div>
+                <div class="card-header bg-primary-subtle">[[${product.ename}]]</div>
+                <div class="card-body" >
+                    
+                    <p>[[${product.detail}]]</p>
+                    <p>[[${product.price}]]원</p>
+                    <p>#[[${product.tag}]]</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="text-center mt-5">
+        <a class="btn btn-lg btn-primary" href="/index">메인메뉴</a>
+    </div>    
+    
+    
+</main>
+
+
+
 </html>

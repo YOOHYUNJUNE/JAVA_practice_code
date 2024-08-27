@@ -1,5 +1,6 @@
 package com.kosta.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -32,6 +33,12 @@ public class UserServiceImpl implements UserService {
 		String encodedPassword = bc.encode(password);
 		userDTO.setPassword(encodedPassword);;
 		ur.save(userDTO.setUser());
+	}
+
+
+	@Override
+	public List<User> findAllUser() {
+		return ur.findAll();
 	}
 
 
