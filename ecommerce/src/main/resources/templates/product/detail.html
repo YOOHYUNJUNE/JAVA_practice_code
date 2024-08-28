@@ -6,6 +6,10 @@
     >
 
     <main layout:fragment="main" class="container my-5">
+    
+        <p>제품ID : [[${product.id}]]</p>
+        
+        
         <div class="row border border-3 rounded p-5">
             <!-- 왼쪽: 이미지 -->
             <div class="col-md-6 d-flex justify-content-center align-items-center">
@@ -25,15 +29,17 @@
                 </section>
                 
                 <hr/>
+                
 
 
                 <div class="d-flex">
 	                <a href="/list" class='btn btn-primary btn-sm m-1'>목록으로 이동</a>
 	                <a th:if="${#authentication.principal.id eq product.admin.id}"
-	                   th:href="@{'/modify/' + ${product.id}}" class='btn btn-success btn-sm m-1'>
+	                   th:href="@{'/admin/modify/' + ${product.id}}" class='btn btn-success btn-sm m-1'>
 	                    수정</a>
+	                    
 	                <form th:if="${#authentication.principal.id eq product.admin.id}"
-	                      class='d-inline' th:action="@{'/delete/' + ${product.id}}" th:method="DELETE">
+	                      class='d-inline' th:action="@{'/admin/delete/' + ${product.id}}" th:method="DELETE">
 	                    <button class='btn btn-danger btn-sm m-1'>삭제</button>
 	                </form>	                
                 </div>
@@ -52,7 +58,85 @@
                     수정일 : [[ ${#temporals.format(product.updatedAt, 'yyyy-MM-dd HH:mm')} ]]
                 </div>
             </div>
-        </div>
-    </main>
-    
+       
+        
+        
+        
+            <div class="row">
+                <div>
+                
+                
+	            <button class="col-12 d-flex justify-content-center row border border-3 rounded p-3 mt-5"
+	            type="button" data-bs-toggle="collapse" data-bs-target="#inputForm"
+	                    aria-expanded="false" aria-controls="inputForm">구매하기</button>
+	                    
+	            <!-- 구매 상세 내용 -->
+	            
+		            <div class="collapse mt-3" id="inputForm">
+		                <div>
+		                    <div class="text-center d-flex">
+			                    <form action="/order/add" method="POST">
+			                        <input type="hidden" name="product.id" th:value="${product.id}" />
+			                        <input type="hidden" id="price" th:value="${product.price}" />
+			                        
+			                        <label for="quantity">수량 선택</label>
+			                        <select id="quantity" name="quantity" class="form-select" required>
+			                            <option th:each="i : ${#numbers.sequence(0, 10)}" 
+			                                    th:value="${i}" th:text="${i}"></option>
+			                        </select>
+			                        
+			                        <button id="order-button" class="row border border-3 rounded p-3 mt-2">결정</button>
+					            </form>
+		                    
+		                    </div>
+		                    
+		                         <div>
+	                                <span>총 가격 : </span>
+	                                <span id="total"></span>
+	                                <span>원</span>
+		                         </div>
+		                
+		                </div>
+		            </div>
+	            
+	            
+                </div>
+            </div>
+        
+                     
+      
+      
+      
+      
+        
+         </div>
+</main>
+    <script layout:fragment="js">
+	    document.addEventListener('DOMContentLoaded', function () {
+	    	// 총 가격 실시간 반영
+	        const quantitySelect = document.getElementById('quantity');
+	        const totalSpan = document.getElementById('total');
+	        const price = document.getElementById('price').value
+	        console.log(price)
+	        quantitySelect.addEventListener('change', function () {
+	            const quantity = parseInt(quantitySelect.value, 10);
+	            const totalPrice = price * quantity;
+	            totalSpan.textContent = totalPrice.toFixed(0);
+	        });
+	        
+	        // 0개 수량 선택 시 오류
+	        const orderButton = document.getElementById('order-button');
+	        const quantitySelect2 = document.getElementById('quantity');
+	        orderButton.addEventListener('click', function (event) {
+	        	const quantity = parseInt(quantitySelect2.value, 10);
+	        	
+	        	if (quantity === 0) {
+	        		event.preventDefault(); // 폼 제출 방지
+	        		alert("1개 이상 선택해주세요!");
+	        	}
+	        });
+	        
+	        
+	    });
+	</script>
 </html>

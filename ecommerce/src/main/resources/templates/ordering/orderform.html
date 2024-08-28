@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html 
+    xmlns:th="http://www.thymeleaf.org" 
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layouts/template}"
+    >
+
+
+    <main layout:fragment="main" class="container my-5">
+        <div class="row">
+            <div>
+                <form 
+                    th:action="${product ne null ? '/admin/modify' : '/admin/add'}"
+                    th:method="${product ne null ? 'PATCH' : 'POST'}"
+                >
+                    <input type="hidden" name="id" th:if="${product ne null}" th:value="${product.id}"/>
+                    <header class="mb-4">
+                    
+                        <div class='input-group'>
+                            <span class="input-group-text">이름</span>
+                            <input class="form-control" name="name" required
+                                th:value="${product ne null ? product.name : ''}" />
+                        </div>
+                        <div class='input-group'>
+                            <span class="input-group-text">영문 이름</span>
+                            <input class="form-control" name="ename" required
+                                th:value="${product ne null ? product.ename : ''}" />
+                        </div>
+                        
+                    </header>
+                    
+                    <section class="mb-4">
+                    
+                        <div class='input-group'>
+                            <input type="file" class="form-control" name="img"/>                           
+                        </div>
+                    
+                        <div class='input-group'>
+                            <span class="input-group-text">소개</span>
+                            <textarea class="form-control" name="detail" rows='5'
+                                th:text="${product ne null ? product.detail : ''}">
+                            </textarea>
+                        </div>
+                        <div class='input-group'>
+                            <span class="input-group-text">가격</span>
+                            <input class="form-control" name="price"
+                                th:value="${product ne null ? product.price : ''}" />
+                        </div>
+                        
+                        <div class='input-group'>
+                            <span class="input-group-text">태그</span>
+                            <input class="form-control" name="tag"
+                                th:value="${product ne null ? product.tag : ''}" />
+                        </div>
+
+                    </section>
+                    <a
+                        href="/list"
+                        class='btn btn-primary btn-sm'>
+                        목록으로 이동
+                    </a>
+                    <button class="btn btn-success btn-sm">
+                        [[ ${product ne null ? '수정하기' : '저장하기'} ]]
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+
+
+</html>

@@ -36,9 +36,39 @@ public class UserServiceImpl implements UserService {
 	}
 
 
+	// 모든 유저 리스트(ADMIN)
 	@Override
 	public List<User> findAllUser() {
 		return ur.findAll();
+	}
+
+	// 유저 상세 보기(로그인한 유저만)
+	@Override
+	public User findById(Long id) throws Exception {
+		Optional<User> optUser = ur.findById(id);
+		User user = optUser.orElseThrow(() -> new Exception("유저 정보가 없습니다"));
+		return user;
+	}
+
+	// 유저 수정(ADMIN)
+	@Override
+	public User update(User user) throws Exception {
+		User originUser = findById(user.getId());
+		
+		originUser.setName(user.getName());
+		originUser.setNickname(user.getNickname());
+		originUser.setRole(user.getRole());
+		
+		User updatedUser = ur.save(originUser);
+		return updatedUser;
+	}
+
+
+	// 유저 탈퇴
+	@Override
+	public void deleteById(Long id, User user) throws Exception {
+		User deleteUser = findById(id);
+		ur.deleteById(deleteUser.getId());
 	}
 
 

@@ -10,7 +10,7 @@
         <div class="row">
             <div>
                 <form 
-                    th:action="${product ne null ? '/modify' : '/add'}"
+                    th:action="${product ne null ? '/admin/modify' : '/admin/add'}"
                     th:method="${product ne null ? 'PATCH' : 'POST'}"
                 >
                     <input type="hidden" name="id" th:if="${product ne null}" th:value="${product.id}"/>
@@ -54,11 +54,7 @@
                         </div>
 
                     </section>
-                    <a
-                        href="/list"
-                        class='btn btn-primary btn-sm'>
-                        목록으로 이동
-                    </a>
+                    <a href="/list" class='btn btn-primary btn-sm'>목록으로 이동</a>
                     <button class="btn btn-success btn-sm">
                         [[ ${product ne null ? '수정하기' : '저장하기'} ]]
                     </button>

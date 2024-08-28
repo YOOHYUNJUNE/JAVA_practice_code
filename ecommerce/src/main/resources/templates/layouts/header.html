@@ -2,10 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<header th:fragment="h" class="p-5 mb-5 text-center bg-dark-subtle">
+<header th:fragment="h" class="p-3 mb-3 text-center bg-dark-subtle">
 	<h1 class="mb-3">친 구하자</h1>
 	
-    <div sec:authorize="isAuthenticated()">반갑습니다. [[${#authentication.principal.nickname}]]님</div>
+    <div sec:authorize="isAuthenticated()">반가워요 [[${#authentication.principal.nickname}]]님, 새 친구를 찾아볼까요?</div>
 
 	<h5 th:text="'권한: ' + ${#authentication.authorities}"></h5>
 

@@ -45,7 +45,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public Product update(Product product, User user) throws Exception {
 		Product originProduct = findById(product.getId());
-		User admin = originProduct.getAdmin();
+//		User admin = originProduct.getAdmin();
 		
 		originProduct.setName(product.getName());
 		originProduct.setEname(product.getEname());
@@ -65,9 +65,21 @@ public class ProductServiceImpl implements ProductService {
 	// 상품 삭제(admin)
 	@Override
 	public void deleteById(Long id, User user) throws Exception {
-		Product product = findById(id);
-		User admin = product.getAdmin();
-		pr.deleteById(product.getId());
+		Product deleteProduct = findById(id);
+//		User admin = product.getAdmin();
+		pr.deleteById(deleteProduct.getId());
+	}
+
+
+	// 제품 검색, 정렬 기능
+	@Override
+	public List<Product> searchAndOrder(String keyword, String order) {
+		if (order.equals("desc")) {
+			return pr.findByNameContainsOrderByNameDesc(keyword);
+		}
+		return pr.findByNameContainsOrderByNameAsc(keyword);			
+
+		
 	}
 
 

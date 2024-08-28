@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html 
+    xmlns:th="http://www.thymeleaf.org" 
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layouts/template}"
+    >
+
+
+    <main layout:fragment="main" class="container my-5" style="width:30%;">
+        <div class="row">
+            <div>
+                <form th:action="@{/user/modify}" th:method="PATCH">
+                
+                    <input type="hidden" name="id" th:if="${user ne null}" th:value="${user.id}"/>
+
+                    <section class="mb-4">
+                   
+	                    <div class='input-group'>
+	                        <span class="input-group-text">이름</span>
+	                        <input class="form-control" name="name" th:value="${user.name}" readonly />
+	                    </div>
+                        <div class='input-group'>
+                            <span class="input-group-text">닉네임</span>
+                            <input class="form-control" name="nickname" th:value="${user.nickname}" />
+                        </div>
+                        <div sec:authorize="hasRole('ROLE_ADMIN')" class='input-group'>
+                            <span class="input-group-text">권한</span>
+                            <input class="form-control" name="role" th:value="${user.role}" />
+                        </div>
+                        
+                    </section>
+                    <a href="/index" class='btn btn-primary btn-sm'>홈으로</a>
+                    <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{'/user/detail/' + ${user.id}}" 
+                       class='btn bg-dark-subtle btn-sm'>돌아가기</a>
+                    <button class="btn btn-success btn-sm">수정하기</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+
+
+</html>

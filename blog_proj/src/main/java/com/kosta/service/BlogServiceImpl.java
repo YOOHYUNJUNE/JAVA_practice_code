@@ -68,7 +68,7 @@ public class BlogServiceImpl implements BlogService {
 			// 내림차순 결과 반환
 			return blogRepository.findByTitleContainsOrContentContainsOrderByTitleDesc(keyword, keyword);
 		} 
-		// 오른차순 결과 반환
+		// 오름차순 결과 반환
 		return blogRepository.findByTitleContainsOrContentContainsOrderByTitleAsc(keyword, keyword);
 	}
 }

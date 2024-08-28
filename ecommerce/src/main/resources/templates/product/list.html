@@ -9,41 +9,59 @@
 <main layout:fragment="main" class="container my-5">
     <div class="d-flex justify-content-between">
     
-    <!-- 
+     <!-- 정렬 기능 -->
         <form action="/list" class="d-flex">
             <div class="d-flex flex-column">
-                <input class="form-control form-control-sm mb-1" name="keyword"
-                    placeholder="검색어를 입력하세요" /> <select name="order"
-                    class="form-control form-control-sm d-inline-block">
+            
+                <input class="form-control form-control-sm mb-1" 
+                       name="keyword" placeholder="검색어를 입력하세요" /> 
+                       
+                <!-- 정렬 기준 선택 -->
+                <select name="order" class="form-control form-control-sm d-inline-block">
                     <option value="asc" selected>오름차순</option>
                     <option value="desc">내림차순</option>
                 </select>
+                
             </div>
-            <button class="btn btn-outline-dark btn-sm mx-2 align-self-center">검색</button>
+            <div class="d-flex flex-column">
+	            <button class="btn btn-outline-dark btn-sm mx-1">검색</button>
+	            <a class="btn btn-outline-dark btn-sm mx-1 mt-1 " onclick="location.href='/list'">초기화</a>
+            </div>
         </form>
-     -->
-
-        <a sec:authorize="isAuthenticated()" href="/add"
+     
+     
+        <a sec:authorize="hasRole('ROLE_USER')" class="btn btn-lg btn-primary" 
+        th:href="@{'/user/detail/' + ${#authentication.principal.id}}">내 주문</a>
+        
+        <a sec:authorize="hasRole('ROLE_ADMIN')" href="admin/add"
             class='btn btn-success btn align-self-center'>제품등록</a>
             
     </div>
 
 
 
-    <div class="row row-cols-1 row-cols-sm-4 row-cols-md-12 g-3">
+    <div class="row row-cols-1 row-cols-sm-3 row-cols-md-12 g-3">
+    
         <div class="col" th:each="product : ${list}">
-            <div class="card mt-4 border border-2 border-success" style="height: 400px"
+            <div class="card mt-4 border border-2 border-success" 
                 th:onclick="|location.href='/detail/'+${product.id}|" role='button'>
-                <div class="card-header bg-primary-subtle">[[${product.name}]]</div>
-                <div class="card-header bg-primary-subtle">[[${product.ename}]]</div>
+                <div style="height:50%;"><img src="#" alt="상품이미지" ></div>
+                <div class="text-center">
+	                <div class="card-header bg-primary-subtle">[[${product.name}]]</div>
+	                <div class="card-header bg-primary-subtle">[[${product.ename}]]</div>
+                </div>
                 <div class="card-body" >
                     
                     <p>[[${product.detail}]]</p>
-                    <p>[[${product.price}]]원</p>
-                    <p>#[[${product.tag}]]</p>
+                    <div class="text-end">
+                        <p>[[${product.price}]]원</p>
+                    </div>
+                    
                 </div>
             </div>
+            <p>상품 ID : [[${product.id}]]</p>
         </div>
+        
     </div>
     
     <div class="text-center mt-5">
@@ -52,7 +70,6 @@
     
     
 </main>
-
 
 
 </html>

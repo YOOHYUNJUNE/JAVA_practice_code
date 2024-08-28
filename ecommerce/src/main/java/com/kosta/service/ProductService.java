@@ -17,4 +17,6 @@ public interface ProductService {
 
 	List<Product> findAllProduct();
 
+	List<Product> searchAndOrder(String keyword, String order);
+
 }

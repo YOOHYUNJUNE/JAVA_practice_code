@@ -34,7 +34,7 @@
                    <th>이메일</th>
                    <th>권한</th>
                    <th>가입일</th>
-                   <th>삭제</th>
+                   <th></th>
                </tr>
            </thead>
            <tbody>
@@ -46,9 +46,7 @@
                    <td th:text="${user.role}"></td>
                    <td th:text="${#temporals.format(user.createdAt, 'yyyy년 MM월 dd일')}"></td>
                    <td>
-                       <form th:action="@{/admin/userlist/delete(id=${user.id})}" th:method="DELETE">
-                           <button class='btn btn-danger'>삭제</button>
-                       </form>
+                       <a class="btn btn-success btn-sm" th:href="@{'/user/detail/' + ${user.id}}">상세정보</a>
                    </td>
                </tr>
            </tbody>

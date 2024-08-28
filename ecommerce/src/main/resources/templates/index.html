@@ -8,7 +8,8 @@
 <main layout:fragment="main" class="container my-5">
 
     <a class="btn btn-lg btn-primary" href="/list">상품리스트</a>
-    <a class="btn btn-lg btn-success" href="/userlist">유저리스트</a>
+    <a sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-lg btn-success" href="/admin/userlist">유저리스트</a>
+    <a sec:authorize="hasRole('ROLE_USER')" class="btn btn-lg btn-success" th:href="@{'/user/detail/' + ${#authentication.principal.id}}">내 정보</a>
     
 
 

@@ -29,3 +29,4 @@
 <div sec:authorize="hasRole('ROLE_USER')">USER 권한만 보여요</div>
 <div sec:authorize="!hasRole('ROLE_USER')">anonymousUser에요</div>
 
+<p>제품ID 타입 : [[${product.id.getClass().getName()}]]</p>

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kosta.entity.Product;
 import com.kosta.entity.User;
+import com.kosta.repository.OrderRepository;
 import com.kosta.service.ProductService;
 import com.kosta.service.UserService;
 
@@ -21,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
-//@RequestMapping("/admin")
+@RequestMapping("/admin/*")
 public class AdminController {
 	
 	// admin(관리자 고유 역할)
@@ -74,6 +75,7 @@ public class AdminController {
 	// 상품 삭제
 	@DeleteMapping("/delete/{id}")
 	public String deleteProduct(@PathVariable("id") Long id, Model model, @AuthenticationPrincipal User user) throws Exception {
+
 		ps.deleteById(id, user);
 		return "redirect:/list";
 	}

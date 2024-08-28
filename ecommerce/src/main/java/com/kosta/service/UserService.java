@@ -16,5 +16,14 @@ public interface UserService {
 	// 유저 전체(admin 권한)
 	List<User> findAllUser();
 
+	// 유저 상세 정보를 ID로 가져오기
+	User findById(Long id) throws Exception;
+
+	// 유저 수정
+	User update(User user) throws Exception;
+
+	// 유저 탈퇴
+	void deleteById(Long id, User user) throws Exception;
+
 
 }
