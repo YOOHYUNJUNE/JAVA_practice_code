@@ -61,7 +61,7 @@
 	                   <!-- 5개까지만 출력, 5개 이하 리스트 전부출력 -->
 	                   <tbody th:each="orders : ${orders.size() > 5 ? orders.subList(0, 5) : orders}">
 	                       <tr>
-                               <td th:text="${orders.product.id}" 
+                               <td th:text="${orders.product.name}" 
                                    th:onclick="|location.href='/detail/' + ${orders.product.id} |" 
                                    role="button"></td>
                                <td th:text="${#temporals.format(orders.updatedAt, 'MM월dd일')}" 

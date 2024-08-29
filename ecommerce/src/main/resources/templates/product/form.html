@@ -9,11 +9,16 @@
     <main layout:fragment="main" class="container my-5">
         <div class="row">
             <div>
+            
+           
+            
+            
                 <form 
                     th:action="${product ne null ? '/admin/modify' : '/admin/add'}"
                     th:method="${product ne null ? 'PATCH' : 'POST'}"
-                >
+                    enctype="multipart/form-data" >
                     <input type="hidden" name="id" th:if="${product ne null}" th:value="${product.id}"/>
+                    
                     <header class="mb-4">
                     
                         <div class='input-group'>
@@ -31,10 +36,14 @@
                     
                     <section class="mb-4">
                     
+                   
                         <div class='input-group'>
-                            <input type="file" class="form-control" name="img"/>                           
+                            <input type="file" class="form-control" name="image"/> <!-- 파일 업로드 필드 -->
                         </div>
-                    
+                        
+                        
+                        
+                     
                         <div class='input-group'>
                             <span class="input-group-text">소개</span>
                             <textarea class="form-control" name="detail" rows='5'

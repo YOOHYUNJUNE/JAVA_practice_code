@@ -7,7 +7,9 @@
 	
     <div sec:authorize="isAuthenticated()">반가워요 [[${#authentication.principal.nickname}]]님, 새 친구를 찾아볼까요?</div>
 
+    <!--     
 	<h5 th:text="'권한: ' + ${#authentication.authorities}"></h5>
+     -->
 
 	<button sec:authorize="isAuthenticated()"
 		class="btn btn-secondary btn-lg mt-3"

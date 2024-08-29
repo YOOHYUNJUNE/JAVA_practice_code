@@ -5,32 +5,34 @@
     layout:decorate="~{layouts/template}"
     >
 
-    <main layout:fragment="main" class="container my-5">
+    <main layout:fragment="main" class="container my-5" style="width:70%;">
     
-        <p>제품ID : [[${product.id}]]</p>
         
         
         <div class="row border border-3 rounded p-5">
             <!-- 왼쪽: 이미지 -->
-            <div class="col-md-6 d-flex justify-content-center align-items-center">
-                <img src="#" alt="img" class="img-fluid">
-            </div>
+		    <!-- 이미지 파일이 있을 경우 표시 -->
 
+            <div class="col-md-6 d-flex justify-content-center align-items-center">
+                <img th:src="@{/display?filename={file}(file=${product.imageFileName})}" alt="${product.name}" class="img-fluid">
+            </div>
+            
             <!-- 오른쪽: 정보 -->
-            <div class="col-md-6 d-flex flex-column align-items-start">
+            <div class="col-md-6 d-flex flex-column">
                 <header class="mb-4">
                     <h3 class="fw-bolder mb-1 text-truncate">[[${product.name}]]</h3>
                 </header>
-                <section class="mb-0">
+                <div class="mb-0">
                     <p class="fs-5 mb-4">[[${product.detail}]]</p>
-                    <p>[[${product.price}]]원</p>
-                    <p>#[[${product.tag}]]</p>
+                </div>
+                <div class="text-end">
+                    <h6>[[${product.price}]]원</h6>
+                </div>
+                <div class="text-end mt-3">
+                    <p class="text-secondary">#[[${product.tag}]]</p>
+                </div>
                     
-                </section>
-                
-                <hr/>
-                
-
+               
 
                 <div class="d-flex">
 	                <a href="/list" class='btn btn-primary btn-sm m-1'>목록으로 이동</a>
@@ -63,44 +65,38 @@
         
         
             <div class="row">
-                <div>
-                
-                
 	            <button class="col-12 d-flex justify-content-center row border border-3 rounded p-3 mt-5"
 	            type="button" data-bs-toggle="collapse" data-bs-target="#inputForm"
 	                    aria-expanded="false" aria-controls="inputForm">구매하기</button>
 	                    
-	            <!-- 구매 상세 내용 -->
-	            
-		            <div class="collapse mt-3" id="inputForm">
-		                <div>
-		                    <div class="text-center d-flex">
-			                    <form action="/order/add" method="POST">
-			                        <input type="hidden" name="product.id" th:value="${product.id}" />
-			                        <input type="hidden" id="price" th:value="${product.price}" />
-			                        
-			                        <label for="quantity">수량 선택</label>
+	             <!-- 구매 상세 내용 -->
+			    <div class="collapse mt-3" id="inputForm">
+			        <div class="card border-success">
+			            <div class="card-body">
+			                <form action="/order/add" method="POST">
+			                    <input type="hidden" name="product.id" th:value="${product.id}" />
+			                    <input type="hidden" id="price" th:value="${product.price}" />
+			
+			                    <div class="mb-3">
+			                        <label for="quantity" class="form-label">만남 횟수</label>
 			                        <select id="quantity" name="quantity" class="form-select" required>
 			                            <option th:each="i : ${#numbers.sequence(0, 10)}" 
 			                                    th:value="${i}" th:text="${i}"></option>
 			                        </select>
-			                        
-			                        <button id="order-button" class="row border border-3 rounded p-3 mt-2">결정</button>
-					            </form>
-		                    
-		                    </div>
-		                    
-		                         <div>
-	                                <span>총 가격 : </span>
-	                                <span id="total"></span>
-	                                <span>원</span>
-		                         </div>
-		                
-		                </div>
-		            </div>
+			                    </div>
+			
+			                    <div class="mb-3">
+			                        <span class="fw-bold">가격: </span>
+			                        <span id="total">0</span> 원
+			                    </div>
+			
+			                    <button id="order-button" class="btn btn-success w-100 mt-3">결정</button>
+			                </form>
+			            </div>
+			        </div>
+			    </div>
 	            
 	            
-                </div>
             </div>
         
                      

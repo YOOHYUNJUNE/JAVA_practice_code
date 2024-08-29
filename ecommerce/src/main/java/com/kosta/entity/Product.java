@@ -37,8 +37,9 @@ public class Product {
 	@Column
 	private String detail = " "; // 상품정보
 	
+	// 이미지
 	@Column
-	private String img = "사진등록"; // 이미지
+	public String imageFileName;
 	
 	@Column
 	private String tag = " ";
@@ -70,18 +71,23 @@ public class Product {
 	
 	// 롬복 오류로 일단 전부 생성
 	@Builder
-	public Product(Long id, String name, String ename, String detail, String img, String tag, int price,
+	public Product(Long id, String name, String ename, String detail, String tag, int price,
 			LocalDateTime createdAt, LocalDateTime updatedAt) {
 		this.id = id;
 		this.name = name;
 		this.ename = ename;
 		this.detail = detail;
-		this.img = img;
 		this.tag = tag;
 		this.price = price;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
 	}
+
+
+
+
+
+
 
 	
 	

@@ -43,12 +43,22 @@
     <div class="row row-cols-1 row-cols-sm-3 row-cols-md-12 g-3">
     
         <div class="col" th:each="product : ${list}">
-            <div class="card mt-4 border border-2 border-success" 
-                th:onclick="|location.href='/detail/'+${product.id}|" role='button'>
-                <div style="height:50%;"><img src="#" alt="상품이미지" ></div>
+            <div class="card mt-4 border border-2 border-success"
+                th:onclick="|location.href='/detail/'+${product.id}|" role='button'
+                >
+                
+                <div class="text-center">
+	                <div>
+	                    <img th:src="@{/display?filename={file}(file=${product.imageFileName})}" 
+	                         class="img-fluid" alt="${product.name}" style="height:400px;">
+	                </div>
+                </div>
+                
                 <div class="text-center">
 	                <div class="card-header bg-primary-subtle">[[${product.name}]]</div>
-	                <div class="card-header bg-primary-subtle">[[${product.ename}]]</div>
+	                <div class="card-header bg-primary-subtle">
+	                   <p class="text-secondary">[[${product.ename}]]</p>
+	                </div>
                 </div>
                 <div class="card-body" >
                     
@@ -59,7 +69,6 @@
                     
                 </div>
             </div>
-            <p>상품 ID : [[${product.id}]]</p>
         </div>
         
     </div>

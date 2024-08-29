@@ -50,7 +50,6 @@ public class ProductServiceImpl implements ProductService {
 		originProduct.setName(product.getName());
 		originProduct.setEname(product.getEname());
 		originProduct.setDetail(product.getDetail());
-		originProduct.setImg(product.getImg());
 		originProduct.setTag(product.getTag());
 		originProduct.setPrice(product.getPrice());
 		
