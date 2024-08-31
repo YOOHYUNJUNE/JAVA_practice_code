@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/default}">
+<th:block layout:fragment="css">
+	<link href="/css/form.css" rel="stylesheet" />
+</th:block>
+
+<main layout:fragment="main">
+	<table class="table table-bordered table-hover">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>닉네임</th>
+				<th>이름</th>
+				<th>잠금여부</th>
+				<th>권한</th>
+				<th>저장</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="user : ${list}" th:unless="${#authentication.name eq user.username}">
+				<form action="/admin/save" th:method="PATCH">
+				<td th:text="${user.id}"></td>
+				<td th:text="${user.username}"></td>
+				<td th:text="${user.name}"></td>
+				<td>
+					<div class="form-check form-switch">
+						<input class="form-check-input" type="checkbox" th:checked="${user.locked}" name="locked">
+					</div>
+				</td>
+				<td>
+					<select class="form-select" name="role" th:value="${user.role}">
+						<option value="MEMBER" th:selected="${user.role == 'ROLE_MEMBER'}">Member</option>
+						<option value="LEADER" th:selected="${user.role == 'ROLE_LEADER'}">Leader</option>
+						<option value="ADMIN" th:selected="${user.role == 'ROLE_ADMIN'}">Admin</option>
+					</select>
+				</td>
+				<td>
+					<input type='hidden' name='id' th:value="${user.id}"/>
+					<button class="btn btn-primary">저장</button>
+				</td>
+				</form>
+			</tr>
+		</tbody>
+	</table>
+</main>

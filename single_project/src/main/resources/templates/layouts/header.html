@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+	<header th:fragment="h">
+		<!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light py-3">
+            <div class="container px-5">
+                <a class="navbar-brand" href="/">
+                	<span class="fw-bolder text-primary">STUDY GROUP</span>
+               	</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                	<span class="navbar-toggler-icon"></span>
+               	</button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0 small fw-bolder">
+                        <li class="nav-item"><a class="nav-link" href="/study">전체 스터디 그룹 보기</a></li>
+                        <li class="nav-item" sec:authorize="!isAuthenticated()"><a class="nav-link" href="/join">회원가입</a></li>
+                        <li class="nav-item" sec:authorize="isAuthenticated()"><a class="nav-link" href="/mystudy">참여 중인 스터디 그룹 보기</a></li>
+                        <li class="nav-item" sec:authorize="isAuthenticated()" th:if="${#authorization.expression('!hasAuthority(''ROLE_ADMIN'')')}"><a class="nav-link" href="/mystudy/create">스터디 그룹 만들기</a></li>
+                        <li class="nav-item" sec:authorize="hasAuthority('ROLE_LEADER')"><a class="nav-link" href="/leader">내가 만든 스터디 그룹 관리</a></li>
+                        <li class="nav-item" sec:authorize="hasAuthority('ROLE_ADMIN')"><a class="nav-link" href="/admin">회원 관리</a></li>
+                        <li class="nav-item" sec:authorize="isAuthenticated()">
+                        	<p>
+								<span sec:authentication="name"></span>님 안녕하세요
+							</p>
+							<form action="/logout" method="POST">
+								<button>로그아웃</button>
+							</form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+	</header>
+</html>

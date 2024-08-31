@@ -11,4 +11,8 @@ public interface ProductService {
 
 	ProductResponseDTO addProduct(ProductRequestDTO productRequestDTO);
 
+	boolean deleteProduct(Long id);
+
+	ProductResponseDTO patchProduct(ProductRequestDTO productRequestDTO);
+
 }

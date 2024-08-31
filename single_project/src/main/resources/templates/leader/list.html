@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/default}">
+
+<main layout:fragment="main">
+	<h1>리더로써 생성한 스터디 그룹 리스트</h1>
+	<table class="table table-dark table-hover">
+			<thead>
+			    <tr>
+			      <th scope="col">ID</th>
+			      <th scope="col">스터디 그룹명</th>
+			      <th scope="col">스터디 리더</th>
+			      <th scope="col">시작일</th>
+			      <th scope="col">종료일</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    <tr th:each="sg : ${list}" role="button" th:onclick="|location.href='/leader/' + ${sg.id}|">
+			      <th scope="row">[[${sg.id}]]</th>
+			      <td>[[${sg.name}]]</td>
+			      <td>[[${sg.leader.name}]]</td>
+			      <td>[[${sg.startedAt}]]</td>
+			      <td>[[${sg.finishedAt}]]</td>
+			    </tr>
+			  </tbody>
+		</table>
+</main>

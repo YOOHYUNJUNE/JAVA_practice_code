@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/default}">
+
+<main layout:fragment="main">
+	<div class="p-5 mb-4 bg-body-tertiary rounded-3">
+		<div class="container-fluid py-5">
+			<h1 class="display-5 fw-bold">[[${studyGroup.name}]]</h1>
+			<p class="col-md-8 fs-4">[[${studyGroup.description}]]</p>
+			<p class="col-md-8">스터디 기간 : [[${studyGroup.startedAt}]] ~ [[${studyGroup.finishedAt}]]</p>
+			<p class="col-md-8">스터디 리더 : [[${studyGroup.leader.name}]]</p>
+			<p class="col-md-8">
+				스터디 멤버 : <span th:each="m, s : ${studyGroup.memberList}">[[${s.last ? m.name : m.name + ', '}]]</span>
+			</p>
+			<p class="col-md-8">
+				<form th:action="@{/mystudy/quit(id=${studyGroup.id})}" th:method="DELETE">
+	      	  		<button class="btn btn-sm btn-dark">탈퇴</button>
+      	  		</form>
+			</p>
+		</div>
+	</div>
+</main>

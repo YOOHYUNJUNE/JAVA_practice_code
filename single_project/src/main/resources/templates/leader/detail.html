@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/default}">
+<th:block layout:fragment="css">
+	<link href="/css/form.css" rel="stylesheet" />
+</th:block>
+
+<main layout:fragment="main">
+	<form action="/leader/modify" th:method="PATCH">
+		<h4 class="mb-4">스터디 그룹 만들기</h4>
+		<input type='hidden' th:value="${studyGroup.id}" name="id">
+		<div class="form-floating mb-3">
+			<input class="form-control" id="name" name="name" th:value="${studyGroup.name}" type="text" placeholder="" required />
+			<label for="name">그룹명</label>
+		</div>
+		<div class="form-floating mb-3">
+			<input class="form-control" id="description" name="description" th:value="${studyGroup.description}" type="text" placeholder="" required />
+			<label for="description">설명</label>
+		</div>
+		<div class="form-floating mb-3">
+			<input class="form-control" type="date" name="startedAt" th:value="${studyGroup.startedAt}" id="startedAt" required />
+			<label for="startedAt">스터디 시작일</label>
+		</div>
+		<div class="form-floating mb-3">
+			<input class="form-control" type="date" name="finishedAt" th:value="${studyGroup.finishedAt}" id="finishedAt" required />
+			<label for="finishedAt">스터디 종료일</label>
+		</div>
+		<div class="d-grid">
+			<button class="btn btn-primary btn-sm">수정하기</button>
+		</div>
+	</form>
+    <form th:action="@{/leader/delete(id=${studyGroup.id})}" th:method="DELETE">
+    	<div class="d-grid mt-1">
+			<button class="btn btn-sm btn-danger">삭제하기</button>
+		</div>
+	</form>
+</main>

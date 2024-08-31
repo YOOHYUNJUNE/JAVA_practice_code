@@ -1,0 +1,10 @@
+@charset "UTF-8";
+
+form {
+	max-width: 330px;
+	margin: auto;
+}
+
+label {
+	color: gray;
+}

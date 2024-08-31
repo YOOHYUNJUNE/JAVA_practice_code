@@ -1,22 +1,5 @@
 INDEX VERSION 1.134+C:\Users\rnlay\Desktop\데이터 사이언스\JAVA\java_8\.metadata\.plugins\org.eclipse.jdt.core
 1865797976.index
-1121910722.index
-3459364619.index
-3327593237.index
-2042914847.index
-3120356535.index
-1953399393.index
-4232877828.index
-1167164790.index
-2283047198.index
-3795281981.index
-313172759.index
+1487796827.index
 2290215115.index
-3907856803.index
-3442986957.index
-2248618667.index
-2452900482.index
-868447213.index
-532964347.index
 502416711.index
-2674830056.index

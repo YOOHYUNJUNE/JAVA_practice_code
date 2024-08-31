@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: single_project
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/studygroup_db
+    # lms_db ecommerce_db studygroup_db secondhand_db
+    username: root
+    password: 1234
+  jpa:
+    generate-ddl: true
+    show-sql: true
+    open-in-view: false
+  sql:
+    init:
+      mode: never
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+server:
+  port: 9090

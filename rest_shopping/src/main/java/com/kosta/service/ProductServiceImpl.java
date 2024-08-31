@@ -1,6 +1,7 @@
 package com.kosta.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -29,5 +30,28 @@ public class ProductServiceImpl implements ProductService {
 		Product savedProduct = pr.save(product);
 		return ProductResponseDTO.setDTO(savedProduct);
 	}
-	
+
+	@Override
+	public boolean deleteProduct(Long id) {
+		Optional<Product> optProduct = pr.findById(id);
+		if (optProduct.isEmpty()) {
+			return false;
+		}
+		pr.deleteById(id);
+		return true;
+	}
+
+	@Override
+	public ProductResponseDTO patchProduct(ProductRequestDTO productRequestDTO) {
+		Optional<Product> optProduct = pr.findById(productRequestDTO.getId());
+		if (optProduct.isEmpty()) {
+			return null;
+		}
+		Product product = optProduct.get();
+		product.setName(productRequestDTO.getName());
+		product.setPrice(productRequestDTO.getPrice());
+		Product updatedProduct = pr.save(product);
+		
+		return ProductResponseDTO.setDTO(updatedProduct);
+	}
 }
