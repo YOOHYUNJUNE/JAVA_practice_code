@@ -2,7 +2,7 @@ import Navigation from "./Navigation";
 import "./Header.css";
 
 const Header = () => {
-    return ( 
+    return (
         <>
             <header>
                 <a href="/">메인 로고</a>
@@ -11,5 +11,5 @@ const Header = () => {
         </>
     );
 }
- 
+
 export default Header;

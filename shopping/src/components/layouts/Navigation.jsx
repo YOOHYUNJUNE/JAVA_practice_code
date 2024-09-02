@@ -1,11 +1,11 @@
 const Navigation = () => {
     const menuList = [
-        {link: "/about", name: "ABOUT"},
-        {link: "/service", name: "SERVICE"},
-        {link: "/product", name: "PRODUCT"}
+        { link: "/about", name: "ABOUT" },
+        { link: "/service", name: "SERVICE" },
+        { link: "/product", name: "PRODUCT" }
     ];
 
-    return ( 
+    return (
         <nav>
             <ul>
                 {
@@ -15,5 +15,5 @@ const Navigation = () => {
         </nav>
     );
 }
- 
+
 export default Navigation;
