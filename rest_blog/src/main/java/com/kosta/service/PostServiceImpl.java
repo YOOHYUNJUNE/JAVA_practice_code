@@ -84,6 +84,29 @@ public class PostServiceImpl implements PostService {
 		PostResponse result = PostResponse.toDTO(updatedPost);		
 		return result;
 	}
+
+
+	// 게시글 삭제
+	@Override
+	public PostResponse deletePost(Long id, PostRequest postDTO) {
+		// 삭제 유저 확인
+		User user = userRepository.findById(postDTO.getAuthorId())
+				.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 ID입니다."));
+		// 원본 글 가져오기
+		Post post = postRepository.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("해당 게시물을 찾을 수 없음"));
+		
+		if(!post.getAuthor().getId().equals(user.getId())) {
+			throw new IllegalArgumentException("본인의 글만 삭제할 수 있습니다.");
+		}
+		if(!post.getPassword().equals(postDTO.getPassword())) {
+			throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+		}
+		
+		postRepository.delete(post);
+		return PostResponse.toDTO(post);
+		
+	}
 	
 	
 	

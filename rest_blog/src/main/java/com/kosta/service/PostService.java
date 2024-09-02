@@ -15,4 +15,6 @@ public interface PostService {
 
 	PostResponse updatePost(PostRequest post);
 
+	PostResponse deletePost(Long id, PostRequest postRequest);
+
 }

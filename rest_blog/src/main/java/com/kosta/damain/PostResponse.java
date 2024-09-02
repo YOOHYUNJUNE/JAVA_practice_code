@@ -1,6 +1,7 @@
 package com.kosta.damain;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import com.kosta.entity.Post;
 
@@ -14,7 +15,7 @@ public class PostResponse {
 	private Long id;
 	private String title, content;
 	private UserResponse author;
-	private LocalDateTime createdAt, updatedAt;
+	private String createdAt, updatedAt;
 	
 	// Post -> PostResponse 변환
 	public static PostResponse toDTO(Post post) {
@@ -23,8 +24,8 @@ public class PostResponse {
 			.title(post.getTitle())
 			.content(post.getContent())
 			.author(UserResponse.toDTO(post.getAuthor())) // post.getAuthor() : User 타입 / author : UserResponse 타입
-			.createdAt(post.getCreatedAt())
-			.updatedAt(post.getUpdatedAt())
+			.createdAt(post.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+			.updatedAt(post.getUpdatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
 			.build();
 	}
 	
