@@ -12,9 +12,9 @@ let theme = createTheme({});
 theme = createTheme(theme, {
     palette: {
       main: theme.palette.augmentColor({color: {main: '#F17F42', contrastText: '#FFF'}}),
-      sub: theme.palette.augmentColor({color: {main: '#CE6D39'}}),
-      bg1: theme.palette.augmentColor({color: {main: '#FFEEE4'}}),
-      bg2: theme.palette.augmentColor({color: {main: '#FBFFB9'}}),
+      sub: theme.palette.augmentColor({color: {main: '#CE6D39', contrastText: '#FFF'}}),
+      bg1: theme.palette.augmentColor({color: {main: '#FFEEE4', contrastText: '#383A3F'}}),
+      bg2: theme.palette.augmentColor({color: {main: '#FBFFB9', contrastText: '#383A3F'}}),
       font: theme.palette.augmentColor({color: {main: '#383A3F'}})  
     },
 });

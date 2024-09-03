@@ -13,6 +13,7 @@ function App() {
         <Route path='/' element={<h1>홈</h1>} />
         <Route path='/post' element={<Post/>} />
         <Route path='/post/write' element={<PostForm />} />
+        <Route path='/post/modify/:postId' element={<PostForm/>} />
         <Route path='/post/:postId' element={<PostDetail />} />
         <Route path='/search' element={<h1>검색</h1>} />
         <Route path='/error' element={<h1>에러</h1>} />
