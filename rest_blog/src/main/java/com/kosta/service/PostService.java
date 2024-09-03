@@ -2,12 +2,15 @@ package com.kosta.service;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
+import com.kosta.damain.FileDTO;
 import com.kosta.damain.PostRequest;
 import com.kosta.damain.PostResponse;
 
 public interface PostService {
 
-	PostResponse insertPost(PostRequest post);
+	PostResponse insertPost(PostRequest post, MultipartFile file);
 
 	List<PostResponse> getAllPost();
 
@@ -16,5 +19,7 @@ public interface PostService {
 	PostResponse updatePost(PostRequest post);
 
 	PostResponse deletePost(Long id, PostRequest postRequest);
+
+	FileDTO getImageByImageId(Long id);
 
 }

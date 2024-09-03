@@ -20,7 +20,6 @@ const PostDetail = () => {
             setPost(data);
             // PostDetail은 setPost(state가 바뀔때)마다 실행되기때문에 무한 반복
             // -> useEffect() 사용
-            console.log(res); 
         } catch (error) {
             navigate("/error")
         }
@@ -75,7 +74,6 @@ const PostDetail = () => {
             }
         
         }
-
     }
 
     return (
@@ -92,17 +90,19 @@ const PostDetail = () => {
                 title={post.title}
                 subheader={post.createdAt}
             />
-            <CardMedia
-                component="img"
-                height="194"
-                image=""
-                alt="게시글 이미지"
-            />
+
+            {
+                post.image && <CardMedia
+                                component="img"
+                                image={`http://localhost:8080/img/${post.image.saved}`}
+                                alt="게시글 이미지"
+                                />
+            }
+            
             <CardContent>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                     {post.content}
                 </Typography>
-                <hr/>
                 <Typography gutterBottom sx={{ color: 'text.secondary', fontSize:12, textAlign: 'right'}} >
                     {post.author.name} {post.author.email}
                 </Typography>

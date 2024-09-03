@@ -2,15 +2,23 @@ package com.kosta.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
+import org.aspectj.util.FileUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.kosta.damain.FileDTO;
 import com.kosta.damain.PostRequest;
 import com.kosta.damain.PostResponse;
+import com.kosta.entity.ImageFile;
 import com.kosta.entity.Post;
 import com.kosta.entity.User;
+import com.kosta.repository.ImageFileRepository;
 import com.kosta.repository.PostRepository;
 import com.kosta.repository.UserRepository;
+import com.kosta.util.FileUtils;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,13 +26,28 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
 
-	public final PostRepository postRepository;
-	public final UserRepository userRepository;
+	private final PostRepository postRepository;
+	private final UserRepository userRepository;
+	private final ImageFileRepository imageFileRepository;
+	private final FileUtils fileUtils;
 
 	
-	// 게시글 추가
+	// 게시글(이미지 포함) 추가 -> FileUtils
 	@Override
-	public PostResponse insertPost(PostRequest postDTO) {
+	public PostResponse insertPost(PostRequest postDTO, MultipartFile file) {
+		
+		if (file != null) {
+			// 파일 저장후, 저장된 imageFile 객체 가져오기
+			ImageFile imageFile = fileUtils.fileUpload(file);
+			
+			if (imageFile != null) {			
+				ImageFile savedImageFile = imageFileRepository.save(imageFile);
+				postDTO.setImageFile(savedImageFile);
+			}
+			
+		}
+		
+		// 게시글 추가
 		User user = userRepository.findById(postDTO.getAuthorId())
 			.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 ID입니다."));
 		Post post = postDTO.toEntity(user);
@@ -106,6 +129,15 @@ public class PostServiceImpl implements PostService {
 		postRepository.delete(post);
 		return PostResponse.toDTO(post);
 		
+	}
+
+
+	// 이미지 다운로드
+	@Override
+	public FileDTO getImageByImageId(Long id) {
+		ImageFile image = imageFileRepository.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("파일을 찾을 수 없음"));
+		return FileDTO.toDTO(image);
 	}
 	
 	

@@ -1,10 +1,16 @@
 import { useTheme } from "@emotion/react";
-import { Avatar, Card, CardHeader, CardMedia, CardContent, Typography } from "@mui/material"; 
+import { Avatar, Card, CardHeader, CardMedia, CardContent, Typography, IconButton } from "@mui/material"; 
 import { useNavigate } from "react-router-dom";
+import SaveIcon from "@mui/icons-material/Save";
 
 const PostCard = ( {post }) => {
     const navigate = useNavigate();
     const theme = useTheme();
+
+    const handleDownload = (e) => {
+        e.stopPropagation();
+        window.location.href = `http://localhost:8080/api/post/download/${post.image.id}`
+    }
 
     return (
         <Card sx={{ maxWidth: 345, cursor: 'pointer' }} onClick={() => navigate(`/post/${post.id}`)}>
@@ -16,6 +22,13 @@ const PostCard = ( {post }) => {
                 }
                 title={post.title}
                 subheader={post.createdAt}
+                // 이미지 첨부 여부를 아이콘으로 보여줌
+                action={
+                    post.image && 
+                    <IconButton>
+                        <SaveIcon onClick={(e) => handleDownload(e)} />
+                    </IconButton>
+                }
             />
             {/* <CardMedia
                 component="img"

@@ -47,6 +47,12 @@ public class Post {
 	private User author;
 	
 	
+	// 이미지 (하나만 게시)
+	@JoinColumn(name = "image_id", nullable = true)
+	@ManyToOne // 정확히는 OneToOne
+	private ImageFile image;
+	
+	
 	@CreatedDate
 	@Column(name = "created_at")
 	private LocalDateTime createdAt;

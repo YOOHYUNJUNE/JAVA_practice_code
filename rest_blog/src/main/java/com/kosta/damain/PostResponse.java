@@ -16,6 +16,7 @@ public class PostResponse {
 	private String title, content;
 	private UserResponse author;
 	private String createdAt, updatedAt;
+	private FileDTO image;
 	
 	// Post -> PostResponse 변환
 	public static PostResponse toDTO(Post post) {
@@ -26,6 +27,7 @@ public class PostResponse {
 			.author(UserResponse.toDTO(post.getAuthor())) // post.getAuthor() : User 타입 / author : UserResponse 타입
 			.createdAt(post.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
 			.updatedAt(post.getUpdatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+			.image(FileDTO.toDTO(post.getImage()))
 			.build();
 	}
 	

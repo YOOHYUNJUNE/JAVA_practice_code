@@ -1,8 +1,14 @@
 package com.kosta.controller;
 
+import java.net.MalformedURLException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,8 +21,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.UriUtils;
 
 import com.kosta.damain.ErrorResponse;
+import com.kosta.damain.FileDTO;
 import com.kosta.damain.PostRequest;
 import com.kosta.damain.PostResponse;
 import com.kosta.service.PostService;
@@ -31,12 +40,17 @@ public class PostController {
 
 	private final PostService postService;
 	
+	// application.yml의 location 정보 가져오기(파일 다운로드)
+	@Value("${spring.upload.location}")
+	private String uploadPath;
 	
-	// 추가
+	
+	// 게시글 추가: 이미지도 추가하기
+	// postMan에서 raw가 아니라 formData (이미지도 추가하기 위해)
 	@PostMapping("")
-	public ResponseEntity<PostResponse> writePost(@RequestBody PostRequest post) {
-		PostResponse savedPost = postService.insertPost(post);
-		return ResponseEntity.status(HttpStatus.CREATED).body(savedPost);
+	public ResponseEntity<PostResponse> writePost(PostRequest post, @RequestParam(name = "image", required = false) MultipartFile file) {
+		PostResponse savedPost = postService.insertPost(post, file);
+		return ResponseEntity.status(HttpStatus.CREATED).body(savedPost);		
 	}
 	
 	
@@ -95,6 +109,24 @@ public class PostController {
 						.build()						
 				);
 	}
+	
+	
+	
+	// 파일 다운로드
+	@GetMapping("/download/{imageId}")
+	public ResponseEntity<Resource> downloadImage(@PathVariable("imageId") Long id) throws MalformedURLException {
+		FileDTO fileDTO = postService.getImageByImageId(id);
+		
+		UrlResource resource = new UrlResource("file:" + uploadPath + "\\" + fileDTO.getSaved());
+		String fileName = UriUtils.encode(fileDTO.getOrigin(), StandardCharsets.UTF_8);
+		String contentDisposition = "attachment; filename=\"" + fileName + "\"";
+		return ResponseEntity
+				.ok()
+				.header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition)
+				.body(resource);
+		
+	}
+	
 	
 	
 	

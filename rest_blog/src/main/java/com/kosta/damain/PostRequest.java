@@ -1,5 +1,6 @@
 package com.kosta.damain;
 
+import com.kosta.entity.ImageFile;
 import com.kosta.entity.Post;
 import com.kosta.entity.User;
 
@@ -11,6 +12,7 @@ public class PostRequest {
 	private Long id;
 	private String title, content, password;
 	private Long authorId;
+	private ImageFile imageFile;
 	
 	public Post toEntity(User author) {
 		return Post.builder()
@@ -18,6 +20,7 @@ public class PostRequest {
 				.content(content)
 				.password(password)
 				.author(author)
+				.image(imageFile)
 				.build();
 	}
 	

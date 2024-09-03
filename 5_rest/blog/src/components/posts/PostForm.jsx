@@ -30,33 +30,46 @@ const PostForm = () => {
         }
     }
     useEffect(() => {
-        // postId가 있으면 게시물 정보 가져오기
+        // postId가 있으면 게시물 정보 가져오기(수정)
         if (postId) {
             getPost();
         }
     }, []);
 
     const onSubmit = async (data) => {
+
+        // 이미지 등록시 필요한 데이터 가져오기
+        data.image = data.image[0];
+
         data.authorId = 1; // 로그인 기능 전까지 임의로 지정
-        console.log("서버에 게시글 요청을 보낼 데이터 : ", data);
+
+        // 첨부파일은 JSON이 안되므로 Form으로 변환
+        const formData = new FormData();
+        
+        Object.keys(data).forEach(key => {
+            formData.append(key, data[key]); // (title, data.title)
+        })
+
 
         try {
             if (postId) {
-                data.id = postId;
+                formData.append("id", postId);
                 // 서버에 요청
-                const res = await axios.patch("http://localhost:8080/api/post", data);
+                const res = await axios.patch("http://localhost:8080/api/post", data); // 수정
             } else {
-                const res = await axios.post("http://localhost:8080/api/post", data);
+                const res = await axios.post( // 글 새로 추가
+                    "http://localhost:8080/api/post",
+                    formData,
+                    {
+                        headers: {"Content-Type": "multipart/form-data"}
+                    });
             }
-            // 정상이면 게시글 목록으로 보냄
+            // 정상이면 게시글 목록으로 이동
             navigate("/post");
         } catch (error) {
             // 비정상이면 에러페이지로
             navigate("/error");
         }
-
-
-
 
     }
     // watch("name") : 입력된 "name"값을 가져옴
@@ -86,6 +99,14 @@ const PostForm = () => {
                         error={errors.content && true}
                         helperText={errors.content && "내용은 필수입력입니다."}
                         {...register("content", {required:true})}
+                    />
+
+                {/* 이미지 등록 (선택) */}
+                    <TextField 
+                        type="file"
+                        label="이미지 파일"
+                        {...register("image", {required:false})}
+                        slotProps={{ htmlInput: {"accept": "image/*"}}}
                     />
 
                 {/* 비밀번호(필수, 영어+숫자 8자리 이상) */}
