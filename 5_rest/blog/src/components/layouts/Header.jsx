@@ -15,6 +15,7 @@ const Header = () => {
 
     const [menuOpen, setMenuOpen] = useState(false);
 
+    // onClick 이동 경로 지정
     const navigate = useNavigate();
 
     const toggleDrawer = () => {

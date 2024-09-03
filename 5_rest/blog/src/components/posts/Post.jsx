@@ -1,9 +1,13 @@
-import { Divider, Grid2 } from '@mui/material';
+import { Button, Divider, Grid2 } from '@mui/material';
 import axios from "axios";
 import { useEffect, useState } from 'react';
 import PostCard from './PostCard';
+import { useNavigate } from 'react-router-dom';
 
 const Post = () => {
+
+    // onClick 이동 경로 지정
+    const navigate = useNavigate();
 
     // 백엔드로부터 가져오기
     // state만들기 -> axios사용해서 set -> useEffect 함수 적용 -> 화면
@@ -27,9 +31,10 @@ const Post = () => {
         <>
         <h1>포스트</h1>
         {/* 글쓰기 양식 */}
+        <Button variant="contained" color='main' onClick={() => navigate("/post/write")}>글쓰기</Button>
         <Divider />
         {/* 전체 리스트 */}
-        <Grid2 container spacing={5}>
+        <Grid2 container direction={"column"} spacing={2}>
         {
             postList.map(post => (
                 <PostCard key={post.key} post={post}></PostCard>

@@ -1,8 +1,13 @@
+import { useTheme } from "@emotion/react";
 import { Avatar, Card, CardHeader, CardMedia, CardContent, Typography } from "@mui/material"; 
+import { useNavigate } from "react-router-dom";
 
-const PostCard = ({post}) => {
+const PostCard = ( {post }) => {
+    const navigate = useNavigate();
+    const theme = useTheme();
+
     return (
-        <Card sx={{ maxWidth: 345 }}>
+        <Card sx={{ maxWidth: 345, cursor: 'pointer' }} onClick={() => navigate(`/post/${post.id}`)}>
             <CardHeader
                 avatar={
                     <Avatar>
@@ -12,7 +17,7 @@ const PostCard = ({post}) => {
                 title={post.title}
                 subheader={post.createdAt}
             />
-            <CardMedia
+            {/* <CardMedia
                 component="img"
                 height="194"
                 image=""
@@ -25,7 +30,7 @@ const PostCard = ({post}) => {
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                     {post.content}
                 </Typography>
-            </CardContent>
+            </CardContent> */}
         </Card>
     );
 }

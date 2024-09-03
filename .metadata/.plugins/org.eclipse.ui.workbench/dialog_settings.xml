@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="WorkbenchPreferenceDialog.dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="148"/>
-		<item key="DIALOG_Y_ORIGIN" value="28"/>
-		<item key="DIALOG_WIDTH" value="1268"/>
-		<item key="DIALOG_HEIGHT" value="1001"/>
-		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
+		<item key="DIALOG_X_ORIGIN" value="412"/>
+		<item key="DIALOG_Y_ORIGIN" value="110"/>
+		<item key="DIALOG_WIDTH" value="672"/>
+		<item key="DIALOG_HEIGHT" value="722"/>
+		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
 	</section>
 	<section name="NewWizardAction">
 		<item key="NewWizardSelectionPage.STORE_SELECTED_ID" value="org.eclipse.wst.html.ui.internal.wizard.NewHTMLWizard"/>
@@ -29,17 +29,17 @@
 		<section name="ImportExportWizard.dialogBounds">
 			<item key="DIALOG_X_ORIGIN" value="663"/>
 			<item key="DIALOG_Y_ORIGIN" value="142"/>
-			<item key="DIALOG_WIDTH" value="613"/>
+			<item key="DIALOG_WIDTH" value="617"/>
 			<item key="DIALOG_HEIGHT" value="550"/>
-			<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
+			<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
 		</section>
 	</section>
 	<section name="PropertyDialog.dialogBounds">
 		<item key="DIALOG_X_ORIGIN" value="502"/>
 		<item key="DIALOG_Y_ORIGIN" value="109"/>
-		<item key="DIALOG_WIDTH" value="1122"/>
-		<item key="DIALOG_HEIGHT" value="920"/>
-		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
+		<item key="DIALOG_WIDTH" value="801"/>
+		<item key="DIALOG_HEIGHT" value="724"/>
+		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
 	</section>
 	<section name="org.eclipse.ui.internal.QuickAccess">
 		<item key="org.eclipse.ui.internal.quickaccess.QuickAccessDialogDIALOG_WIDTH" value="525"/>
@@ -61,5 +61,12 @@
 		<item key="DIALOG_WIDTH" value="814"/>
 		<item key="DIALOG_HEIGHT" value="976"/>
 		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
+	</section>
+	<section name="FileExtensionDialogSettings">
+		<item key="DIALOG_X_ORIGIN" value="74"/>
+		<item key="DIALOG_Y_ORIGIN" value="174"/>
+		<item key="DIALOG_WIDTH" value="525"/>
+		<item key="DIALOG_HEIGHT" value="281"/>
+		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
 	</section>
 </section>

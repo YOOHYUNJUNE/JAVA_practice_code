@@ -8,6 +8,8 @@
 		<item key="SmartImportRootWizardPage.STORE_NESTED_PROJECTS" value="true"/>
 		<item key="SmartImportRootWizardPage.STORE_CONFIGURE_NATURES" value="true"/>
 		<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+			<item value="C:\Users\WD\Documents\유현준\spring_workspace\shopping"/>
+			<item value="C:\Users\WD\Documents\유현준\spring_workspace\rest_shopping"/>
 			<item value="C:\Users\rnlay\Desktop\데이터 사이언스\JAVA\java_8\shopping"/>
 			<item value="C:\Users\rnlay\Desktop\데이터 사이언스\JAVA\java_8\rest_shopping"/>
 			<item value="C:\Users\rnlay\Desktop\데이터 사이언스\JAVA\선생님 깃\4_spring\spring_workspace\cik_proj"/>
@@ -23,19 +25,19 @@
 		<section name="SmartImportWizard.dialogBounds">
 			<item key="DIALOG_X_ORIGIN" value="663"/>
 			<item key="DIALOG_Y_ORIGIN" value="142"/>
-			<item key="DIALOG_WIDTH" value="1086"/>
-			<item key="DIALOG_HEIGHT" value="726"/>
-			<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
+			<item key="DIALOG_WIDTH" value="895"/>
+			<item key="DIALOG_HEIGHT" value="629"/>
+			<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
 		</section>
 	</section>
 	<section name="CleanDialogSettings">
 		<item key="TOGGLE_SELECTED" value="false"/>
-		<item key="DIALOG_WIDTH" value="581"/>
-		<item key="DIALOG_HEIGHT" value="434"/>
-		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
+		<item key="DIALOG_WIDTH" value="500"/>
+		<item key="DIALOG_HEIGHT" value="389"/>
+		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
 	</section>
 	<section name="NewWizardAction">
-		<item key="NewWizardSelectionPage.STORE_SELECTED_ID" value="org.eclipse.ui.wizards.new.project"/>
+		<item key="NewWizardSelectionPage.STORE_SELECTED_ID" value="org.springsource.ide.eclipse.commons.gettingstarted.wizard.boot.NewSpringBootWizard"/>
 		<list key="NewWizardSelectionPage.STORE_EXPANDED_CATEGORIES_ID">
 			<item value="org.eclipse.ui.Basic"/>
 			<item value="org.springsource.ide.eclipse.boot.wizards.category"/>
