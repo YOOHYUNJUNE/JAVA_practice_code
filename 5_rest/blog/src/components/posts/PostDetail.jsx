@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import HouseSharpIcon from '@mui/icons-material/HouseSharp';
 import Swal from "sweetalert2";
 
 const PostDetail = () => {
@@ -15,7 +16,7 @@ const PostDetail = () => {
 
     const getPost = async () => {
         try {
-            const res = await axios.get(`http://localhost:8080/api/post/${postId}`)
+            const res = await axios.get(`${process.env.REACT_APP_REST_SERVER}/post/${postId}`)
             const data = res.data;
             setPost(data);
             // PostDetail은 setPost(state가 바뀔때)마다 실행되기때문에 무한 반복
@@ -58,9 +59,9 @@ const PostDetail = () => {
           if (password) {
             const authorId = 1; // 로그인 기능 전 작성자 임시 부여
             try {
-                // await axios.delete("http://localhost:8080/api/post/" + post.id)
+                // await axios.delete("${process.env.REACT_APP_REST_SERVER}/post/" + post.id)
                 const res = await axios.delete(
-                    `http://localhost:8080/api/post/${post.id}`,
+                    `${process.env.REACT_APP_REST_SERVER}/post/${post.id}`,
                     {data : { password, authorId }}
                 );
                 Swal.fire({
@@ -94,7 +95,7 @@ const PostDetail = () => {
             {
                 post.image && <CardMedia
                                 component="img"
-                                image={`http://localhost:8080/img/${post.image.saved}`}
+                                image={`${process.env.REACT_APP_SERVER}/img/${post.image.saved}`}
                                 alt="게시글 이미지"
                                 />
             }
@@ -123,6 +124,13 @@ const PostDetail = () => {
                 startIcon={<DeleteIcon/>}
                 onClick={handleDelete}
             >삭제</Button>
+            <Button 
+                variant="contained" 
+                color="bg1" 
+                size="small"
+                startIcon={<HouseSharpIcon/>}
+                onClick={() => navigate("/post")}
+            >메뉴</Button>
             </CardActions>
 
         </Card>

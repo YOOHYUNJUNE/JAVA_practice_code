@@ -17,7 +17,7 @@ const PostForm = () => {
     // 게시물 수정
     const getPost = async () => {
         try {
-            const res = await axios.get(`http://localhost:8080/api/post/${postId}`)
+            const res = await axios.get(`${process.env.REACT_APP_REST_SERVER}/post/${postId}`)
             const data = res.data;
             console.log(data);
             // PostDetail은 setPost(state가 바뀔때)마다 실행되기때문에 무한 반복
@@ -55,10 +55,15 @@ const PostForm = () => {
             if (postId) {
                 formData.append("id", postId);
                 // 서버에 요청
-                const res = await axios.patch("http://localhost:8080/api/post", data); // 수정
+                const res = await axios.patch( // 수정
+                    `${process.env.REACT_APP_REST_SERVER}/post`, 
+                    formData,
+                    {
+                        headers: {"Content-Type": "multipart/form-data"}
+                    });
             } else {
                 const res = await axios.post( // 글 새로 추가
-                    "http://localhost:8080/api/post",
+                    `${process.env.REACT_APP_REST_SERVER}/post`,
                     formData,
                     {
                         headers: {"Content-Type": "multipart/form-data"}

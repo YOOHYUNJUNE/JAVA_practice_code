@@ -15,7 +15,7 @@ const Post = () => {
 
     const getPostList = async() => {
         try {
-            const res = await axios.get("http://localhost:8080/api/post");
+            const res = await axios.get(`${process.env.REACT_APP_REST_SERVER}/post`);
             const data = res.data;            
             setPostList(data);
         } catch (error) {

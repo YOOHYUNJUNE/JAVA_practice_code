@@ -9,7 +9,7 @@ const PostCard = ( {post }) => {
 
     const handleDownload = (e) => {
         e.stopPropagation();
-        window.location.href = `http://localhost:8080/api/post/download/${post.image.id}`
+        window.location.href = `${process.env.REACT_APP_REST_SERVER}/post/download/${post.image.id}`
     }
 
     return (

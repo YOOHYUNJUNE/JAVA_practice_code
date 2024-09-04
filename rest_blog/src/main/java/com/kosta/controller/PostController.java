@@ -80,8 +80,8 @@ public class PostController {
 	
 	// 수정
 	@PatchMapping("")
-	public ResponseEntity<PostResponse> modifyPost(@RequestBody PostRequest post) {
-		PostResponse updatedPost = postService.updatePost(post);
+	public ResponseEntity<PostResponse> modifyPost(PostRequest post, @RequestParam(name = "image", required = false) MultipartFile file) {
+		PostResponse updatedPost = postService.updatePost(post, file);
 		return ResponseEntity.ok(updatedPost);
 	}
 	

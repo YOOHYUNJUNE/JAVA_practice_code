@@ -16,7 +16,7 @@ public interface PostService {
 
 	PostResponse getPostById(Long id);
 
-	PostResponse updatePost(PostRequest post);
+	PostResponse updatePost(PostRequest post, MultipartFile file);
 
 	PostResponse deletePost(Long id, PostRequest postRequest);
 
