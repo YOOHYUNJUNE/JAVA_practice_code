@@ -6,6 +6,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import HouseSharpIcon from '@mui/icons-material/HouseSharp';
 import Swal from "sweetalert2";
+import { postAPI } from "../../api/services/post";
 
 const PostDetail = () => {
     // 필요값 : id (주소창(/api/post/id)에 있음)
@@ -16,7 +17,7 @@ const PostDetail = () => {
 
     const getPost = async () => {
         try {
-            const res = await axios.get(`${process.env.REACT_APP_REST_SERVER}/post/${postId}`)
+            const res = await postAPI.getPost(postId);
             const data = res.data;
             setPost(data);
             // PostDetail은 setPost(state가 바뀔때)마다 실행되기때문에 무한 반복
@@ -59,11 +60,7 @@ const PostDetail = () => {
           if (password) {
             const authorId = 1; // 로그인 기능 전 작성자 임시 부여
             try {
-                // await axios.delete("${process.env.REACT_APP_REST_SERVER}/post/" + post.id)
-                const res = await axios.delete(
-                    `${process.env.REACT_APP_REST_SERVER}/post/${post.id}`,
-                    {data : { password, authorId }}
-                );
+                const res = await postAPI.deletePost(post.id, password, authorId);
                 Swal.fire({
                     title: "Good job!",
                     text: `${post.id}번 게시물이 삭제되었습니다.`,
@@ -71,7 +68,8 @@ const PostDetail = () => {
                 });
                 navigate('/post');
             } catch (error) {
-                navigate('/error');
+                console.error(error)
+                // navigate('/error');
             }
         
         }

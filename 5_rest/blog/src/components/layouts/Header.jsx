@@ -2,17 +2,22 @@ import { AppBar, Box, Button, IconButton, List, ListItem, ListItemButton, ListIt
 import MenuIcon from "@mui/icons-material/Menu";
 import AccessibilityIcon from '@mui/icons-material/Accessibility';
 import HouseSharpIcon from '@mui/icons-material/HouseSharp';
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Drawer from "./Drawer";
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+import Swal from "sweetalert2";
+import FavoriteButton from './FavoriteButton';
 
 
 const Header = () => {
+    
+    // 메뉴 아이콘
     const [menu, setMenu] = useState([
         {path:'/post', name:'게시물'},
         {path:'/search', name:'검색'},
     ]);
-
     const [menuOpen, setMenuOpen] = useState(false);
 
     // onClick 이동 경로 지정
@@ -21,7 +26,8 @@ const Header = () => {
     const toggleDrawer = () => {
         setMenuOpen(prev => !prev);
     }
-    
+
+
     return (
         <>
         <AppBar position="static" color="main">
@@ -37,6 +43,22 @@ const Header = () => {
                     <HouseSharpIcon onClick={()=>navigate('/')} />
                 </Box>
 
+
+                {/* 즐겨찾기 아이콘 */}
+                <Box sx={{display: {xs: 'none', sm: 'block'}, cursor:'pointer', marginLeft:'auto'}}>
+                    <StarBorderIcon>
+                        <FavoriteButton/>
+                    </StarBorderIcon>
+                </Box>
+
+                {/* (임시) 즐겨찾기 목록 이동
+                 */}
+                <Box sx={{display: {xs: 'none', sm: 'block'}, cursor:'pointer', marginLeft:'auto'}}>
+                    <button onClick={()=>navigate("/favorite")}>즐겨찾기</button>
+                </Box>
+
+
+                {/* 메뉴 아이콘 */}
                 <Box sx={{display: {xs: 'none', sm: 'block'}}}>
                     {
                         menu.map((m, idx) => {
@@ -48,6 +70,8 @@ const Header = () => {
                         })
                     }
                 </Box>
+
+
 
             </Toolbar>
         </AppBar>
@@ -70,5 +94,5 @@ const Header = () => {
         </>
     );
 }
- 
+
 export default Header;

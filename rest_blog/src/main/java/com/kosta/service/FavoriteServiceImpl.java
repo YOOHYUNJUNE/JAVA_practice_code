@@ -22,8 +22,7 @@ import lombok.RequiredArgsConstructor;
 public class FavoriteServiceImpl implements FavoriteService {
 
 	private final FavoriteRepository fr;
-	private final ImageFileRepository ir;
-	private final FileUtils fileUtils;
+	private final ImageFileService is;
 	
 	
 	// 전체 즐겨찾기 보기
@@ -53,19 +52,7 @@ public class FavoriteServiceImpl implements FavoriteService {
 	
 	// 즐겨찾기 추가하기
 	// 이미지 저장
-	private ImageFile saveImage(MultipartFile file) {
-		
-		if (file != null) {
-			// 파일 저장 후, 저장된 imageFile 객체 가져오기
-			ImageFile imageFile = fileUtils.fileUpload(file);
-			
-			if (imageFile != null) {
-				ImageFile savedImageFile = ir.save(imageFile);
-				return savedImageFile;
-			}			
-		}
-		return null;
-	}
+	
 	
 	
 	// 즐겨찾기 추가
@@ -73,8 +60,8 @@ public class FavoriteServiceImpl implements FavoriteService {
 	public FavoriteResponse insertFav(FavoriteRequest favDTO, MultipartFile file) {
 		
 		// 이미지 저장
-		ImageFile savedImage = saveImage(file);
-		if (saveImage(file) != null) {
+		ImageFile savedImage = is.saveImage(file);
+		if (savedImage != null) {
 			favDTO.setImageFile(savedImage);
 		}
 		
@@ -95,7 +82,7 @@ public class FavoriteServiceImpl implements FavoriteService {
 		Favorite favorite = fr.findById(favDTO.getId())
 				.orElseThrow(() -> new IllegalArgumentException("해당 즐겨찾기를 찾을 수 없습니다."));
 		
-		ImageFile savedImage = saveImage(file);
+		ImageFile savedImage = is.saveImage(file);
 		// 수정하지 않을 경우 그대로 놔두기(null로)
 		if(savedImage != null) favorite.setImageId(savedImage);
 		if(favDTO.getTitle() != null) favorite.setTitle(favDTO.getTitle());

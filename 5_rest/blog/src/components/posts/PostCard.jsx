@@ -3,7 +3,7 @@ import { Avatar, Card, CardHeader, CardMedia, CardContent, Typography, IconButto
 import { useNavigate } from "react-router-dom";
 import SaveIcon from "@mui/icons-material/Save";
 
-const PostCard = ( {post }) => {
+const PostCard = ( { post }) => {
     const navigate = useNavigate();
     const theme = useTheme();
 

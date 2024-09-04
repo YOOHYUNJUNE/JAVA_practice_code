@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from 'react';
 import PostCard from './PostCard';
 import { useNavigate } from 'react-router-dom';
+import { postAPI } from '../../api/services/post';
 
 const Post = () => {
 
@@ -15,7 +16,7 @@ const Post = () => {
 
     const getPostList = async() => {
         try {
-            const res = await axios.get(`${process.env.REACT_APP_REST_SERVER}/post`);
+            const res = await postAPI.getPostList();
             const data = res.data;            
             setPostList(data);
         } catch (error) {

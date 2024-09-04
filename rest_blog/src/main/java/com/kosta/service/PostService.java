@@ -20,6 +20,4 @@ public interface PostService {
 
 	PostResponse deletePost(Long id, PostRequest postRequest);
 
-	FileDTO getImageByImageId(Long id);
-
 }

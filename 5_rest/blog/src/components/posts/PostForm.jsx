@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
+import { postAPI } from "../../api/services/post";
 
 const PostForm = () => {
 
@@ -17,7 +18,7 @@ const PostForm = () => {
     // 게시물 수정
     const getPost = async () => {
         try {
-            const res = await axios.get(`${process.env.REACT_APP_REST_SERVER}/post/${postId}`)
+            const res = await postAPI.getPost(postId);
             const data = res.data;
             console.log(data);
             // PostDetail은 setPost(state가 바뀔때)마다 실행되기때문에 무한 반복
@@ -55,19 +56,11 @@ const PostForm = () => {
             if (postId) {
                 formData.append("id", postId);
                 // 서버에 요청
-                const res = await axios.patch( // 수정
-                    `${process.env.REACT_APP_REST_SERVER}/post`, 
-                    formData,
-                    {
-                        headers: {"Content-Type": "multipart/form-data"}
-                    });
+                // 수정
+                const res = await postAPI.modifyPost(formData);
             } else {
-                const res = await axios.post( // 글 새로 추가
-                    `${process.env.REACT_APP_REST_SERVER}/post`,
-                    formData,
-                    {
-                        headers: {"Content-Type": "multipart/form-data"}
-                    });
+                // 추가
+                const res = await postAPI.writePost(formData);
             }
             // 정상이면 게시글 목록으로 이동
             navigate("/post");

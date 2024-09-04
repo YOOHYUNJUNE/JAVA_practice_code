@@ -50,7 +50,7 @@ public class Post {
 	
 	// 이미지 (하나만 게시)
 	@JoinColumn(name = "image_id", nullable = true)
-	@ManyToOne(cascade = CascadeType.REMOVE) // 정확히는 OneToOne
+	@ManyToOne// 정확히는 OneToOne
 	private ImageFile image;
 	
 	

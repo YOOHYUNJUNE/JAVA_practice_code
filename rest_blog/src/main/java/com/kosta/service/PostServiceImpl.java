@@ -28,33 +28,15 @@ public class PostServiceImpl implements PostService {
 
 	private final PostRepository postRepository;
 	private final UserRepository userRepository;
-	private final ImageFileRepository imageFileRepository;
-	private final FileUtils fileUtils;
-
-	
-	
-	// 이미지저장
-	private ImageFile saveImage(MultipartFile file) {
-		
-		if (file != null) {
-			// 파일 저장후, 저장된 imageFile 객체 가져오기
-			ImageFile imageFile = fileUtils.fileUpload(file);
-			
-			if (imageFile != null) {			
-				ImageFile savedImageFile = imageFileRepository.save(imageFile);
-				return savedImageFile;
-			}
-		}
-		return null;		
-	}
+	private final ImageFileService imageFileService;
 	
 	
 	// 게시글(이미지 포함) 추가 -> FileUtils
 	@Override
 	public PostResponse insertPost(PostRequest postDTO, MultipartFile file) {
 		
-		ImageFile savedImage = saveImage(file);
-		if (saveImage(file) != null) {			
+		ImageFile savedImage = imageFileService.saveImage(file);
+		if (savedImage != null) {			
 			postDTO.setImageFile(savedImage);
 		}
 			
@@ -111,7 +93,7 @@ public class PostServiceImpl implements PostService {
 			throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
 		}
 		
-		ImageFile savedImage = saveImage(file);
+		ImageFile savedImage = imageFileService.saveImage(file);
 		// 수정하지 않을 경우 그대로 놔두기(null로)
 		if(savedImage != null) post.setImage(savedImage); 
 		if(postDTO.getTitle() != null) post.setTitle(postDTO.getTitle());
@@ -141,21 +123,15 @@ public class PostServiceImpl implements PostService {
 		}
 		
 		// 게시물 삭제시 첨부파일도 삭제 (cascade 설정하기)
-		postRepository.deleteById(post.getImage().getId());
+//		postRepository.deleteById(post.getImage().getId());
 		
-//		postRepository.delete(post);
+		postRepository.delete(post);
 		return PostResponse.toDTO(post);
 		
 	}
 
 
-	// 이미지 다운로드
-	@Override
-	public FileDTO getImageByImageId(Long id) {
-		ImageFile image = imageFileRepository.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("파일을 찾을 수 없음"));
-		return FileDTO.toDTO(image);
-	}
+
 	
 	
 	

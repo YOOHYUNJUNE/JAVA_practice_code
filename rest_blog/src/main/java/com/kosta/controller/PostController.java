@@ -28,6 +28,7 @@ import com.kosta.damain.ErrorResponse;
 import com.kosta.damain.FileDTO;
 import com.kosta.damain.PostRequest;
 import com.kosta.damain.PostResponse;
+import com.kosta.service.ImageFileService;
 import com.kosta.service.PostService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -39,6 +40,7 @@ import lombok.RequiredArgsConstructor;
 public class PostController {
 
 	private final PostService postService;
+	private final ImageFileService imageFileService;
 	
 	// application.yml의 location 정보 가져오기(파일 다운로드)
 	@Value("${spring.upload.location}")
@@ -99,6 +101,7 @@ public class PostController {
 	// 예외처리
 	@ExceptionHandler(RuntimeException.class)
 	public ResponseEntity<ErrorResponse> handlerPostException(RuntimeException e, HttpServletRequest req) {
+		e.printStackTrace();
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 				.body(
 					ErrorResponse.builder()
@@ -115,7 +118,7 @@ public class PostController {
 	// 파일 다운로드
 	@GetMapping("/download/{imageId}")
 	public ResponseEntity<Resource> downloadImage(@PathVariable("imageId") Long id) throws MalformedURLException {
-		FileDTO fileDTO = postService.getImageByImageId(id);
+		FileDTO fileDTO = imageFileService.getImageByImageId(id);
 		
 		UrlResource resource = new UrlResource("file:" + uploadPath + "\\" + fileDTO.getSaved());
 		String fileName = UriUtils.encode(fileDTO.getOrigin(), StandardCharsets.UTF_8);
