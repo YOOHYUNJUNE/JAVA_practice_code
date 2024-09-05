@@ -33,6 +33,6 @@ public class Favorite {
 	// 이미지와 연결
 	@JoinColumn(name = "image_id", nullable = true)
 	@ManyToOne 
-	private ImageFile imageId;
+	private ImageFile image;
 	
 }

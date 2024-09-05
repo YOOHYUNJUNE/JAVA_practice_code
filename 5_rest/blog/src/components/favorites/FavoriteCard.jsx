@@ -12,14 +12,13 @@ import { useEffect, useState } from "react";
 
 const FavoriteCard = ( { favorite }) => {
     const navigate = useNavigate();
-    const theme = useTheme();
 
-    const [fav, setFav] = useState();
+    // const [fav, setFav] = useState();
 
-    // 가져온 정보 보여주기
-    useEffect(() => {
-        setFav();        
-    }, []);
+    // // 가져온 정보 보여주기
+    // useEffect(() => {
+    //     setFav();        
+    // }, []);
 
     // 즐겨찾기 삭제
     const handleDelete = async () => {
@@ -32,15 +31,7 @@ const FavoriteCard = ( { favorite }) => {
             
           });
 
-          // // 취소 분기
-        //   if (result.dismiss === "close") {
-        //     console.log("닫았네");
-        //   } else if (result.dismiss === "cancel") {
-        //     console.log("취소했네");
-        //   } else {
-        //     console.log("딴데 눌렀네");
-        //   }
-
+        // 삭제 분기
         if (result.isConfirmed) {
             try {
                 await favAPI.deleteFav(favorite.id);
@@ -52,18 +43,25 @@ const FavoriteCard = ( { favorite }) => {
                 navigate('/favorite');
             } catch (error) {
                 console.error(error)
-                // navigate('/error');
             }
         }
         
-        
     }
+
+    // 수정
+    const handleModify = async () => {
+        navigate(`/favorite/modify/${favorite.id}`, { state : favorite });
+        console.log(favorite.id);
+        console.log(favorite.title);
+        console.log(favorite.url);
+      }
 
     return (
         <Card sx={{ maxWidth: 345, cursor: 'pointer' }}>
             <CardHeader                
                 title={favorite.title}
                 subheader={favorite.url}
+
                 // onClick={() => window.location.href = favorite.url}   
                 onClick={() => window.open(favorite.url)}                             
             />
@@ -73,7 +71,7 @@ const FavoriteCard = ( { favorite }) => {
                 color="bg2" 
                 size="small" 
                 startIcon={<EditIcon/>}
-                onClick={() => navigate(`/favorite/modify/${favorite.id}`, {state:fav})}
+                onClick={handleModify}
             >수정</Button>
             <Button 
                 variant="contained" 

@@ -56,7 +56,7 @@ const Favorite = () => {
         <Button variant="contained" color='main' onClick={() => navigate("/favorite/write")}>즐겨찾기 추가</Button>
         <Divider />
         {/* 전체 리스트 */}
-        <Grid2 container direction={"column"} spacing={2}>
+        <Grid2 container spacing={2}>
         {
             favList.map(fav => (
                 <FavoriteCard key={fav.key} favorite={fav}></FavoriteCard>

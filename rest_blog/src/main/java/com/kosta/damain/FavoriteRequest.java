@@ -16,7 +16,7 @@ public class FavoriteRequest {
 		return Favorite.builder()
 				.title(title)
 				.url(url)
-				.imageId(imageFile)
+				.image(imageFile)
 				.build();
 	}
 	

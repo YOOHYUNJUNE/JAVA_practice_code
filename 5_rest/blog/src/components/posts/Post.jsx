@@ -1,4 +1,4 @@
-import { Button, Divider, Grid2 } from '@mui/material';
+import { Box, Button, Divider, Grid2 } from '@mui/material';
 import axios from "axios";
 import { useEffect, useState } from 'react';
 import PostCard from './PostCard';
@@ -35,13 +35,18 @@ const Post = () => {
         <Button variant="contained" color='main' onClick={() => navigate("/post/write")}>글쓰기</Button>
         <Divider />
         {/* 전체 리스트 */}
-        <Grid2 container direction={"column"} spacing={2}>
-        {
-            postList.map(post => (
-                <PostCard key={post.key} post={post}></PostCard>
-            ))
-        }
-        </Grid2>
+        <Box sx={{flexGrow:1}}>
+            <Grid2 container spacing={2} columns={24}>
+            {
+                postList.map(post => (
+                    <Grid2 size={6}>
+                        <PostCard key={post.key} post={post}></PostCard>
+                    </Grid2>
+                ))
+            }
+            </Grid2>
+        </Box>
+
         </>
     );
 }

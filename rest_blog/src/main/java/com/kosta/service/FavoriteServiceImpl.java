@@ -50,11 +50,7 @@ public class FavoriteServiceImpl implements FavoriteService {
 	}
 
 	
-	// 즐겨찾기 추가하기
-	// 이미지 저장
-	
-	
-	
+
 	// 즐겨찾기 추가
 	@Override
 	public FavoriteResponse insertFav(FavoriteRequest favDTO, MultipartFile file) {
@@ -84,7 +80,7 @@ public class FavoriteServiceImpl implements FavoriteService {
 		
 		ImageFile savedImage = is.saveImage(file);
 		// 수정하지 않을 경우 그대로 놔두기(null로)
-		if(savedImage != null) favorite.setImageId(savedImage);
+		if(savedImage != null) favorite.setImage(savedImage);
 		if(favDTO.getTitle() != null) favorite.setTitle(favDTO.getTitle());
 		if(favDTO.getUrl() != null) favorite.setUrl(favDTO.getUrl());
 		

@@ -2,10 +2,11 @@ import { Button, Grid2, TextField, Typography } from "@mui/material";
 import axios from "axios";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { favAPI } from "../../api/services/favorite";
 
 const FavoriteForm = () => {
+
 
     // react-hook-form
     const { register, handleSubmit, watch, formState: { errors }, setValue } = useForm();
@@ -13,24 +14,16 @@ const FavoriteForm = () => {
     // 경로 이동
     const navigate = useNavigate();
 
-    // postId가 없으면 작성, 있으면 수정
+    // Id가 없으면 작성, 있으면 수정
     const { favId } = useParams();
 
     // 즐겨찾기 수정
-    const getFav = async () => {
-        try {
-            const res = await favAPI.getFav(favId);
-            const data = res.data;
-            setValue("title", data.title);
-            setValue("url", data.url);
-            
-        } catch (error) {
-            navigate("/error")
-        }
-    }
+    const {state} = useLocation();
+
     useEffect(() => {
-        if (favId) {
-            getFav();
+        if (state) {
+            setValue("title", state.title);
+            setValue("url", state.url);
         }
     }, []);
 
@@ -48,11 +41,14 @@ const FavoriteForm = () => {
 
 
         try {
-            if (favId) {
-                formData.append("id", favId);
+            if (state) {
+                formData.append("id", state.id);
                 // 서버에 요청
                 // 수정
                 const res = await favAPI.modifyFav(formData);
+                console.log("state : ", state.id);
+                console.log(state.title);
+                console.log(state.url);
             } else {
                 // 추가
                 const res = await favAPI.writeFav(formData);
@@ -79,9 +75,9 @@ const FavoriteForm = () => {
                     <TextField 
                         variant="outlined" 
                         label="이름" 
-                        error={errors.title && true} 
+                        error={errors.title && true}
                         helperText={errors.title && "즐겨찾기할 사이트의 이름을 적어주세요."}
-                        {...register("title", {required:true, maxLength:50})}
+                        {...register("title", {required:true})}
                     />
 
                 {/* 내용(필수, 제한없음) */}
@@ -90,7 +86,7 @@ const FavoriteForm = () => {
                         multiline
                         error={errors.url && true}
                         helperText={errors.url && "url을 적어주세요."}
-                        defaultValue="https://www."
+                        defaultValue={"https://www."}
                         {...register("url", {required:true})}
                     />
 

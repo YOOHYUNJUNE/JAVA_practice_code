@@ -11,7 +11,7 @@ public class FavoriteResponse {
 
 	private Long id;
 	private String title, url;
-	private FavoriteDTO imageId;
+	private FavoriteDTO image;
 	
 	// Favorite -> FavoriteResponse 변환
 	public static FavoriteResponse toDTO(Favorite f) {
@@ -19,7 +19,7 @@ public class FavoriteResponse {
 				.id(f.getId())
 				.title(f.getTitle())
 				.url(f.getUrl())
-				.imageId(FavoriteDTO.toDTO(f.getImageId()))
+				.image(FavoriteDTO.toDTO(f.getImage()))
 				.build();
 	}
 	

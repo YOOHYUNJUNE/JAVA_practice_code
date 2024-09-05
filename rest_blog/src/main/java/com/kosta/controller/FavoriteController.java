@@ -48,7 +48,7 @@ public class FavoriteController {
 	
 	// 즐겨찾기 추가
 	@PostMapping("")
-	public ResponseEntity<FavoriteResponse> addFav(FavoriteRequest fav, @RequestParam(name = "imageId", required = false) MultipartFile file) {
+	public ResponseEntity<FavoriteResponse> addFav(FavoriteRequest fav, @RequestParam(name = "image", required = false) MultipartFile file) {
 		FavoriteResponse savedFav = fs.insertFav(fav, file);
 		return ResponseEntity.status(HttpStatus.CREATED).body(savedFav);
 		
@@ -56,7 +56,7 @@ public class FavoriteController {
 	
 	// 즐겨찾기 수정
 	@PatchMapping("")
-	public ResponseEntity<FavoriteResponse> modifyFav(FavoriteRequest fav, @RequestParam(name = "imageId", required = false) MultipartFile file) {
+	public ResponseEntity<FavoriteResponse> modifyFav(FavoriteRequest fav, @RequestParam(name = "image", required = false) MultipartFile file) {
 		
 		FavoriteResponse updateFav = fs.updateFav(fav, file);
 		return ResponseEntity.ok(updateFav);
