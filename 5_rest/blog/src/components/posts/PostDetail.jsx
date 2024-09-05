@@ -23,7 +23,7 @@ const PostDetail = () => {
             // PostDetail은 setPost(state가 바뀔때)마다 실행되기때문에 무한 반복
             // -> useEffect() 사용
         } catch (error) {
-            navigate("/error")
+            navigate("/error", {state:error.message})
         }
     }
     // 가져온 정보 보여주기
@@ -68,8 +68,7 @@ const PostDetail = () => {
                 });
                 navigate('/post');
             } catch (error) {
-                console.error(error)
-                // navigate('/error');
+                navigate("/error", {state:error.message})
             }
         
         }

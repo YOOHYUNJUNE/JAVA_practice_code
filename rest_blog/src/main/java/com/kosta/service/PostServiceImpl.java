@@ -9,9 +9,9 @@ import org.aspectj.util.FileUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.kosta.damain.FileDTO;
-import com.kosta.damain.PostRequest;
-import com.kosta.damain.PostResponse;
+import com.kosta.domain.FileDTO;
+import com.kosta.domain.PostRequest;
+import com.kosta.domain.PostResponse;
 import com.kosta.entity.ImageFile;
 import com.kosta.entity.Post;
 import com.kosta.entity.User;

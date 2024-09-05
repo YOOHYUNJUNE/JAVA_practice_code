@@ -57,7 +57,7 @@ const FavoriteForm = () => {
             navigate("/favorite");
         } catch (error) {
             // 비정상이면 에러페이지로
-            navigate("/error");
+            navigate("/error", {state:error.message})
         }
 
     }

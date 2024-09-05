@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.kosta.damain.FileDTO;
-import com.kosta.damain.PostRequest;
-import com.kosta.damain.PostResponse;
+import com.kosta.domain.FileDTO;
+import com.kosta.domain.PostRequest;
+import com.kosta.domain.PostResponse;
 
 public interface PostService {
 

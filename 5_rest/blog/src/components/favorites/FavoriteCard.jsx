@@ -42,7 +42,7 @@ const FavoriteCard = ( { favorite }) => {
                 });
                 navigate('/favorite');
             } catch (error) {
-                console.error(error)
+                navigate("/error", {state:error.message})
             }
         }
         

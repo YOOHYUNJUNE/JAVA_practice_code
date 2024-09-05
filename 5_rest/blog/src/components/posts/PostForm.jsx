@@ -27,7 +27,7 @@ const PostForm = () => {
             setValue("content", data.content);
             
         } catch (error) {
-            navigate("/error")
+            navigate("/error", {state:error.message})
         }
     }
     useEffect(() => {
@@ -66,7 +66,7 @@ const PostForm = () => {
             navigate("/post");
         } catch (error) {
             // 비정상이면 에러페이지로
-            navigate("/error");
+            navigate("/error", {state:error.message})
         }
 
     }

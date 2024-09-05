@@ -4,12 +4,12 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.kosta.damain.FavoriteRequest;
-import com.kosta.damain.FavoriteResponse;
+import com.kosta.domain.FavoriteRequest;
+import com.kosta.domain.FavoriteResponse;
 
 public interface FavoriteService {
 
-	List<FavoriteResponse> getAllPost();
+	List<FavoriteResponse> getAllFavorite();
 
 	FavoriteResponse getFavoriteById(Long id);
 

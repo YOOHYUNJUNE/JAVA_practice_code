@@ -19,16 +19,20 @@ const Header = () => {
     // 메뉴 아이콘
     const [menu, setMenu] = useState([
         {path:'/favorite', name:'즐겨찾기'},
+        {path:'/user', name:'회원 관리'},
         {path:'/post', name:'게시물'},
         {path:'/search', name:'검색'},
+        {path:'/signup', name:'회원가입'},
     ]);
     // 버튼에 경로 적용
     const handleClickPath = (path) => {
-        if (path == '/favorite') {
-            handleFavoriteClick();
-        } else {
-            navigate(path);
+        switch (path) {
+            case '/favorite': handleFavoriteClick(); 
+                break;
+            default: navigate(path);
+                break;
         }
+
     } 
 
 
@@ -47,7 +51,7 @@ const Header = () => {
             const data = res.data;            
             setFavList(data);
         } catch (error) {
-            console.error(error);
+            navigate("/error", {state:error.message})
         }
     }
     useEffect(() => {

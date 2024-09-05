@@ -29,10 +29,13 @@ const PostCard = ( { post }) => {
                 //         <SaveIcon onClick={(e) => handleDownload(e)} />
                 //     </IconButton> }
             />
-            <CardMedia
+            {
+                post.image &&
+                <CardMedia
                 component="img" height="194" alt="게시글 이미지"
                 image={`${process.env.REACT_APP_SERVER}/img/${post.image.saved}`}                
-            />
+                />
+            }
             <CardContent>
                 <Typography gutterBottom sx={{ color: 'text.secondary', fontSize:12 }}>
                     {post.author.name} - {post.author.email}

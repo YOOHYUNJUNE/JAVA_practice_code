@@ -6,9 +6,9 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.kosta.damain.FavoriteDTO;
-import com.kosta.damain.FavoriteRequest;
-import com.kosta.damain.FavoriteResponse;
+import com.kosta.domain.FavoriteDTO;
+import com.kosta.domain.FavoriteRequest;
+import com.kosta.domain.FavoriteResponse;
 import com.kosta.entity.Favorite;
 import com.kosta.entity.ImageFile;
 import com.kosta.repository.FavoriteRepository;
@@ -27,7 +27,7 @@ public class FavoriteServiceImpl implements FavoriteService {
 	
 	// 전체 즐겨찾기 보기
 	@Override
-	public List<FavoriteResponse> getAllPost() {
+	public List<FavoriteResponse> getAllFavorite() {
 		List<Favorite> favList = fr.findAll();
 		
 		if (favList.size() > 0) {

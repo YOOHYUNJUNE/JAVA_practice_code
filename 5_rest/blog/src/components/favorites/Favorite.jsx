@@ -41,7 +41,7 @@ const Favorite = () => {
             const data = res.data;            
             setFavList(data);
         } catch (error) {
-            console.error(error);
+            navigate("/error", {state:error.message})
         }
     }
     

@@ -20,7 +20,7 @@ const Post = () => {
             const data = res.data;            
             setPostList(data);
         } catch (error) {
-            console.error(error);
+            navigate("/error", {state:error.message})
         }
     }
     

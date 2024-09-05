@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.kosta.damain.FavoriteRequest;
-import com.kosta.damain.FavoriteResponse;
+import com.kosta.domain.FavoriteRequest;
+import com.kosta.domain.FavoriteResponse;
 import com.kosta.service.FavoriteService;
 
 import lombok.RequiredArgsConstructor;
@@ -37,7 +37,7 @@ public class FavoriteController {
 		List<FavoriteResponse> result = new ArrayList<>();
 		
 		if (id == null) {
-			result = fs.getAllPost();
+			result = fs.getAllFavorite();
 		} else {
 			FavoriteResponse favoriteResponse = fs.getFavoriteById(id);
 			result.add(favoriteResponse);
