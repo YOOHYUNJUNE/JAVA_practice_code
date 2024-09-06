@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { userAPI } from "../../api/services/user";
 import { Navigate, useNavigate } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Box, Button, Divider, Grid2 } from '@mui/material';
+import Swal from "sweetalert2";
+import UserCard from "./UserCard";
+
 
 const User = () => {
     const navigate = useNavigate();
@@ -23,16 +28,33 @@ const User = () => {
     }, []);
 
 
+
     return (
         <>
-            회원관리 ㅋㅋ
-            {
-                userList.map(user => (
-                    <div key={user.id}>
-                        {user.name}
-                    </div>
-                ))
-            }
+        <h1>회원 목록</h1>
+        <Button variant="contained" color='main' onClick={() => navigate("/signup")}>유저추가</Button>
+        <table className="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>이름</th>
+                            <th>Email</th>
+                            <th>가입일</th>
+                            <th>수정</th>
+                            <th>탈퇴</th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                        {
+                            userList.map(user => (
+                                <UserCard key={user.id} user={user}/>
+                            ))
+                        }
+
+                    </tbody>
+
+        </table>
         </>
     );
 }

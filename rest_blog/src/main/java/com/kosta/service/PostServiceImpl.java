@@ -131,6 +131,14 @@ public class PostServiceImpl implements PostService {
 	}
 
 
+	// 게시글 검색
+	@Override
+	public List<PostResponse> search(String keyword) {
+		List<Post> postList = postRepository.findByTitleContainsOrContentContains(keyword, keyword);
+		return postList.stream().map(p -> PostResponse.toDTO(p)).toList();		
+	}
+
+
 
 	
 	

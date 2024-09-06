@@ -8,27 +8,7 @@ import { favAPI } from '../../api/services/favorite';
 import FavoriteCard from './FavoriteCard';
 
 
-
-// // 실시간 반영
-// const favoriteReducer = (state, action) => {
-//     switch (action.type) {
-//         case "SET_FAV":
-//             return action.payload;
-//         case "ADD_FAV":
-//             return [...state, action.payload];
-//         case "EDIT_FAV":
-//             return state.map(p => p.id == action.payload.id ? action.payload : p);
-//         case "DELETE_FAV":
-//             return state.filter(p => p.id != action.payload.id);
-//     }
-// }
-
-
-
 const Favorite = () => {
-    // // reducer : 실시간 반영
-    // const [favList, dispatch] = useReducer(favoriteReducer, []);
-
     // onClick 이동 경로 지정
     const navigate = useNavigate();
 

@@ -2,10 +2,13 @@ import { Box, Button, Divider, Grid2 } from '@mui/material';
 import axios from "axios";
 import { useEffect, useState } from 'react';
 import PostCard from './PostCard';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { postAPI } from '../../api/services/post';
 
 const Post = () => {
+
+    // 검색결과 state로 가져오기
+    const {state} = useLocation();
 
     // onClick 이동 경로 지정
     const navigate = useNavigate();
@@ -15,18 +18,25 @@ const Post = () => {
     const [postList, setPostList] = useState([]);
 
     const getPostList = async() => {
-        try {
-            const res = await postAPI.getPostList();
-            const data = res.data;            
-            setPostList(data);
-        } catch (error) {
-            navigate("/error", {state:error.message})
+
+        // 검색 결과에 따른 분기
+        if (state) {
+            setPostList(state);
+        } else {
+            try {
+                const res = await postAPI.getPostList();
+                const data = res.data;            
+                setPostList(data);
+            } catch (error) {
+                navigate("/error", {state:error.message})
+            }
         }
+
     }
     
     useEffect(() => {
         getPostList();
-    }, []);
+    }, [state]); // state가 변경시에도 useEffect가 작동되게
    
     return (
         <>

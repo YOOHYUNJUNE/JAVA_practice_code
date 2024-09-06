@@ -20,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 public class AuthServiceImpl implements AuthService {
 	private final UserRepository userRepository;
 
+	// 회원가입
 	@Override
 	public UserResponse signUp(SignUpRequest signUpRequest) {
 		User user = User.builder()
@@ -32,13 +33,15 @@ public class AuthServiceImpl implements AuthService {
 	}
 	
 	
-
+	// 유저 전체 가져오기
 	@Override
 	public List<UserResponse> getUserList() {
 		List<User> userList = userRepository.findAll();
 		return userList.stream().map(UserResponse::toDTO).toList();
 	}
 
+	
+	// 회원 정보 수정(이메일로 불러옴 -> 비밀번호 확인)
 	@Override
 	public UserResponse updateUser(UserUpdateRequest userUpdateReqeust) {
 		User user = userRepository.findByEmail(userUpdateReqeust.getEmail())
@@ -54,6 +57,8 @@ public class AuthServiceImpl implements AuthService {
 		return UserResponse.toDTO(updatedUser);
 	}
 
+	
+	// 회원 탈퇴(이메일로 불러옴 -> 비밀번호 확인)
 	@Override
 	public void deleteUser(UserDeleteRequest userDeleteRequest) {
 		User user = userRepository.findByEmail(userDeleteRequest.getEmail())
@@ -68,6 +73,6 @@ public class AuthServiceImpl implements AuthService {
 	// 가입시 이메일 중복 체크
 	@Override
 	public boolean duplicateCheckEmail(String email) {
-		return userRepository.existsByEmail(email);
+		return !userRepository.existsByEmail(email);
 	}
 }

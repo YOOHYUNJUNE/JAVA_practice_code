@@ -1,4 +1,4 @@
-import { AppBar, Box, Button, IconButton, List, ListItem, ListItemButton, ListItemText, Menu, Toolbar } from "@mui/material";
+import { alpha, AppBar, Box, Button, IconButton, InputBase, List, ListItem, ListItemButton, ListItemText, Menu, styled, Toolbar } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import AccessibilityIcon from '@mui/icons-material/Accessibility';
 import HouseSharpIcon from '@mui/icons-material/HouseSharp';
@@ -9,6 +9,8 @@ import Drawer from "./Drawer";
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import Swal from "sweetalert2";
 import { favAPI } from '../../api/services/favorite';
+import SearchIcon from '@mui/icons-material/Search';
+import { postAPI } from "../../api/services/post";
 
 
 
@@ -21,8 +23,8 @@ const Header = () => {
         {path:'/favorite', name:'즐겨찾기'},
         {path:'/user', name:'회원 관리'},
         {path:'/post', name:'게시물'},
-        {path:'/search', name:'검색'},
         {path:'/signup', name:'회원가입'},
+        {path:'/search', name:'검색'},
     ]);
     // 버튼에 경로 적용
     const handleClickPath = (path) => {
@@ -133,6 +135,7 @@ const Header = () => {
                 <Box sx={{display: {xs: 'none', sm: 'block'}}}>
                     {
                         menu.map((m, idx) => {
+                            if(m.path === "/search") return <MySearch/>;
                             return (
                                 <Button key={idx} color='font' onClick={(event) => handleClickPath(m.path, event.preventDefault())}>
                                     {m.name}
@@ -165,5 +168,89 @@ const Header = () => {
         </>
     );
 }
+
+const MySearch = () => {
+
+    const navigate = useNavigate();
+    const [keyword, setKeyword] = useState("");
+
+    const handleSearch = (e) => {
+        if (e.key === "Enter") {            
+            // keyword를 http://localhost:8080/post/search?keyword={검색어} 로 보냄
+            postSearch({keyword});
+        }
+    }
+
+    const postSearch = async (keyword) => {
+
+        try {
+            const res = await postAPI.searchPost(keyword);
+            navigate("/search", {state:res.data}); // 검색시 /search로 이동
+        } catch (error) {
+            console.error(error);
+        }
+
+    }
+
+    return (
+        <Search>
+        <SearchIconWrapper>
+          <SearchIcon />
+        </SearchIconWrapper>
+        <StyledInputBase
+          placeholder="Search…"
+          value={keyword}
+          onKeyDown={(e) => handleSearch(e)}
+          onChange={(e) => setKeyword(e.target.value)}
+        />
+      </Search>
+    )
+}
+
+const Search = styled('div')(({ theme }) => ({
+    display: "inline-block",
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: alpha(theme.palette.common.white, 0.15),
+    '&:hover': {
+      backgroundColor: alpha(theme.palette.common.white, 0.25),
+    },
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(1),
+      width: 'auto',
+    },
+  }));
+  
+  const SearchIconWrapper = styled('div')(({ theme }) => ({
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }));
+  
+  const StyledInputBase = styled(InputBase)(({ theme }) => ({
+    color: 'inherit',
+    width: '100%',
+    '& .MuiInputBase-input': {
+      padding: theme.spacing(1, 1, 1, 0),
+      // vertical padding + font size from searchIcon
+      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+      transition: theme.transitions.create('width'),
+      [theme.breakpoints.up('sm')]: {
+        width: '12ch',
+        '&:focus': {
+          width: '20ch',
+        },
+      },
+    },
+  }));
+
+
+
 
 export default Header;

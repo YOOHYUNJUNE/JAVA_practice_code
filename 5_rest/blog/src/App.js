@@ -16,7 +16,7 @@ function App() {
     <Layout>
       <Routes>
         <Route path='/' element={<h1>홈</h1>} />
-        <Route path='/search' element={<h1>검색</h1>} />
+        <Route path='/search' element={<Post/>} />
         <Route path='/error' element={<Error/>} />
         <Route path='*' element={<h1>NOT FOUND</h1>} />
 
@@ -31,9 +31,11 @@ function App() {
         <Route path='/favorite/write' element={<FavoriteForm />} />
         <Route path='/favorite/modify/:favId' element={<FavoriteForm />} />
 
-        {/* 회원가입 */}
-        <Route path='/signup' element={<SignUp/>} />
+        {/* 유저 */}
         <Route path='/user' element={<User/>} />
+        <Route path='/signup' element={<SignUp/>} />
+        <Route path='/user/modify/:userEmail' element={<SignUp/>} />
+        
 
 
 

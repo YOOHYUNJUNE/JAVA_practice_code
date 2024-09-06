@@ -20,4 +20,6 @@ public interface PostService {
 
 	PostResponse deletePost(Long id, PostRequest postRequest);
 
+	List<PostResponse> search(String keyword);
+
 }

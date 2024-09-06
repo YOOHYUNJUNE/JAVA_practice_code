@@ -19,10 +19,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	public void addCorsMappings(CorsRegistry registry) {
 		registry
 			.addMapping("/**")
-			.allowedOrigins("http://localhost:3000")
+			.allowedOrigins("http://localhost:3000", "http://172.30.1.40:3000")
 			.allowedMethods("OPTIONS", "GET", "POST", "PUT", "PATCH", "DELETE");
 	}
-	
 	
 	// 웹 페이지에서 이미지 보여주기
 	@Override

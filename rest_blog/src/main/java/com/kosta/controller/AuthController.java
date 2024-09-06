@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kosta.domain.SignUpRequest;
@@ -38,9 +39,9 @@ public class AuthController {
 	}
 	// 가입시 이메일 중복 체크
 	@GetMapping("/duplicate")
-	public ResponseEntity<Boolean> emailCheck(@RequestBody Map<String, String> emailMap) {
+	public ResponseEntity<Boolean> emailCheck(@RequestParam("email") String email) {
 //		System.out.println(email.get("email"));
-		boolean isNotDuplicate = authService.duplicateCheckEmail(emailMap.get("email"));
+		boolean isNotDuplicate = authService.duplicateCheckEmail(email);
 		return ResponseEntity.ok(isNotDuplicate);
 	}
 	

@@ -132,6 +132,13 @@ public class PostController {
 	
 	
 	
+	// 검색 기능
+	@GetMapping("/search")
+	public ResponseEntity<List<PostResponse>> search(@RequestParam("keyword") String keyword) {
+		List<PostResponse> result = postService.search(keyword);
+		return ResponseEntity.ok(result);
+	}
+	
 	
 	
 	
