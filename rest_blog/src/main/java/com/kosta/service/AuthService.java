@@ -2,6 +2,7 @@ package com.kosta.service;
 
 import java.util.List;
 
+import com.kosta.domain.LoginResponse;
 import com.kosta.domain.SignUpRequest;
 import com.kosta.domain.UserDeleteRequest;
 import com.kosta.domain.UserResponse;
@@ -18,5 +19,7 @@ public interface AuthService {
 	void deleteUser(UserDeleteRequest userDeleteRequest);
 
 	boolean duplicateCheckEmail(String email);
+
+	LoginResponse login(String email, String password);
 
 }

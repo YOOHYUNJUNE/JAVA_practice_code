@@ -2,8 +2,11 @@ package com.kosta.service;
 
 import java.util.List;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.kosta.config.JwtProvider;
+import com.kosta.domain.LoginResponse;
 import com.kosta.domain.SignUpRequest;
 import com.kosta.domain.UserDeleteRequest;
 import com.kosta.domain.UserResponse;
@@ -19,14 +22,19 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 	private final UserRepository userRepository;
+	private final BCryptPasswordEncoder bCryptPasswordEncoder;
+	private final JwtProvider jwtProvider;
 
 	// 회원가입
 	@Override
 	public UserResponse signUp(SignUpRequest signUpRequest) {
+		// 비밀번호 암호화
+		String encodedPassword = bCryptPasswordEncoder.encode(signUpRequest.getPassword());
+		
 		User user = User.builder()
 				.email(signUpRequest.getEmail())
 				.name(signUpRequest.getName())
-				.password(signUpRequest.getPassword())
+				.password(encodedPassword)
 				.build();
 		User savedUser = userRepository.save(user);
 		return UserResponse.toDTO(savedUser);
@@ -75,4 +83,19 @@ public class AuthServiceImpl implements AuthService {
 	public boolean duplicateCheckEmail(String email) {
 		return !userRepository.existsByEmail(email);
 	}
+
+
+	// 로그인 기능
+	@Override
+	public LoginResponse login(String email, String password) {
+		User user = userRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("없는 이메일입니다."));
+		// 평문, 암호문 일치여부 판단
+		boolean matchedPassword = bCryptPasswordEncoder.matches(password, user.getPassword()); 
+		if (!matchedPassword) throw new RuntimeException("비밀번호 불일치");
+		String accessToken = jwtProvider.generateAccessToken(user);
+		
+		return LoginResponse.builder().accessToken(accessToken).build();
+	}
+	
+	
 }

@@ -15,3 +15,7 @@ spring:
       mode: never
   upload:
     location: C:\\Users\\WD\\Desktop\\post-image
+jwt:
+  issuer: kosta-uhj
+  secret_key: mysecretmysecretmysecretmysecret
+  access_duration: 10000 # 30분 : 30분 * 60초 * 1000ms 초

@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form";
 
 
 const UserCard = ( { user }) => {
+    console.log("유저정보: ", user);
     // react-hook-form
     const { register, handleSubmit, watch, formState: { errors }, setValue } = useForm();
 

@@ -11,6 +11,9 @@ import Swal from "sweetalert2";
 import { favAPI } from '../../api/services/favorite';
 import SearchIcon from '@mui/icons-material/Search';
 import { postAPI } from "../../api/services/post";
+import { useAuth } from "../../hooks/useAuth";
+import { jwtDecode } from "jwt-decode";
+import { convertLength } from "@mui/material/styles/cssUtils";
 
 
 
@@ -18,14 +21,40 @@ const Header = () => {
     
     const navigate = useNavigate();
 
+    // 액세스 토큰 가져오기
+    const { accessToken, tokenCheck, logout } = useAuth();
+
     // 메뉴 아이콘
-    const [menu, setMenu] = useState([
-        {path:'/favorite', name:'즐겨찾기'},
-        {path:'/user', name:'회원 관리'},
-        {path:'/post', name:'게시물'},
-        {path:'/signup', name:'회원가입'},
-        {path:'/search', name:'검색'},
-    ]);
+    let allMenu = [
+        {path:'/favorite', name:'즐겨찾기', auth:["ROLE_ADMIN", "ROLE_USER"]},
+        {path:'/user', name:'회원 관리', auth:["ROLE_ADMIN"]},
+        {path:'/post', name:'게시물', auth:["ROLE_ADMIN", "ROLE_USER", "none"]},
+        {path:'/signup', name:'회원가입', auth:["none"]},
+        {path:'/login', name:'로그인', auth:["none"]},
+        {path:'/logout', name:'로그아웃', auth:["ROLE_ADMIN", "ROLE_USER"]},
+        {path:'/search', name:'검색', auth:["ROLE_ADMIN", "ROLE_USER", "none"]},
+    ]
+
+    const [menu, setMenu] = useState([]);
+
+    useEffect(() => {
+        // 브라우저 토큰이 유효하면
+        if (tokenCheck()) {
+            // 권한에 맞는 메뉴 설정
+            const claims = jwtDecode(accessToken);
+            console.log("로그인 유저정보: ", claims);            
+            const role = claims.role;
+            setMenu(allMenu.filter(m => m.auth.includes(role)));
+
+        // 유효하지 않으면
+        } else {
+            // 로그아웃
+            logout(() => navigate("/"))
+            // "none"만 볼 수 있는 메뉴 설정
+            setMenu(allMenu.filter(m => m.auth.includes("none")));
+        }
+    }, [accessToken]); // accessToken 변경시마다 useEffect 실행
+
     // 버튼에 경로 적용
     const handleClickPath = (path) => {
         switch (path) {
@@ -135,7 +164,7 @@ const Header = () => {
                 <Box sx={{display: {xs: 'none', sm: 'block'}}}>
                     {
                         menu.map((m, idx) => {
-                            if(m.path === "/search") return <MySearch/>;
+                            if(m.path === "/search") return <MySearch key={idx}/>;
                             return (
                                 <Button key={idx} color='font' onClick={(event) => handleClickPath(m.path, event.preventDefault())}>
                                     {m.name}
