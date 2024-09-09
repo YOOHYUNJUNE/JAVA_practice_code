@@ -1,8 +1,8 @@
 import { Box, Button, Divider, FormControl, FormLabel, Grid2, InputBase, Paper, Stack, TextField, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { useForm } from "react-hook-form";
 import { userAPI } from "../../api/services/user";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 
 
@@ -15,6 +15,7 @@ const SignUp = () => {
     /* navigate */
     const navigate = useNavigate();
 
+  
     /* 회원가입 */
     const onSubmit = async (data) => {
         try {

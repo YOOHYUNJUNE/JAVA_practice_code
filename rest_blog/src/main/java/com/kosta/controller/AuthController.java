@@ -31,7 +31,7 @@ public class AuthController {
 	private final AuthService authService;
 	
 	// 회원가입
-	@PostMapping("")
+	@PostMapping("/signup")
 	public ResponseEntity<UserResponse> signUp(@RequestBody SignUpRequest signUpRequest) {
 		log.info("[signUp] 회원가입 진행. 요청정보 : {}", signUpRequest);
 		UserResponse userResponse = authService.signUp(signUpRequest);

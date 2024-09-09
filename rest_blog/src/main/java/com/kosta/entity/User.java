@@ -1,14 +1,23 @@
 package com.kosta.entity;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.List;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import com.kosta.domain.RoleEnum;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -16,7 +25,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class) // 생성, 수정 날짜 추적 -> Application.java > @EnableJpaAuditing
@@ -24,7 +32,7 @@ import lombok.RequiredArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class User {
+public class User implements UserDetails {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,6 +57,27 @@ public class User {
 	@LastModifiedDate
 	@Column(name = "updated_at")
 	private LocalDateTime updatedAt;
+
+	
+	// 권한 컬럼 추가(기본값 ROLE_USER)
+	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
+	@Builder.Default
+	private RoleEnum role = RoleEnum.ROLE_USER;
+	
+	// refresh_token으로 변경 예정	
+	
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// 권한 목록 반환
+		return List.of(new SimpleGrantedAuthority(role.name()));
+	}
+
+	
+	@Override
+	public String getUsername() {
+		return email; // email로 사용자명 대체
+	}
 
 
 	

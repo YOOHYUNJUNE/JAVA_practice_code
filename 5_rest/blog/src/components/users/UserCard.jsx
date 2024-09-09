@@ -24,7 +24,7 @@ const UserCard = ( { user }) => {
         if (state) {
             setValue("name", state.name);
             setValue("url", state.email);
-            setValue("url", state.password);
+            setValue("password", state.password);
         }
     }, []);
 
