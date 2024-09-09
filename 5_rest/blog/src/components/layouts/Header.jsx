@@ -165,6 +165,9 @@ const Header = () => {
                     {
                         menu.map((m, idx) => {
                             if(m.path === "/search") return <MySearch key={idx}/>;
+                            if(m.path === "/logout") return <Button key={idx} onClick={
+                                () => logout(() => navigate("/logout"))
+                            }>로그아웃</Button>
                             return (
                                 <Button key={idx} color='font' onClick={(event) => handleClickPath(m.path, event.preventDefault())}>
                                     {m.name}
