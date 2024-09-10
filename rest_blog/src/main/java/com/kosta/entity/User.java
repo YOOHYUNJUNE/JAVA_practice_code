@@ -65,7 +65,10 @@ public class User implements UserDetails {
 	@Builder.Default
 	private RoleEnum role = RoleEnum.ROLE_USER;
 	
-	// refresh_token으로 변경 예정	
+	
+	// refresh_token 저장
+	@Column(name = "refresh_token", nullable = true)
+	private String refreshToken;
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -76,7 +76,7 @@ const PostDetail = () => {
     }
 
     // 로그인 여부 확인
-    const { accessToken } = useAuth();
+    const { userInfo } = useAuth();
 
     return (
         <>
@@ -112,7 +112,7 @@ const PostDetail = () => {
 
             <CardActions>
                 {
-                    accessToken &&
+                    userInfo &&
                     <>
                     <Button 
                         variant="contained" 

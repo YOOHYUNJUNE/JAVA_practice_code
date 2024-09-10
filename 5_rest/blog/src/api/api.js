@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: `${process.env.REACT_APP_REST_SERVER}`
+    baseURL: `${process.env.REACT_APP_REST_SERVER}`,
+    withCredentials: true // HttpOnly 쿠키 속성으로 저장된 리프레시 쿠키 전송
 })
 
 
@@ -26,17 +27,43 @@ api.interceptors.request.use(
 
 api.interceptors.response.use(
     (res) => {
-        // const data = res.data;
-        // if (data) return data;
         return res;
     },
-    (err) => {
-        if (err.response.status == 403) {
-            window.location.href="/";
+    async (err) => {
+        // 원래 403으로 실패했던 요청
+        const originalReq = err.config;
+        // 만약 권한이 없다는 에러 시 + 무한루프 시
+        if (err.response.status == 403 && !originalReq._retry) {
+            originalReq._retry = true;
+            try {
+                // 토큰 재발급
+                const response = await refreshTokenHandler();
+                // 정상 발급시
+                if (response.status === 200) {
+                    // 로컬스토리지에 토큰 저장
+                    localStorage.setItem("token", response.data.accessToken);
+                    // 헤더에 새로운 토큰 추가
+                    originalReq.headers.Authorization = `Bearer ${response.data.accessToken}`;
+                    // 실패했던 요청 다시 보내기
+                    return api.request(originalReq);
+                }
+                console.log(response);
+           } catch (error) {
+                console.log("토큰 재발급 실패");
+                return Promise.reject(err);
+           }
         }
         return Promise.reject(err);
-        // 만약 권한이 없다는 에러시, 토큰 재발급
     }
 );
+
+const refreshTokenHandler = async () => {
+    try {
+        const response = await api.post("/auth/refresh-token");
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
 
 export default api;

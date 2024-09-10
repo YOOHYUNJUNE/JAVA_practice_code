@@ -21,6 +21,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
+import com.kosta.repository.UserRepository;
 import com.kosta.security.JwtAuthenticationFilter;
 import com.kosta.security.JwtAuthenticationService;
 import com.kosta.security.JwtProperties;
@@ -37,6 +38,7 @@ public class WebSecurityConfig {
 	
 	private final UserDetailsService userDetailsService;
 	private final JwtProperties jwtProperties;
+	private final UserRepository userRepository;
 
 	// JWT Provider
 	private JwtProvider jwtProvider() {
@@ -48,7 +50,7 @@ public class WebSecurityConfig {
 	}
 	
 	private JwtAuthenticationService jwtAuthenticationService() {
-		return new JwtAuthenticationService(tokenUtils());
+		return new JwtAuthenticationService(tokenUtils(), userRepository);
 	}
 	
 	
@@ -78,10 +80,10 @@ public class WebSecurityConfig {
 		http.authorizeHttpRequests(auth -> 
 			// 인증 필요없이 접근 가능한 특정 URL
 			auth.requestMatchers(
-//				new AntPathRequestMatcher("/api/auth/login"), // 로그인
 				new AntPathRequestMatcher("/img/**"), // 이미지
 				new AntPathRequestMatcher("/api/auth/signup"), // 회원가입
 				new AntPathRequestMatcher("/api/auth/duplicate"), // 이메일 중복체크
+				new AntPathRequestMatcher("/api/auth/refresh-token"), // 토큰 재발급
 				new AntPathRequestMatcher("/api/post/**", "GET") // 게시물 보기
 			).permitAll()
 			// 인증(ADMIN) 필요한 나머지 URL

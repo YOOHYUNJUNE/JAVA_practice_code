@@ -45,7 +45,7 @@ const UserCard = ({ user }) => {
         if (result.isConfirmed) {
 
             // 비밀번호 입력
-            const  {value:password } = await Swal.fire({
+            const  { value:password } = await Swal.fire({
                 title: "비밀번호 입력",
                 input: "password",
                 inputLabel: '비밀번호를 입력해주세요',
@@ -81,47 +81,41 @@ const UserCard = ({ user }) => {
         // 수정
         const handleModify = async() => {
 
-            // 수정 창
-            const result = await Swal.fire({
-                title : "유저 확인",
-                html:
-                '<input id="email" class="swal2-input" placeholder="이메일">' +
-                '<input id="password" class="swal2-input" placeholder="비밀번호">'
-                ,
-                focusConfirm : false,
-                showCancelButton: true,
-                preConfirm: async () => {
-                    const email = document.getElementById("email").value;
-                    const password = document.getElementById("password").value;
-                    if(!email || !password) {
-                        Swal.showValidationMessage("이메일 또는 비밀번호를 입력해주세요.");
-                        return false;
-                    }
-                    // 일치 여부
-                    // DB에서 유저 정보 가져오기
-                    if(email && password) {
-                        try {
-                            await userAPI.modifyUser({email:user.email, password});
-                            Swal.fire({
-                                title: "안녕",
-                                text: `${user.name}님`,
-                                icon: "success"
-                            });
-                            navigate('/user');
-                        } catch (error) {
-                            navigate("/error", {state:error.message})
-                            console.log(user);
-                            console.log(user.id);
-                            console.log(user.name);
-                            console.log(user.email);
-                            console.log(user.password);                            
-                        }
+            // 비밀번호 입력
+            const { value:newPassword } = await Swal.fire({
+                title: "비밀번호 입력",
+                input: "password",
+                inputLabel: '비밀번호를 입력해주세요',
+                inputPlaceholder: '비밀번호',
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
+                showCancelButton: true
+            });
+
+            // 비밀번호 일치 여부
+            if(newPassword) {
+                try {
+                    // 수정창
+                    const { value:newPassword } = await Swal.fire({
+                        title : "비밀번호 변경",
+                        input : "text",
+                        inputLabel : "비밀번호를 변경합니다.",
+                        inputPlaceholder : "비밀번호",
+                        showCancelButton : true
+                    }); 
+                    if (newPassword) {
+                                                
+                        await userAPI.modifyUser({email:user.email, password:newPassword});
+                        console.log("수정완료")
+                        navigate("/user")
                     }
 
-                } // 입력창
-
-            }) // 수정 창
-
+                } catch (error) {
+                    navigate("/error", {state:error.message})
+                    console.log("수정 실패", user.email)                
+                }
+            }
 
            
 

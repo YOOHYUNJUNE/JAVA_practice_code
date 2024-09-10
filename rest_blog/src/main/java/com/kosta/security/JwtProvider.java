@@ -32,7 +32,7 @@ public class JwtProvider {
 	public String generateAccessToken(User user) {
 		log.info("[generateAccessToken] 액세스 토큰 생성");
 		Date now = new Date(); // 현재 날짜 가져오기
-		Date expriedDate =  new Date(now.getTime() + jwtProperties.getRefreshDuration()); // 만료일
+		Date expriedDate =  new Date(now.getTime() + jwtProperties.getAccessDuration()); // 만료일
 		return makeToken(user, expriedDate);
 	}
 	
@@ -40,7 +40,7 @@ public class JwtProvider {
 	public String generateRefreshToken(User user) {
 		log.info("[generateRefreshToken] 리프레시 토큰 생성");
 		Date now = new Date(); // 현재 날짜 가져오기
-		Date expriedDate =  new Date(now.getTime() + jwtProperties.getAccessDuration()); // 만료일
+		Date expriedDate =  new Date(now.getTime() + jwtProperties.getRefreshDuration()); // 만료일
 		return makeToken(user, expriedDate);
 	}
 

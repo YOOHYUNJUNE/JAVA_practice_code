@@ -21,6 +21,7 @@ import com.kosta.domain.request.UserUpdateRequest;
 import com.kosta.domain.response.LoginResponse;
 import com.kosta.domain.response.UserResponse;
 import com.kosta.service.AuthService;
+import com.kosta.util.TokenUtils;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -33,16 +34,21 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class AuthController {
 	private final AuthService authService;
+	private final TokenUtils tokenUtils;
 	
 	// 토큰 재발급 요청
 	@PostMapping("/refresh-token")
 	public ResponseEntity<LoginResponse> refreshToken(HttpServletRequest req, HttpServletResponse res) {
 		// 토큰 요청
 		Map<String, String> tokenMap = authService.refreshToken(req);
+		// 토큰 재발급 불가시, 401 에러 반환
 		if (tokenMap == null) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
 		}
-		// tokenMap이 없는 경우
+		// 헤더 쿠키로 리프레시 토큰 재발급
+		tokenUtils.setRefreshTokenCookie(res, tokenMap.get("refreshToken"));
+		
+		// tokenMap이 없는 경우, 응답 body로 액세스 토큰 재발급
 		return ResponseEntity.ok(
 				LoginResponse.builder()
 				.accessToken(tokenMap.get("accessToken"))

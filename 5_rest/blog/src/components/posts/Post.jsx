@@ -40,14 +40,14 @@ const Post = () => {
     }, [state]); // state가 변경시에도 useEffect가 작동되게
    
     // 로그인 여부 확인
-    const { accessToken } = useAuth();
+    const { userInfo } = useAuth();
 
     return (
         <>
         <h1>포스트</h1>
         {/* 글쓰기 양식 */}
         {
-            accessToken &&
+            userInfo &&
             <>
             <Button variant="contained" color='main' onClick={() => navigate("/post/write")}>글쓰기</Button>
             <Divider />
