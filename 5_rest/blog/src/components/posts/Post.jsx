@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import PostCard from './PostCard';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { postAPI } from '../../api/services/post';
+import { useAuth } from '../../hooks/useAuth';
 
 const Post = () => {
 
@@ -38,12 +39,20 @@ const Post = () => {
         getPostList();
     }, [state]); // state가 변경시에도 useEffect가 작동되게
    
+    // 로그인 여부 확인
+    const { accessToken } = useAuth();
+
     return (
         <>
         <h1>포스트</h1>
         {/* 글쓰기 양식 */}
-        <Button variant="contained" color='main' onClick={() => navigate("/post/write")}>글쓰기</Button>
-        <Divider />
+        {
+            accessToken &&
+            <>
+            <Button variant="contained" color='main' onClick={() => navigate("/post/write")}>글쓰기</Button>
+            <Divider />
+            </>
+        }
         {/* 전체 리스트 */}
         <Box sx={{flexGrow:1}}>
             <Grid2 container spacing={2} columns={24}>

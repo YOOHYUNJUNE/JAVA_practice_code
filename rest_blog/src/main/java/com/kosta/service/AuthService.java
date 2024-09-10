@@ -2,11 +2,11 @@ package com.kosta.service;
 
 import java.util.List;
 
-import com.kosta.domain.LoginResponse;
-import com.kosta.domain.SignUpRequest;
-import com.kosta.domain.UserDeleteRequest;
-import com.kosta.domain.UserResponse;
-import com.kosta.domain.UserUpdateRequest;
+import com.kosta.domain.request.SignUpRequest;
+import com.kosta.domain.request.UserDeleteRequest;
+import com.kosta.domain.request.UserUpdateRequest;
+import com.kosta.domain.response.LoginResponse;
+import com.kosta.domain.response.UserResponse;
 
 public interface AuthService {
 
@@ -20,6 +20,5 @@ public interface AuthService {
 
 	boolean duplicateCheckEmail(String email);
 
-	LoginResponse login(String email, String password);
 
 }

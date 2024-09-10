@@ -7,26 +7,25 @@ export const useProvideAuth = () => {
     const [accessToken, setAccessToken] = useState(localStorage.getItem("token"));
 
     // 로그인 메소드
-    const login = async(data, successCallBack, failCallBack) => {
+    const login = async(data, successCallBack = null) => {
         try {
             const res = await userAPI.login(data);
             if (res.status === 200) {
                 const token = res.data.accessToken;
                 localStorage.setItem("token", token);
                 setAccessToken(token);
-                successCallBack();
+                if(successCallBack) successCallBack();
             }
         } catch (error) {
             console.error(error);
-            failCallBack();
         }
     }
 
     // 로그아웃
-    const logout = (callBack) => {
+    const logout = (callBack = null) => {
         localStorage.removeItem("token");
         setAccessToken(null);
-        callBack();
+        if(callBack) callBack();
     }
 
     // 토큰 체크

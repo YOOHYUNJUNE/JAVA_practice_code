@@ -11,8 +11,8 @@ import { useForm } from "react-hook-form";
 
 
 
-const UserCard = ( { user }) => {
-    console.log("유저정보: ", user);
+const UserCard = ({ user }) => {
+    console.log("UserCard 유저정보: ", user);
     // react-hook-form
     const { register, handleSubmit, watch, formState: { errors }, setValue } = useForm();
 
@@ -31,6 +31,7 @@ const UserCard = ( { user }) => {
 
 
     // 삭제
+    // 삭제 메소드
     const handleDelete = async () => {
         const result = await Swal.fire({
             title: "이런",
@@ -44,7 +45,7 @@ const UserCard = ( { user }) => {
         if (result.isConfirmed) {
 
             // 비밀번호 입력
-            const {value:password} = await Swal.fire({
+            const  {value:password } = await Swal.fire({
                 title: "비밀번호 입력",
                 input: "password",
                 inputLabel: '비밀번호를 입력해주세요',
@@ -57,6 +58,7 @@ const UserCard = ( { user }) => {
 
             // 비밀번호 일치 여부
             if(password) {
+                console.log("비밀번호: ", password)
                 try {
                     await userAPI.deleteUser({email:user.email, password});
                     Swal.fire({
@@ -67,9 +69,7 @@ const UserCard = ( { user }) => {
                     navigate('/user');
                 } catch (error) {
                     navigate("/error", {state:error.message})
-                    console.log(user.id);
-                    console.log(user.name);
-                    console.log(user.email);
+                    console.log("삭제할 유저정보 : ",user.id, user.email, user.password);
                     
                 }
             }

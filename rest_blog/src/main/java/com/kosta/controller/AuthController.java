@@ -14,14 +14,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kosta.domain.LoginRequest;
-import com.kosta.domain.LoginResponse;
-import com.kosta.domain.SignUpRequest;
-import com.kosta.domain.UserDeleteRequest;
-import com.kosta.domain.UserResponse;
-import com.kosta.domain.UserUpdateRequest;
+import com.kosta.domain.request.LoginRequest;
+import com.kosta.domain.request.SignUpRequest;
+import com.kosta.domain.request.UserDeleteRequest;
+import com.kosta.domain.request.UserUpdateRequest;
+import com.kosta.domain.response.LoginResponse;
+import com.kosta.domain.response.UserResponse;
 import com.kosta.service.AuthService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +34,22 @@ import lombok.extern.slf4j.Slf4j;
 public class AuthController {
 	private final AuthService authService;
 	
+	// 토큰 재발급 요청
+	@PostMapping("/refresh-token")
+	public ResponseEntity<LoginResponse> refreshToken(HttpServletRequest req, HttpServletResponse res) {
+		// 토큰 요청
+		Map<String, String> tokenMap = authService.refreshToken(req);
+		if (tokenMap == null) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+		}
+		// tokenMap이 없는 경우
+		return ResponseEntity.ok(
+				LoginResponse.builder()
+				.accessToken(tokenMap.get("accessToken"))
+				.build());
+	}
+	
+	
 	// 회원가입
 	@PostMapping("/signup")
 	public ResponseEntity<UserResponse> signUp(@RequestBody SignUpRequest signUpRequest) {
@@ -41,15 +58,8 @@ public class AuthController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(userResponse);				
 	}
 	
-	
-	// 로그인
-	@PostMapping("/login")
-	public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest, HttpServletResponse response) {
-		log.info("[login] 로그인 시도, user : {}", loginRequest);
-		LoginResponse loginResponse = authService.login(loginRequest.getEmail(), loginRequest.getPassword());
-		return ResponseEntity.ok(loginResponse);
-	}
-	
+//	로그인 -> LoginCustomAuthenticationFilter 에서 처리
+
 	
 	// 가입시 이메일 중복 체크
 	@GetMapping("/duplicate")

@@ -85,12 +85,8 @@ const Header = () => {
             navigate("/error", {state:error.message})
         }
     }
-    useEffect(() => {
-        getFavList();
-    }, []);
 
     // 즐겨찾기 수정, 삭제 함수
-
 
     //////////// 즐겨 찾기 팝업
     const handleFavoriteClick = async () => {

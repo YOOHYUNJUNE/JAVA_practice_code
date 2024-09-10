@@ -24,10 +24,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriUtils;
 
-import com.kosta.domain.ErrorResponse;
 import com.kosta.domain.FileDTO;
-import com.kosta.domain.PostRequest;
-import com.kosta.domain.PostResponse;
+import com.kosta.domain.request.PostRequest;
+import com.kosta.domain.response.ErrorResponse;
+import com.kosta.domain.response.PostResponse;
 import com.kosta.service.ImageFileService;
 import com.kosta.service.PostService;
 

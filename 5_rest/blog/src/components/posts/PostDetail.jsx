@@ -7,6 +7,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import HouseSharpIcon from '@mui/icons-material/HouseSharp';
 import Swal from "sweetalert2";
 import { postAPI } from "../../api/services/post";
+import { useAuth } from "../../hooks/useAuth";
 
 const PostDetail = () => {
     // 필요값 : id (주소창(/api/post/id)에 있음)
@@ -74,6 +75,9 @@ const PostDetail = () => {
         }
     }
 
+    // 로그인 여부 확인
+    const { accessToken } = useAuth();
+
     return (
         <>
         <h1>게시물 상세정보</h1>
@@ -107,20 +111,25 @@ const PostDetail = () => {
             </CardContent>
 
             <CardActions>
-            <Button 
-                variant="contained" 
-                color="bg2" 
-                size="small" 
-                startIcon={<EditIcon/>}
-                onClick={() => navigate(`/post/modify/${post.id}`)}
-            >수정</Button>
-            <Button 
-                variant="contained" 
-                color="sub" 
-                size="small" 
-                startIcon={<DeleteIcon/>}
-                onClick={handleDelete}
-            >삭제</Button>
+                {
+                    accessToken &&
+                    <>
+                    <Button 
+                        variant="contained" 
+                        color="bg2" 
+                        size="small" 
+                        startIcon={<EditIcon/>}
+                        onClick={() => navigate(`/post/modify/${post.id}`)}
+                    >수정</Button>
+                    <Button 
+                        variant="contained" 
+                        color="sub" 
+                        size="small" 
+                        startIcon={<DeleteIcon/>}
+                        onClick={handleDelete}
+                    >삭제</Button>                    
+                    </>
+                }
             <Button 
                 variant="contained" 
                 color="bg1" 
