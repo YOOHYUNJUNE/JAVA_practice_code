@@ -57,11 +57,9 @@ INDEX VERSION 1.134+C:\Users\WD\Documents\유현준\spring_workspace\.metadata\.
 246972690.index
 220240680.index
 2984190043.index
-1743262777.index
 1323478032.index
 1650308420.index
 2383495060.index
-207526896.index
 173695010.index
 355501798.index
 872710686.index
@@ -77,5 +75,4 @@ INDEX VERSION 1.134+C:\Users\WD\Documents\유현준\spring_workspace\.metadata\.
 1956312031.index
 2805064346.index
 2290215115.index
-1969735478.index
 3582963197.index

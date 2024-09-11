@@ -90,8 +90,8 @@ public class JwtProvider {
 	
 	// 토큰 정보(Claim) 추출 메소드
 	private Claims getClaims(String token) {
-		return Jwts.parser().
-			verifyWith(getSecretKey())
+		return Jwts.parser()
+			.verifyWith(getSecretKey())
 			.build()
 			.parseSignedClaims(token)
 			.getPayload(); // 파싱한 클레임에서 페이로드(실제 클레임) 반환

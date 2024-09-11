@@ -14,6 +14,8 @@ import { LoginContext } from './contexts/LoginContext';
 import { useProvideAuth } from './hooks/useProvideAuth';
 import Login from './components/auth/Login';
 import Home from './components/common/Home';
+import AccessControl from './components/common/AccessControl';
+import NotFound from './components/common/NotFound';
 
 function App() {
 
@@ -28,25 +30,31 @@ function App() {
           <Route path='/' element={<Home/>} />
           <Route path='/search' element={<Post/>} />
           <Route path='/error' element={<Error/>} />
-          <Route path='*' element={<h1>NOT FOUND</h1>} />
+          <Route path='*' element={<NotFound/>} />
 
-          {/* 게시글 */}
+      {/* 게시글 */}
+          {/* 로그인한 사용자 */}
+          <Route path='/post/write' element={<AccessControl roleList={["ROLE_USER", "ROLE_ADMIN"]} >  <PostForm /> </AccessControl>} />
+          <Route path='/post/modify/:postId' element={<AccessControl roleList={["ROLE_USER", "ROLE_ADMIN"]} > <PostForm/> </AccessControl>} />
+          {/* 아무나 */}
           <Route path='/post' element={<Post/>} />
-          <Route path='/post/write' element={<PostForm />} />
-          <Route path='/post/modify/:postId' element={<PostForm/>} />
           <Route path='/post/:postId' element={<PostDetail />} />
 
-          {/* 즐겨찾기 */}
-          <Route path='/favorite' element={<Favorite/>} />
-          <Route path='/favorite/write' element={<FavoriteForm />} />
-          <Route path='/favorite/modify/:favId' element={<FavoriteForm />} />
+      {/* 즐겨찾기 */}
+          {/* 로그인한 사용자 */}
+          <Route path='/favorite' element={<AccessControl roleList={["ROLE_USER", "ROLE_ADMIN"]} >  <FavoriteForm /> </AccessControl>} />
+          <Route path='/favorite/write' element={<AccessControl roleList={["ROLE_USER", "ROLE_ADMIN"]} >  <FavoriteForm /> </AccessControl>} />
+          <Route path='/favorite/modify/:favId' element={<AccessControl roleList={["ROLE_USER", "ROLE_ADMIN"]} > <FavoriteForm /> </AccessControl>} />
 
-          {/* 유저 */}
-          <Route path='/user' element={<User/>} />
-          <Route path='/signup' element={<SignUp/>} />
-          <Route path='/user/modify/:userEmail' element={<SignUp/>} />
-          <Route path='/login' element={<Login/>} />
-          <Route path='/logout' element={<Login/>} />
+      {/* 유저 */}
+          {/* 관리자 */}
+          <Route path='/user/modify/:userEmail' element={<AccessControl roleList={["ROLE_USER", "ROLE_ADMIN"]} > <SignUp/> </AccessControl>} />
+          <Route path='/user' element={<AccessControl roleList={["ROLE_USER", "ROLE_ADMIN"]} > <User/> </AccessControl>} />
+          {/* 로그인한 사용자 */}
+          <Route path='/logout' element={<AccessControl roleList={["ROLE_USER", "ROLE_ADMIN"]} > <Login/> </AccessControl>} />
+          {/* 아무나 */}
+          <Route path='/signup' element={ <SignUp/> } />
+          <Route path='/login' element={<AccessControl roleList={["none"]} > <Login/> </AccessControl>} />
 
 
 

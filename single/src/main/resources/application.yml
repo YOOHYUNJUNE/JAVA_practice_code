@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: single
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/single_db
+    username: root
+    password: 1234
+  jpa:
+    generate-ddl: true
+    show-sql: true
+    open-in-view: false
+  sql:
+    init:
+      mode: never
+jwt:
+  issuer: kosta-uhj
+  secret_key: secretkeysecretkeysecretkey
+  access_duration: 5000
+  refresh_duration: 86400000
+   

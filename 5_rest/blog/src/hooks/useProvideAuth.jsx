@@ -2,7 +2,6 @@ import { useState } from "react";
 import { userAPI } from "../api/services/user";
 import { jwtDecode } from "jwt-decode";
 import { getCookie, removeCookie, setCookie } from "../utils/cookieUtil";
-import { useNavigate } from "react-router-dom";
 
 // 훅 생성
 export const useProvideAuth = () => {
