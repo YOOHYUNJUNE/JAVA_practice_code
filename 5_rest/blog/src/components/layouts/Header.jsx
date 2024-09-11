@@ -22,7 +22,8 @@ const Header = () => {
     const navigate = useNavigate();
 
     // 액세스 토큰 가져오기
-    const { userInfo, tokenCheck, logout } = useAuth();
+    const { userInfo, refreshUserInfo, tokenCheck, logout } = useAuth();
+
 
     // 메뉴 아이콘
     let allMenu = [
@@ -39,20 +40,18 @@ const Header = () => {
 
     useEffect(() => {
         // 브라우저 토큰이 유효하면
-        if (tokenCheck()) {
+        const role = tokenCheck();
+        if (role) {
             // 권한에 맞는 메뉴 설정
-            console.log("로그인 유저정보: ", userInfo);           
-
-            const role = userInfo.role;
+            console.log("로그인 유저정보: ", userInfo);     
             setMenu(allMenu.filter(m => m.auth.includes(role)));
-        // 유효하지 않으면
+        // 유효하지 않으면 로그아웃
         } else {
-            // 로그아웃
-            logout(() => navigate("/"))
             // "none"만 볼 수 있는 메뉴 설정
             setMenu(allMenu.filter(m => m.auth.includes("none")));
         }
     }, [userInfo]); // userInfo 변경시마다 useEffect 실행
+
 
     // 버튼에 경로 적용
     const handleClickPath = (path) => {
@@ -62,9 +61,7 @@ const Header = () => {
             default: navigate(path);
                 break;
         }
-
     } 
-
 
     const [menuOpen, setMenuOpen] = useState(false);
 

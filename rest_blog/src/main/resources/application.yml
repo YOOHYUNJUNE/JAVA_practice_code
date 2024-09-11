@@ -19,4 +19,4 @@ jwt:
   issuer: kosta-uhj
   secret_key: mysecretmysecretmysecretmysecret
   access_duration: 5000 #180000 # 30분 : 30분 * 60초 * 1000ms초
-  refresh_duration: 10000 #86400000 # 24시간 : 24시간 * 60분 * 60초 * 1000ms초 
+  refresh_duration: 86400000 # 24시간 : 24시간 * 60분 * 60초 * 1000ms초 

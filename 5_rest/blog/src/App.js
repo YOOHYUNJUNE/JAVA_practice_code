@@ -13,6 +13,7 @@ import Error from './components/common/Error';
 import { LoginContext } from './contexts/LoginContext';
 import { useProvideAuth } from './hooks/useProvideAuth';
 import Login from './components/auth/Login';
+import Home from './components/common/Home';
 
 function App() {
 
@@ -24,7 +25,7 @@ function App() {
 
       <Layout>
         <Routes>
-          <Route path='/' element={<h1>홈</h1>} />
+          <Route path='/' element={<Home/>} />
           <Route path='/search' element={<Post/>} />
           <Route path='/error' element={<Error/>} />
           <Route path='*' element={<h1>NOT FOUND</h1>} />
@@ -45,6 +46,8 @@ function App() {
           <Route path='/signup' element={<SignUp/>} />
           <Route path='/user/modify/:userEmail' element={<SignUp/>} />
           <Route path='/login' element={<Login/>} />
+          <Route path='/logout' element={<Login/>} />
+
 
 
 

@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
+import {CookiesProvider} from "react-cookie";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -25,7 +26,10 @@ root.render(
   // <React.StrictMode>
   <ThemeProvider theme={theme}>
     <CssBaseline />
-    <App />
+    <CookiesProvider>
+      <App />
+    </CookiesProvider>
+      
   </ThemeProvider>
     
   // </React.StrictMode>

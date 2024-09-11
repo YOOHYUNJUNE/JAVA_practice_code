@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { postAPI } from '../../api/services/post';
 import { favAPI } from '../../api/services/favorite';
 import FavoriteCard from './FavoriteCard';
+import { useAuth } from '../../hooks/useAuth';
 
 
 const Favorite = () => {
@@ -28,7 +29,7 @@ const Favorite = () => {
     useEffect(() => {
         getFavList();
     }, []);
-   
+
     return (
         <>
         <h1>즐겨찾기 목록</h1>

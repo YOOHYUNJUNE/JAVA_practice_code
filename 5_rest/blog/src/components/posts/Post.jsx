@@ -28,6 +28,7 @@ const Post = () => {
                 const res = await postAPI.getPostList();
                 const data = res.data;            
                 setPostList(data);
+                console.log("게시물 리스트 출력");
             } catch (error) {
                 navigate("/error", {state:error.message})
             }

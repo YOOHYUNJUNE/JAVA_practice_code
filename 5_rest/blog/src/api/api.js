@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getCookie, removeCookie, setCookie } from "../utils/cookieUtil";
 
 const api = axios.create({
     baseURL: `${process.env.REACT_APP_REST_SERVER}`,
@@ -12,7 +13,7 @@ const api = axios.create({
 api.interceptors.request.use(
     (config) => {
         // 로그인을 하면 토큰을 보내서 권한에 따른 행동 가능하게 하기
-        const token = localStorage.getItem("token");
+        const token = getCookie("accessToken");
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         } else {
@@ -40,8 +41,10 @@ api.interceptors.response.use(
                 const response = await refreshTokenHandler();
                 // 정상 발급시
                 if (response.status === 200) {
-                    // 로컬스토리지에 토큰 저장
-                    localStorage.setItem("token", response.data.accessToken);
+                    // // 로컬스토리지에 토큰 저장
+                    // localStorage.setItem("token", response.data.accessToken);
+                    // 쿠키에 토큰 저장
+                    setCookie("accessToken", response.data.accessToken);
                     // 헤더에 새로운 토큰 추가
                     originalReq.headers.Authorization = `Bearer ${response.data.accessToken}`;
                     // 실패했던 요청 다시 보내기
@@ -49,7 +52,8 @@ api.interceptors.response.use(
                 }
                 console.log(response);
            } catch (error) {
-                console.log("토큰 재발급 실패");
+                console.log("토큰 재발급 실패 (401)");
+                removeCookie("accessToken"); // 에러 시 로그아웃처리
                 return Promise.reject(err);
            }
         }
@@ -59,8 +63,10 @@ api.interceptors.response.use(
 
 const refreshTokenHandler = async () => {
     try {
-        const response = await api.post("/auth/refresh-token");
-        return response;
+        if (getCookie("accessToken")) {
+            const response = await api.post("/auth/refresh-token");
+            return response;
+        }            
     } catch (error) {
         throw error;
     }
