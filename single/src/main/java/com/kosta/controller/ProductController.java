@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -88,11 +89,14 @@ public class ProductController {
 		return ResponseEntity.ok(deletedProduct);
 	}
 	
-	// 예외처리
-	
 	
 	// 검색 기능
-	
+	@GetMapping("/search")
+	public ResponseEntity<List<ProductResponse>> searchProduct(@RequestParam("keyword") String keyword) {
+		List<ProductResponse> result = productService.search(keyword);
+		
+		return ResponseEntity.ok(result);
+	}
 	
 	
 	

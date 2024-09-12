@@ -12,6 +12,7 @@ public class ProductRequest {
 	private Long id;
 	private String name, ename, iceOrHot, detail, allergy;
 	private Double sugar, caffeine, calorie;
+	private int price;
 	private Long authorId;
 	private ImageFile imageFile;
 	
@@ -23,6 +24,7 @@ public class ProductRequest {
 				.detail(detail)
 				.allergy(allergy)
 				.sugar(sugar)
+				.price(price)
 				
 				.caffeine(caffeine)
 				.calorie(calorie)

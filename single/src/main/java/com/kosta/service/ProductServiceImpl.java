@@ -85,6 +85,7 @@ public class ProductServiceImpl implements ProductService {
 		if (savedImage != null) product.setImage(savedImage);
 		if (productDTO.getName() != null) product.setName(productDTO.getName());
 		if (productDTO.getEname() != null) product.setEname(productDTO.getEname());
+		if (productDTO.getPrice() != product.getPrice()) product.setPrice(productDTO.getPrice());
 		if (productDTO.getIceOrHot() != null) product.setIceOrHot(productDTO.getIceOrHot());
 		if (productDTO.getSugar() != null) product.setSugar(productDTO.getSugar());
 		if (productDTO.getCaffeine() != null) product.setCaffeine(productDTO.getCaffeine());
@@ -116,6 +117,14 @@ public class ProductServiceImpl implements ProductService {
 		productRepository.delete(product);
 		
 		return ProductResponse.toDTO(product);
+	}
+
+
+	// 상품 검색
+	@Override
+	public List<ProductResponse> search(String keyword) {
+		List<Product> productList = productRepository.findByNameContainsOrEnameContains(keyword, keyword);
+		return productList.stream().map(p -> ProductResponse.toDTO(p)).toList();
 	}
 	
 	

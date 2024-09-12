@@ -13,6 +13,7 @@ public class ProductResponse {
 	private Long id;
 	private String name, ename, iceOrHot, detail, allergy;
 	private Double sugar, caffeine, calorie;
+	private int price;
 	
 	private UserResponse author;
 	
@@ -25,6 +26,7 @@ public class ProductResponse {
 				.id(product.getId())
 				.name(product.getName())
 				.ename(product.getEname())
+				.price(product.getPrice())
 				.iceOrHot(product.getIceOrHot())
 				.detail(product.getDetail())
 				.allergy(product.getAllergy())

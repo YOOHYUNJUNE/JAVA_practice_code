@@ -30,14 +30,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/user")
+@RequestMapping("/api")
 public class CommonController {
 
 	private final UserService userService;
 	private final TokenUtils tokenUtils;
 	
 	// 토큰 재발급 요청
-	@PostMapping("/refresh-token")
+	@PostMapping("/refresh")
 	public ResponseEntity<LoginResponse> refreshToken(HttpServletRequest req, HttpServletResponse res) {
 		// 토큰 요청
 		Map<String, String> tokenMap = userService.refreshToken(req);

@@ -76,19 +76,22 @@ public class WebSecurityConifg {
 		http.authorizeHttpRequests(auth ->
 			// 누구나
 			auth.requestMatchers(
-				new AntPathRequestMatcher("/api/user/**"),
-				new AntPathRequestMatcher("/api/product/**"),
+//				new AntPathRequestMatcher("/api/**"),
+//				new AntPathRequestMatcher("/api/product/**"),
 				
 				new AntPathRequestMatcher("/img/**"),
-				new AntPathRequestMatcher("/api/user/join"),
-				new AntPathRequestMatcher("/api/user/duplicate"), // 회원가입 이메일 중복여부
-				new AntPathRequestMatcher("/api/user/refresh-token") // 토큰 재발급
+				new AntPathRequestMatcher("/api/join"),
+				new AntPathRequestMatcher("/api/duplicate"), // 회원가입 이메일 중복여부
+				new AntPathRequestMatcher("/api/refresh") // 토큰 재발급
 //				new AntPathRequestMatcher("/api/product/**", "GET") // 제품보기				
 			).permitAll()
-//			// 인증 필요
-//			.requestMatchers(
-//				new AntPathRequestMatcher("api/**")).hasRole("ADMIN")
-//			.anyRequest().authenticated()
+			// 인증 필요
+			.requestMatchers(
+					new AntPathRequestMatcher("api/product", "POST"),
+					new AntPathRequestMatcher("api/product", "DELETE"),
+					new AntPathRequestMatcher("api/product", "PATCH")
+					).hasRole("ADMIN")
+			.anyRequest().authenticated()
 		);
 		
 		// 무상태성 세션 관리
