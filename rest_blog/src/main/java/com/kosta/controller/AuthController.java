@@ -97,7 +97,7 @@ public class AuthController {
 	// 회원 삭제
 	@DeleteMapping("")
 	public ResponseEntity<?> userWithdrawal(@RequestBody UserDeleteRequest userDeleteRequest) {
-		log.info("[updateUser] 회원 삭제. 삭제 요청 정보 : {}", userDeleteRequest);
+		log.info("[userWithdrawal] 회원 삭제. 삭제 요청 정보 : {}", userDeleteRequest);
 		authService.deleteUser(userDeleteRequest);
 		return ResponseEntity.ok(null);
 	}

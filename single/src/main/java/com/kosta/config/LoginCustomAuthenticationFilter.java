@@ -12,6 +12,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kosta.domain.request.LoginRequest;
 
+import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class LoginCustomAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
-	private static final AntPathRequestMatcher LOGIN_PATH = new AntPathRequestMatcher("/api/auth/login", "POST");
+	private static final AntPathRequestMatcher LOGIN_PATH = new AntPathRequestMatcher("/api/login", "POST");
 	private JwtAuthenticationService jwtAuthenticationService;
 	
 	
@@ -36,7 +37,7 @@ public class LoginCustomAuthenticationFilter extends AbstractAuthenticationProce
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException, IOException, ServletException {
-		// POST 방식으로 /api/auth/login 요청이 오면 진행
+		// POST 방식으로 /api/login 요청이 오면 진행
 		LoginRequest loginRequest = null;
 		
 		// 1. body에 있는 로그인정보 ({ "email" : "@@", "password" : "@@" })를 가져오게 함
@@ -62,7 +63,12 @@ public class LoginCustomAuthenticationFilter extends AbstractAuthenticationProce
 	
 	
 	// 로그인 성공시 실행 메소드
-	
+	@Override
+	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
+			Authentication authResult) throws IOException, ServletException {
+		log.info("로그인 성공 -> 토큰 생성");
+		jwtAuthenticationService.successAuthentication(response, authResult);
+	}
 	
 	
 	

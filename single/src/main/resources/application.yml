@@ -13,9 +13,11 @@ spring:
   sql:
     init:
       mode: never
+  upload:
+    location: C:\\Users\\WD\\Desktop\\product-image
 jwt:
   issuer: kosta-uhj
-  secret_key: secretkeysecretkeysecretkey
-  access_duration: 5000
+  secret_key: secretkeysecretkeysecretkeysecretkeysecretkey
+  access_duration: 500000
   refresh_duration: 86400000
    

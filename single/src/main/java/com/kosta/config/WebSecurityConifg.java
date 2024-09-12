@@ -1,5 +1,7 @@
 package com.kosta.config;
 
+import java.util.Collections;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -7,12 +9,16 @@ import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HttpBasicConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 import com.kosta.repository.UserRepository;
 import com.kosta.util.TokenUtils;
@@ -70,16 +76,19 @@ public class WebSecurityConifg {
 		http.authorizeHttpRequests(auth ->
 			// 누구나
 			auth.requestMatchers(
+				new AntPathRequestMatcher("/api/user/**"),
+				new AntPathRequestMatcher("/api/product/**"),
+				
 				new AntPathRequestMatcher("/img/**"),
-				new AntPathRequestMatcher("/api/auth/signup"),
-				new AntPathRequestMatcher("/api/auth/duplicate"), // 회원가입 이메일 중복여부
-				new AntPathRequestMatcher("/api/auth/refresh-token"), // 토큰 재발급
-				new AntPathRequestMatcher("/api/product/**", "GET") // 제품보기				
+				new AntPathRequestMatcher("/api/user/join"),
+				new AntPathRequestMatcher("/api/user/duplicate"), // 회원가입 이메일 중복여부
+				new AntPathRequestMatcher("/api/user/refresh-token") // 토큰 재발급
+//				new AntPathRequestMatcher("/api/product/**", "GET") // 제품보기				
 			).permitAll()
-			// 인증 필요
-			.requestMatchers(
-				new AntPathRequestMatcher("api/auth/**")).hasRole("ADMIN")
-			.anyRequest().authenticated()
+//			// 인증 필요
+//			.requestMatchers(
+//				new AntPathRequestMatcher("api/**")).hasRole("ADMIN")
+//			.anyRequest().authenticated()
 		);
 		
 		// 무상태성 세션 관리
@@ -89,9 +98,27 @@ public class WebSecurityConifg {
 		// 토큰으로 검증할 수 있는 필터 추가
 		http.addFilterBefore(new JwtAuthenticationFilter(jwtProvider()), UsernamePasswordAuthenticationFilter.class);
 		// HTTP 기본 설정
+		http.httpBasic(HttpBasicConfigurer::disable);
+		// CSRF 비활성화
+		http.csrf(AbstractHttpConfigurer::disable);
+		// CORS 설정
+		http.cors(corsConfig -> corsConfig.configurationSource(CorsConfigurationSource()));
 		
-		
-		
+		return http.getOrBuild();
+	}
+	
+	// CORS 설정 메소드
+	@Bean
+	CorsConfigurationSource CorsConfigurationSource() {
+		return request -> {
+			CorsConfiguration config = new CorsConfiguration();
+			config.setAllowedHeaders(Collections.singletonList("*"));
+			config.setAllowedMethods(Collections.singletonList("*"));
+			config.setAllowedOriginPatterns(Collections.singletonList("http://localhost:3000"));
+			config.setAllowCredentials(true);
+			
+			return config;
+		};
 	}
 	
 	
