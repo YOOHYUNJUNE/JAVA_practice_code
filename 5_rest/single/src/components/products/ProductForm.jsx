@@ -19,8 +19,10 @@ const ProductForm = () => {
 
     // 유저 정보 가져오기
     const { userInfo } = useAuth();
-    console.log("유저 정보 : ", userInfo);
     const role = userInfo?.role;
+    console.log("userInfo : ", userInfo);
+    console.log("role : ", role);
+    console.log("userInfo.role : ", userInfo.role);
     
     // productId가 없으면 작성, 있으면 수정
     const { productId } = useParams();
@@ -115,6 +117,7 @@ const ProductForm = () => {
                 {/* 가격 */}
                 <TextField
                         label="가격(원)"
+                        value={0}
                         multiline
                         error={errors.price && true}
                         {...register("price", {required:false})}

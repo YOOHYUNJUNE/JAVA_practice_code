@@ -31,15 +31,12 @@ public class ProductServiceImpl implements ProductService {
 	// 상품 추가 -> FileUtils
 	@Override
 	public ProductResponse insertProduct(ProductRequest productDTO, MultipartFile file, User loginedUser) {
-		// 로그인유저=관리자 확인
-		if (!loginedUser.getRole().name().equals("ROLE_ADMIN")) {
-			throw new IllegalArgumentException("관리자만 등록할 수 있습니다.");
-		}
+
 		// 이미지 저장
 		ImageFile savedImage = imageFileService.saveImage(file);
 		if (savedImage != null) productDTO.setImageFile(savedImage); 
-		// 상품 추가 (관리자)
-		User user = userRepository.findById(productDTO.getAuthorId())
+		// 상품 추가 (관리자) // 현재 로그인한 유저의 ID로 지정
+		User user = userRepository.findById(loginedUser.getId()) 
 				.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
 		Product product = productDTO.toEntity(user);
 		Product savedProduct = productRepository.save(product);
@@ -75,9 +72,7 @@ public class ProductServiceImpl implements ProductService {
 	// 상품 수정
 	@Override
 	public ProductResponse updateProduct(ProductRequest productDTO, MultipartFile file, User loginedUser) {
-		// 수정할 유저 확인
-		userRepository.findById(productDTO.getAuthorId())
-				.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
+
 		// 상품 원본 정보 가져오기
 		Product product = productRepository.findById(productDTO.getId())
 				.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 상품입니다."));
@@ -113,11 +108,6 @@ public class ProductServiceImpl implements ProductService {
 	// 상품 삭제
 	@Override
 	public ProductResponse deleteProduct(Long id, User loginedUser) {
-		// 수정할 유저 확인 (토큰 미사용시)
-//		User user = userRepository.findById(productDTO.getAuthorId())
-//				.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
-		
-//		log.info("[deleteProduct] 현재 사용자 권한 : {}", loginedUser.getRole().name());
 		// 상품 원본 정보 가져오기
 		// 관리자만 삭제 가능하게
 		Product product = productRepository.findById(id)
@@ -125,10 +115,6 @@ public class ProductServiceImpl implements ProductService {
 		if (!loginedUser.getRole().name().equals("ROLE_ADMIN")) {
 			throw new IllegalArgumentException("관리자만 삭제할 수 있습니다.");
 		}
-//		log.info("[deleteProduct] 현재 사용자 권한 : {}", product.getAuthor().getRole().name());
-//		if (!product.getAuthor().getRole().name().equals("ROLE_ADMIN")) {
-//			throw new IllegalArgumentException("관리자만 수정할 수 있습니다.");			
-//		}
 		productRepository.delete(product);
 		
 		return ProductResponse.toDTO(product);

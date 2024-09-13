@@ -54,7 +54,7 @@ api.interceptors.response.use(
            } catch (error) {
                 console.log("토큰 재발급 실패 (401)");
                 removeCookie("accessToken"); // 에러 시 로그아웃처리
-                return Promise.reject(err);
+
            }
         }
         return Promise.reject(err);
@@ -64,7 +64,7 @@ api.interceptors.response.use(
 const refreshTokenHandler = async () => {
     try {
         if (getCookie("accessToken")) {
-            const response = await api.post("/auth/refresh");
+            const response = await api.post("/refresh");
             return response;
         }            
     } catch (error) {

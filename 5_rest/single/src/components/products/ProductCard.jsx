@@ -21,9 +21,9 @@ const ProductCard = ( { product }) => {
             onClick={() => navigate(`/product/${product.id}`)}>
             <CardHeader
                 avatar={<Avatar>{product.id}</Avatar>}
-                title={product.title}
-                subheader={product.createdAt}
-                // // 이미지 첨부 여부를 아이콘으로 보여줌
+                name={product.name}
+                subheader={product.ename}
+                // // 이미지 첨부 여부를 아이콘으로 보여줌 -> iceOrHot으로 이용
                 // action={product.image && 
                 //     <IconButton>
                 //         <SaveIcon onClick={(e) => handleDownload(e)} />
@@ -38,12 +38,22 @@ const ProductCard = ( { product }) => {
             }
             <CardContent>
                 <Typography gutterBottom sx={{ color: 'text.secondary', fontSize:12 }}>
-                    {product.author.name} - {product.author.email}
+                    {product.price}원
                 </Typography>
-                
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                     {product.detail}
                 </Typography>
+                <Typography gutterBottom sx={{ color: 'text.secondary', fontSize:12 }}>
+                    {product.caffeine}mg | {product.calorie}kcal
+                </Typography>
+                <Typography gutterBottom sx={{ color: 'text.secondary', fontSize:12 }}>
+                    알레르기 : {product.allergy}
+                </Typography>
+                <Typography gutterBottom sx={{ color: 'text.secondary', fontSize:12 }}>
+                    {product.author.name} - {product.author.email}
+                </Typography>
+                
+                
             </CardContent>
         </Card>
     );

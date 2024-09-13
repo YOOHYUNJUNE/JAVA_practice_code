@@ -87,7 +87,7 @@ public class WebSecurityConifg {
 			).permitAll()
 			// 인증 필요
 			.requestMatchers(
-					new AntPathRequestMatcher("/api/product/**", "POST"),
+					new AntPathRequestMatcher("/api/product", "POST"),
 					new AntPathRequestMatcher("/api/product/**", "DELETE"),
 					new AntPathRequestMatcher("/api/product/**", "PATCH")
 					).hasRole("ADMIN")
