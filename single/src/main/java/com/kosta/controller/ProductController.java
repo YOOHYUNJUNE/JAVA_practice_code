@@ -6,13 +6,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,11 +19,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kosta.domain.request.ProductRequest;
 import com.kosta.domain.response.ProductResponse;
+import com.kosta.entity.User;
 import com.kosta.service.ImageFileService;
 import com.kosta.service.ProductService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/product")
@@ -42,8 +44,10 @@ public class ProductController {
 	@PostMapping("")
 	public ResponseEntity<ProductResponse> addProduct(ProductRequest productRequest, @RequestParam(name = "image", required = false) MultipartFile file) {
 
-		
-		ProductResponse savedProduct = productService.insertProduct(productRequest, file);
+		// 토큰을 통해 로그인 유저 정보를 가져옴
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		ProductResponse savedProduct = productService.insertProduct(productRequest, file, user);
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(savedProduct);
 	}
@@ -75,7 +79,10 @@ public class ProductController {
 	// 상품 수정
 	@PatchMapping("")
 	public ResponseEntity<ProductResponse> modifyProduct(ProductRequest productRequest, @RequestParam(name = "image", required = false) MultipartFile file) {
-		ProductResponse updatedProduct = productService.updateProduct(productRequest, file);
+		// 토큰을 통해 로그인 유저 정보를 가져옴
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		ProductResponse updatedProduct = productService.updateProduct(productRequest, file, user);
 		
 		return ResponseEntity.ok(updatedProduct);
 	}
@@ -83,8 +90,12 @@ public class ProductController {
 	
 	// 상품 삭제
 	@DeleteMapping("/{id}")
-	public ResponseEntity<ProductResponse> removeProduct(@PathVariable("id") Long id, @RequestBody ProductRequest productRequest) {
-		ProductResponse deletedProduct = productService.deleteProduct(id, productRequest);
+	public ResponseEntity<ProductResponse> removeProduct(@PathVariable("id") Long id) {
+		// 로그인 유저(토큰을 통해 유저 정보 가져옴)
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		ProductResponse deletedProduct = productService.deleteProduct(id, user);
+
+//		ProductResponse deletedProduct = productService.deleteProduct(id);
 		
 		return ResponseEntity.ok(deletedProduct);
 	}

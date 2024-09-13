@@ -56,11 +56,14 @@ public class Product {
 	@ManyToOne
 	private User author;
 	
+	
 	// 이미지
 	@JoinColumn(name = "image_id", nullable = true)
 	@ManyToOne
 	private ImageFile image;
 
+	
+	
 	
 	
 	

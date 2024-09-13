@@ -18,6 +18,6 @@ spring:
 jwt:
   issuer: kosta-uhj
   secret_key: secretkeysecretkeysecretkeysecretkeysecretkey
-  access_duration: 5000
+  access_duration: 86400000
   refresh_duration: 86400000
    

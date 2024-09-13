@@ -80,16 +80,16 @@ public class WebSecurityConifg {
 //				new AntPathRequestMatcher("/api/product/**"),
 				
 				new AntPathRequestMatcher("/img/**"),
-				new AntPathRequestMatcher("/api/join"),
+				new AntPathRequestMatcher("/api/userjoin"),
 				new AntPathRequestMatcher("/api/duplicate"), // 회원가입 이메일 중복여부
 				new AntPathRequestMatcher("/api/refresh") // 토큰 재발급
 //				new AntPathRequestMatcher("/api/product/**", "GET") // 제품보기				
 			).permitAll()
 			// 인증 필요
 			.requestMatchers(
-					new AntPathRequestMatcher("api/product", "POST"),
-					new AntPathRequestMatcher("api/product", "DELETE"),
-					new AntPathRequestMatcher("api/product", "PATCH")
+					new AntPathRequestMatcher("/api/product/**", "POST"),
+					new AntPathRequestMatcher("/api/product/**", "DELETE"),
+					new AntPathRequestMatcher("/api/product/**", "PATCH")
 					).hasRole("ADMIN")
 			.anyRequest().authenticated()
 		);

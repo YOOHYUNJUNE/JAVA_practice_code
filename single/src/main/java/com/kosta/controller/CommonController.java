@@ -55,7 +55,7 @@ public class CommonController {
 	}
 	
 	// 회원가입
-	@PostMapping("/join")
+	@PostMapping("/userjoin")
 	public ResponseEntity<UserResponse> join(@RequestBody JoinRequest joinRequest) {
 		log.info("[join] 회원가입 진행 : {}", joinRequest);
 		UserResponse userResponse = userService.join(joinRequest);
@@ -76,7 +76,7 @@ public class CommonController {
 	
 	
 	// 회원 전체 리스트
-	@GetMapping("")
+	@GetMapping("/userlist")
 	public ResponseEntity<List<UserResponse>> getUserList() {
 		log.info("[getUserList] 회원 전체 조회");
 		List<UserResponse> userList = userService.getUserList();
@@ -86,7 +86,7 @@ public class CommonController {
 	
 	
 	// 회원 정보 수정
-	@PatchMapping("")
+	@PatchMapping("/usermodify")
 	public ResponseEntity<UserResponse> updateUser(@RequestBody UserUpdateRequest userUpdateRequset) {
 		log.info("[updateUser] 회원 정보 수정 : {}", userUpdateRequset);
 		UserResponse userResponse = userService.updateUser(userUpdateRequset);
@@ -96,7 +96,7 @@ public class CommonController {
 	
 	
 	// 회원 탈퇴
-	@DeleteMapping("")
+	@DeleteMapping("/userdelete")
 	public ResponseEntity<?> userWithdrawal(@RequestBody UserDeleteRequest userDeleteRequest) {
 		log.info("회원 탈퇴 : {}", userDeleteRequest);
 		userService.deleteUser(userDeleteRequest);
