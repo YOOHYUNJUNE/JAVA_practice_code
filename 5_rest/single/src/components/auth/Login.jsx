@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
+import google from "../../assets/google.png";
 
 const { Paper, Box, Typography, Divider, TextField, Button } = require("@mui/material");
 const { useForm } = require("react-hook-form");
@@ -18,6 +19,24 @@ const Login = () => {
             setError("password", { type: "manual", message: "비밀번호를 확인해주세요."});
         }
     }
+
+    // 구글 로그인 버튼
+    const handleGoogleLogin = () => {
+        console.log("구글 로그인 진행");
+        const params = new URLSearchParams({
+            scope: "email profile",
+            response_type: "code",
+            redirect_uri: "http://localhost:3000/oauth/google",
+            client_id: "1081047189641-c86rm2u735o2difi0a3im99v1q01lch3.apps.googleusercontent.com",
+        });
+        const GOOGLE_URL = `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`;
+
+        // 지정한 경로로 이동
+        window.location.href = GOOGLE_URL;
+    }
+
+
+
 
     return (
         <Paper variant="outlined">
@@ -69,7 +88,14 @@ const Login = () => {
                         helperText={errors.password && errors.password.message}
                     />
                 <Button type="submit" variant="contained" color="sub" fullWidth>로그인</Button>
+                
+                <Button fullWidth onClick={() => handleGoogleLogin()}>
+                    <img src={google} alt="구글 로그인" width={"30%"}/>
+                </Button>
+
+
             </Box>
+            
         </Paper>
     );
 }

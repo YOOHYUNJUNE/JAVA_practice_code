@@ -45,8 +45,13 @@ public class User implements UserDetails {
 	@Column(nullable = false)
 	private String name;
 	
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private String password;
+	
+	@Column
+	@Builder.Default
+	private boolean oAuth = false;
+	
 	
 	@CreatedDate
 	@Column(name = "created_at")

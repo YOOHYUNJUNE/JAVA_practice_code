@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kosta.domain.request.ProductRequest;
@@ -109,6 +113,27 @@ public class ProductController {
 		return ResponseEntity.ok(result);
 	}
 	
+	
+//	// RestTemplate으로 타 사이트의 주소 가져오기
+//	@GetMapping("/news/{id}")
+//	public ResponseEntity<String> getNewsById(@PathVariable("id") int id) {
+//		// RestTemplate 인스턴스 생성
+//		RestTemplate rt = new RestTemplate();
+//		HttpHeaders headers = new HttpHeaders();
+//		headers.add("Content-Type", "application/json; charset=utf-8");
+//		HttpEntity<String> httpEntity = new HttpEntity<String>(headers);
+//		// URL 주소 만들기
+//		String url = "https://jsonplaceholder.typicode.com/posts/" + id;
+//		
+//		try {
+////			ResponseEntity<String> result = rt.getForEntity(url, String.class);		
+//			ResponseEntity<String> result = rt.exchange(url, HttpMethod.GET, httpEntity, String.class);
+//			return result;
+//		} catch (Exception e) {
+//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).headers(headers).body("에러 발생");
+//		}
+//		
+//	}
 	
 	
 	

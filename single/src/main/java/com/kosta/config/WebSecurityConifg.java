@@ -76,14 +76,15 @@ public class WebSecurityConifg {
 		http.authorizeHttpRequests(auth ->
 			// 누구나
 			auth.requestMatchers(
-//				new AntPathRequestMatcher("/api/**"),
-//				new AntPathRequestMatcher("/api/product/**"),
-				
-				new AntPathRequestMatcher("/img/**"),
-				new AntPathRequestMatcher("/api/userjoin"),
-				new AntPathRequestMatcher("/api/duplicate"), // 회원가입 이메일 중복여부
-				new AntPathRequestMatcher("/api/refresh") // 토큰 재발급
-//				new AntPathRequestMatcher("/api/product/**", "GET") // 제품보기				
+	//				new AntPathRequestMatcher("/api/**"),
+//					new AntPathRequestMatcher("/api/product/**"),
+					
+					new AntPathRequestMatcher("/img/**"),
+					new AntPathRequestMatcher("/api/oauth/**"),				
+					new AntPathRequestMatcher("/api/userjoin"),
+					new AntPathRequestMatcher("/api/duplicate"), // 회원가입 이메일 중복여부
+					new AntPathRequestMatcher("/api/refresh"), // 토큰 재발급
+					new AntPathRequestMatcher("/api/product/**", "GET") // 제품보기				
 			).permitAll()
 			// 인증 필요
 			.requestMatchers(

@@ -23,6 +23,7 @@ theme = createTheme(theme, {
 
 
 root.render(
+  // 스트릭트모드가 있으면 요청이 2번감
   // <React.StrictMode>
   <ThemeProvider theme={theme}>
     <CssBaseline />

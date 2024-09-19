@@ -14,6 +14,8 @@ import Login from './components/auth/Login';
 import Product from './components/products/Product';
 import ProductForm from './components/products/ProductForm';
 import ProductDetail from './components/products/ProductDetail';
+import { oauthAPI } from './api/services/oauth';
+import { useEffect } from 'react';
 
 function App() {
 
@@ -28,6 +30,8 @@ function App() {
           <Route path='/' element={<Home/>} />
           <Route path='/error' element={<Error/>} />
           <Route path='*' element={<NotFound/>} />
+          <Route path='/oauth/google' element={<GoogleLogin />} />
+          
 
           {/* 유저 */}
           {/* 관리자 */}
@@ -49,6 +53,30 @@ function App() {
       </Layout>
     </LoginContext.Provider>
   );
+}
+
+// 구글 로그인
+const GoogleLogin = () => {
+  const code = new URLSearchParams(window.location.search).get("code");
+  console.log("서버에 전달해야하는 코드 : ", code);
+  const login = async () => {
+    try {
+      const response = await oauthAPI.googleLogin(code);
+      if (response.status !== 400) {
+        throw new Error("로그인 실패");      
+      } 
+      
+    } catch (error) {
+    console.error(error);
+    }
+  }
+  
+  useEffect(() => {
+    login();
+  }, [code]);
+
+  return ( <div>로그인 처리중...</div> );
+
 }
 
 export default App;
