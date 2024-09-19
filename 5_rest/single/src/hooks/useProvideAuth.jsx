@@ -5,7 +5,7 @@ import { getCookie, removeCookie, setCookie } from "../utils/cookieUtil";
 
 // 훅 생성
 export const useProvideAuth = () => {
-    const [userInfo, setUserInfo] = useState(null);
+    const [userInfo, setUserInfo] = useState({});
 
     const refreshUserInfo = () => {
         const token = getCookie("accessToken");

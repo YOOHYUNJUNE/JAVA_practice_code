@@ -4,6 +4,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public interface OAuthService {
 
-	String googleSignIn(String code, HttpServletResponse res);
+	String oAuthSignIn(String code, String provider, HttpServletResponse res);
 
 }

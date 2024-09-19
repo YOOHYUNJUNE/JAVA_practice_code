@@ -20,4 +20,17 @@ jwt:
   secret_key: secretkeysecretkeysecretkeysecretkeysecretkey
   access_duration: 86400000
   refresh_duration: 86400000
-   
+oauth2:
+  clients:
+    google:
+      client-id: 1081047189641-c86rm2u735o2difi0a3im99v1q01lch3.apps.googleusercontent.com
+      client-secret: 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
+      redirect-uri: http://localhost:3000/oauth/google
+      token-uri: https://oauth2.googleapis.com/token
+      user-info-request-uri: https://www.googleapis.com/oauth2/v3/userinfo
+    kakao:
+      client-id: 3445b32eda618b1474ba02b6244e8333
+      client-secret: JBhWSxLe8oUPRk8A6HNUrmXsx6d4JjXO
+      redirect-uri: http://localhost:3000/oauth/kakao
+      token-uri: https://kauth.kakao.com/oauth/token
+      user-info-request-uri: https://kapi.kakao.com/v2/user/me

@@ -105,6 +105,7 @@ public class WebSecurityConifg {
 		http.httpBasic(HttpBasicConfigurer::disable);
 		// CSRF 비활성화
 		http.csrf(AbstractHttpConfigurer::disable);
+		
 		// CORS 설정
 		http.cors(corsConfig -> corsConfig.configurationSource(CorsConfigurationSource()));
 		

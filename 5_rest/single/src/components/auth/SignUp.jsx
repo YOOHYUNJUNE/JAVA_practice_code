@@ -27,7 +27,7 @@ const SignUp = () => {
                     html: "가입에 성공했습니다.",
                     timer: 1500,
                     timerProgressBar: true,
-                }).then(navigate("/userlogin"));
+                }).then(navigate("/"));
             }
         } catch (error) {
             navigate("/error", {state: error.message});

@@ -97,7 +97,7 @@ const ProductDetail = () => {
 
             <CardActions>
                 {
-                    userInfo &&
+                    userInfo?.role === "ROLE_ADMIN" &&
                     <>
                     <Button 
                         variant="contained" 

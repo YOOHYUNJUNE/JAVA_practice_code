@@ -31,10 +31,15 @@ const ProductCard = ( { product }) => {
             />
             {
                 product.image &&
-                <CardMedia
-                component="img" height="194" alt="상품 이미지"
-                image={`${process.env.REACT_APP_SERVER}/img/${product.image.saved}`}                
-                />
+                (
+                    <>
+                    {/* {console.log(`${process.env.REACT_APP_SERVER}/img/${product.image.saved}`)} */}
+                    <CardMedia
+                    component="img" height="194" alt="상품 이미지"
+                    image={`${process.env.REACT_APP_SERVER}/img/${product.image.saved}`}                
+                    />
+                    </>
+                )
             }
             <CardContent>
                 <Typography gutterBottom sx={{ color: 'text.secondary', fontSize:12 }}>

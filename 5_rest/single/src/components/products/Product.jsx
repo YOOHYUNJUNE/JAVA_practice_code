@@ -45,10 +45,10 @@ const Product = () => {
 
     return (
         <>
-        <h1>포스트</h1>
+        <h1>상품 목록</h1>
         {/* 글쓰기 양식 */}
         {
-            userInfo &&
+            userInfo?.role === "ROLE_ADMIN" &&
             <>
             <Button variant="contained" color='main' onClick={() => navigate("/product/add")}>상품 추가</Button>
             <Divider />

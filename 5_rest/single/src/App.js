@@ -16,6 +16,8 @@ import ProductForm from './components/products/ProductForm';
 import ProductDetail from './components/products/ProductDetail';
 import { oauthAPI } from './api/services/oauth';
 import { useEffect } from 'react';
+import { setCookie } from './utils/cookieUtil';
+import OAuthLogin from './components/auth/OAuthLogin';
 
 function App() {
 
@@ -30,8 +32,10 @@ function App() {
           <Route path='/' element={<Home/>} />
           <Route path='/error' element={<Error/>} />
           <Route path='*' element={<NotFound/>} />
-          <Route path='/oauth/google' element={<GoogleLogin />} />
-          
+          {/* <Route path='/oauth/google' element={<GoogleLogin />} />
+          <Route path='/oauth/kakao' element={<KakaoLogin />} /> */}
+          <Route path='/oauth/:provider' element={<OAuthLogin />} />
+
 
           {/* 유저 */}
           {/* 관리자 */}
@@ -44,10 +48,10 @@ function App() {
 
           {/* 상품 */}
           {/* 관리자 */}
-          <Route path='/product' element={<AccessControl roleList={["ROLE_ADMIN"]} > <Product/> </AccessControl>} />
+          <Route path='/product' element={<AccessControl roleList={["ROLE_ADMIN", "ROLE_USER", "none"]} > <Product/> </AccessControl>} />
           <Route path='/product/add' element={<AccessControl roleList={["ROLE_ADMIN"]} > <ProductForm/> </AccessControl>} />
           <Route path='/product/modify/:productId' element={<AccessControl roleList={["ROLE_ADMIN"]} > <ProductForm/> </AccessControl>} />
-          <Route path='/product/:productId' element={<AccessControl roleList={["ROLE_ADMIN"]} > <ProductDetail/> </AccessControl>} />
+          <Route path='/product/:productId' element={<AccessControl roleList={["ROLE_ADMIN", "ROLE_USER", "none"]} > <ProductDetail/> </AccessControl>} />
 
         </Routes>
       </Layout>
@@ -55,28 +59,6 @@ function App() {
   );
 }
 
-// 구글 로그인
-const GoogleLogin = () => {
-  const code = new URLSearchParams(window.location.search).get("code");
-  console.log("서버에 전달해야하는 코드 : ", code);
-  const login = async () => {
-    try {
-      const response = await oauthAPI.googleLogin(code);
-      if (response.status !== 400) {
-        throw new Error("로그인 실패");      
-      } 
-      
-    } catch (error) {
-    console.error(error);
-    }
-  }
-  
-  useEffect(() => {
-    login();
-  }, [code]);
 
-  return ( <div>로그인 처리중...</div> );
-
-}
 
 export default App;
