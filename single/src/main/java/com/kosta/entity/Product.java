@@ -35,7 +35,7 @@ public class Product {
 	private String ename = "영어 이름";
 	
 	@Column
-	private int price = 0;
+	private Integer price = 0;
 	
 	@Column
 	private String iceOrHot = "아이스or핫";

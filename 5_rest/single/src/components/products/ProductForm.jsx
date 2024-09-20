@@ -27,7 +27,7 @@ const ProductForm = () => {
     // productId가 없으면 작성, 있으면 수정
     const { productId } = useParams();
 
-    // 게시물 수정
+    // 상품 수정
     const getProduct = async () => {
         try {
             const res = await productAPI.getProduct(productId);
@@ -35,6 +35,8 @@ const ProductForm = () => {
             console.log(data);
             // ProductDetail은 setProduct(state가 바뀔때)마다 실행되기때문에 무한 반복
             // -> useEffect() 사용
+
+            // 미입력(null) -> 기본값
             setValue("name", data.name);
             setValue("detail", data.detail);
             setValue("ename", data.ename);
@@ -110,15 +112,16 @@ const ProductForm = () => {
                 {/* 영어 이름 */}
                     <TextField
                         label="영어 이름"
-                        multiline
+                        defaultValue={"영어 이름 입력"}
+                        // multiline
                         error={errors.ename && true}
                         {...register("ename", {required:false})}
                         />
                 {/* 가격 */}
                 <TextField
                         label="가격(원)"
-                        value={0}
-                        multiline
+                        defaultValue={0}
+                        // multiline
                         error={errors.price && true}
                         {...register("price", {required:false})}
                     />
@@ -127,8 +130,9 @@ const ProductForm = () => {
                 {/* 내용 */}
                 <TextField
                         label="내용"
+                        defaultValue={"상세정보 입력"}
                         multiline
-                        rows={4}
+                        rows={3}
                         error={errors.detail && true}
                         {...register("detail", {required:false})}
                     />
@@ -137,7 +141,8 @@ const ProductForm = () => {
                 {/* 아이스or핫 */}
                 <TextField
                         label="아이스or핫"
-                        multiline
+                        defaultValue={""}
+                        // multiline
                         error={errors.iceOrHot && true}
                         {...register("iceOrHot", {required:false})}
                     />
@@ -145,7 +150,8 @@ const ProductForm = () => {
                 {/* 칼로리 */}
                 <TextField
                         label="칼로리(kcal)"
-                        multiline
+                        defaultValue={0.0}
+                        // multiline
                         error={errors.calorie && true}
                         {...register("calorie", {required:false})}
                     />
@@ -155,14 +161,16 @@ const ProductForm = () => {
                 {/* 당류 */}
                 <TextField
                         label="당 함량(g)"
-                        multiline
+                        defaultValue={0.0}
+                        // multiline
                         error={errors.sugar && true}
                         {...register("sugar", {required:false})}
                     />
                 {/* 카페인 */}
                 <TextField
                         label="카페인 함량(mg)"
-                        multiline
+                        defaultValue={0.0}
+                        // multiline
                         error={errors.caffeine && true}
                         {...register("caffeine", {required:false})}
                     />
@@ -171,7 +179,8 @@ const ProductForm = () => {
                 {/* 알레르기 */}
                 <TextField
                         label="알레르기 성분"
-                        multiline
+                        defaultValue={"알레르기 정보"}
+                        // multiline
                         error={errors.allergy && true}
                         {...register("allergy", {required:false})}
                     />

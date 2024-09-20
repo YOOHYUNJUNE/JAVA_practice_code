@@ -35,8 +35,8 @@ const ProductDetail = () => {
     // 상품 삭제
     const handleDelete = async () => {
        const result = await Swal.fire({
-            title: "이런",
-            text: `${product.name} 을 삭제합니다.`,
+            title: "상품 삭제",
+            text: `${product.name} 삭제합니다.`,
             showCancelButton: true,
             confirmButtonText: "네",
             cancelButtonText: "조금만 더 생각해볼게요"            
@@ -47,7 +47,7 @@ const ProductDetail = () => {
             try {
                 await productAPI.deleteProduct(product.id, product.author);
                 Swal.fire({
-                    title: "안녕",
+                    title: "상품 삭제",
                     text: `${product.name} 삭제되었습니다.`,
                     icon: "success"
                 });
@@ -65,19 +65,16 @@ const ProductDetail = () => {
 
     return (
         <>
-        <h1>게시물 상세정보</h1>
+        <h1>상품 정보</h1>
         {product &&
         <Card sx={{width: {xs:'250px', sm:'500px', md:'800px'}}}>
-            <CardHeader
-                avatar={
-                    <Avatar>
-                        {product.id}
-                    </Avatar>
-                }
-                title={product.title}
-                subheader={product.createdAt}
-            />
+            <div className="d-flex justify-content-between">
+                <CardHeader avatar={<Avatar>{product.id}</Avatar>} />
 
+                <CardContent className="text-center" sx={{flexGrow:1}}>
+                    <h1 className="m-0">{product.name}</h1>
+                </CardContent>
+            </div>
             {
                 product.image && <CardMedia
                                 component="img"
@@ -85,6 +82,7 @@ const ProductDetail = () => {
                                 alt="상품 이미지"
                                 />
             }
+            test
             
             <CardContent>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>

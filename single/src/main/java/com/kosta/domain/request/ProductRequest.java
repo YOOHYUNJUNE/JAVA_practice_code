@@ -12,7 +12,7 @@ public class ProductRequest {
 	private Long id;
 	private String name, ename, iceOrHot, detail, allergy;
 	private Double sugar, caffeine, calorie;
-	private int price;
+	private Integer price;
 	private Long authorId;
 	private ImageFile imageFile;
 	

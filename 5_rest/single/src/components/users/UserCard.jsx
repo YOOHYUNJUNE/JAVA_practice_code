@@ -104,7 +104,7 @@ const UserCard = ({ user }) => {
                         showCancelButton : true
                     }); 
                     if (newPassword) {
-                                                
+                        console.log("신규 비밀번호 : ", newPassword) 
                         await userAPI.modifyUser({email:user.email, password:newPassword});
                         console.log("수정완료")
                         navigate("/user")

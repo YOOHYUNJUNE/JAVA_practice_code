@@ -13,6 +13,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { jwtDecode } from "jwt-decode";
 import { convertLength } from "@mui/material/styles/cssUtils";
 import Drawer from "./Drawer";
+import mega_logo from "../../assets/mega_logo.png";
 
 
 
@@ -69,61 +70,6 @@ const Header = () => {
     }
 
 
-    // // 백엔드로부터 가져오기
-    // const [favList, setFavList] = useState([]);
-    // const getFavList = async() => {
-    //     try {
-    //         const res = await favAPI.getFavList();
-    //         const data = res.data;            
-    //         setFavList(data);
-    //     } catch (error) {
-    //         navigate("/error", {state:error.message})
-    //     }
-    // }
-
-    // 즐겨찾기 수정, 삭제 함수
-
-    // //////////// 즐겨 찾기 팝업
-    // const handleFavoriteClick = async () => {
-    //     await getFavList();
-    //     const url = favList.map(fav => (
-    //         `
-    //         <a onclick="window.open('${fav.url}')" style="cursor:pointer;">
-    //         <h4>
-    //             <img
-    //                 src="${process.env.REACT_APP_SERVER}/img/${fav.image.saved}"
-    //                 alt="[x]"
-    //                 style="width:30px; height:30px;"
-    //             />                
-    //             ${fav.title} : ${fav.url}
-    //         </h4>
-    //         </a>
-    //         `
-    //     )).join('');
-
-    //     Swal.fire({
-    //         position: 'top-end',           
-    //         html:
-    //         `
-    //             <div style="display:flex; justify-content:center;">
-    //                 <h2>즐겨찾기 목록</h2>
-    //                 <button onclick="location.href='/favorite'" style="margin:20px;">관리</button>
-    //             </div>
-    //             <hr/>
-    //             <div>${url}</div>
-    //         `,
-    //         showConfirmButton: false,
-    //         showCloseButton: true,
-
-    //     });
-    // }
-
-
-
-    /////////////////////
-
-
-
     return (
         <>
         <AppBar position="static" color="main">
@@ -134,9 +80,10 @@ const Header = () => {
                     onClick={toggleDrawer}
                     >
                     <MenuIcon />
+                    
                 </IconButton>
                 <Box sx={{display: {xs: 'none', sm: 'block'}, cursor:'pointer'}}>
-                    <HouseSharpIcon onClick={()=>navigate('/')} />
+                    <img src={mega_logo} onClick={()=>navigate("/")} width={200}/>
                 </Box>
 
 
