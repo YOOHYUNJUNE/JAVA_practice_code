@@ -1,0 +1,91 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "email": "iu@gmail.com",
+      "nickname": "아이유",
+      "password": "1234"
+    },
+    {
+      "id": "2",
+      "email": "exchange_gu@gmail.com",
+      "nickname": "구교환",
+      "password": "1234"
+    },
+    {
+      "id": "fc32",
+      "email": "cik@gmail.com",
+      "nickname": "최인규",
+      "password": "1234"
+    },
+    {
+      "id": "5a00",
+      "email": "iu2@gmail.com",
+      "nickname": "아이유2",
+      "password": "1234"
+    },
+    {
+      "id": "9515",
+      "email": "iu3@gmail.com",
+      "nickname": "아이유3",
+      "password": "1234"
+    },
+    {
+      "id": "4506",
+      "email": "iu2@gmail.com",
+      "nickname": "가짜아이유",
+      "password": "1234"
+    },
+    {
+      "id": "6358",
+      "email": "iu2@gmail.com1",
+      "nickname": "아이유가짜",
+      "password": "1234"
+    }
+  ],
+  "posts": [
+    {
+      "id": "1",
+      "contents": "아이유입니다.",
+      "like": 0,
+      "img": "",
+      "userId": "1"
+    },
+    {
+      "id": "2",
+      "contents": "제 애완동물입니다.",
+      "like": 0,
+      "img": [
+        "/img/rabbit.jpg",
+        "/img/rabbit2.jpg"
+      ],
+      "userId": "2"
+    },
+    {
+      "id": "3",
+      "contents": "저는 한마리 더 키워요",
+      "like": 0,
+      "img": [
+        "/img/cat1.jpg",
+        "/img/cat2.jpg",
+        "/img/cat3.jpg",
+        "/img/cat4.jpg"
+      ],
+      "userId": "2"
+    }
+  ],
+  "comments": [
+    {
+      "id": "1",
+      "contents": "안녕하세요, 아이유님!",
+      "postId": "1",
+      "userId": "2"
+    },
+    {
+      "id": "2",
+      "contents": "와~ 그럼 두 마리 키우시는거에요?",
+      "postId": "3",
+      "userId": "1"
+    }
+  ]
+}

@@ -13,6 +13,7 @@ const User = () => {
     // 백엔드에서 user 데이터 불러오기
     const [userList, setUserList] = useState([]);
 
+    // 유저 목록 가져오기
     const getUserList = async() => {
         try {
             const res = await userAPI.getUserList();

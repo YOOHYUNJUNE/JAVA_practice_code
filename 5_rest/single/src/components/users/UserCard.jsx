@@ -8,10 +8,16 @@ import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import { userAPI } from "../../api/services/user";
 import { useForm } from "react-hook-form";
+import withReactContent from "sweetalert2-react-content";
 
 
 
 const UserCard = ({ user }) => {
+
+    const [userList, setUserList] = useState([]);
+
+
+
     // react-hook-form
     const { register, handleSubmit, watch, formState: { errors }, setValue } = useForm();
 
@@ -94,26 +100,62 @@ const UserCard = ({ user }) => {
 
             // 비밀번호 일치 여부
             if(newPassword) {
-                try {
-                    // 수정창
-                    const { value:newPassword } = await Swal.fire({
-                        title : "비밀번호 변경",
-                        input : "text",
-                        inputLabel : "비밀번호를 변경합니다.",
-                        inputPlaceholder : "비밀번호",
-                        showCancelButton : true
-                    }); 
-                    if (newPassword) {
-                        console.log("신규 비밀번호 : ", newPassword) 
-                        await userAPI.modifyUser({email:user.email, password:newPassword});
-                        console.log("수정완료")
-                        navigate("/user")
+                const MySwal = withReactContent(Swal);
+                const {value: formValues} = await MySwal.fire({
+                    title: '회원 정보 수정',
+                    html:
+                        `<label>이메일</label><input id="swal-input1" class="swal2-input" value="${user.email}" disabled>` +
+                        `<label>비밀번호</label><input id="swal-input2" class="swal2-input" type="password" placeholder="새 비밀번호 입력">`,
+                    focusConfirm: false,
+                    preConfirm: () => {
+                        return {
+                            email: document.getElementById('swal-input1').value,
+                            password: document.getElementById('swal-input2').value
+                        };
                     }
-
-                } catch (error) {
-                    navigate("/error", {state:error.message})
-                    console.log("수정 실패", user.email)                
+                });
+        
+                if (formValues) {
+                    const {email, password} = formValues;
+                    if (!password) {
+                        MySwal.fire('실패', '비밀번호를 입력하세요', 'error');
+                        return;
+                    }
+        
+                    try {
+                        // const res = await userAPI.modifyUser({email, password});
+                        const res = await userAPI.modifyUser({email: user.email, password: newPassword});
+                        if (res.status === 200) {
+                            setUserList(prevState => prevState.map(u => u.email === email ? res.data : u));
+                            MySwal.fire('성공', '회원 정보가 수정되었습니다.', 'success');
+                        }
+                    } catch (error) {
+                        MySwal.fire('실패', '회원 정보 수정에 실패했습니다.', 'error');
+                        console.error("수정 실패", error);
+                    }
                 }
+
+
+                // try {
+                //     // 수정창
+                //     const { value:newPassword } = await Swal.fire({
+                //         title : "비밀번호 변경",
+                //         input : "text",
+                //         inputLabel : "비밀번호를 변경합니다.",
+                //         inputPlaceholder : "비밀번호",
+                //         showCancelButton : true
+                //     }); 
+                //     if (newPassword) {
+                //         console.log("신규 비밀번호 : ", newPassword) 
+                //         await userAPI.modifyUser({email:user.email, password:newPassword});
+                //         console.log("수정완료")
+                //         navigate("/user")
+                //     }
+
+                // } catch (error) {
+                //     navigate("/error", {state:error.message})
+                //     console.log("수정 실패", user.email)                
+                // }
             }
 
            

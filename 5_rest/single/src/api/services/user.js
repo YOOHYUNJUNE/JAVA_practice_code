@@ -7,7 +7,8 @@ export const userAPI = {
     getUserList : () => api.get("/userlist"),
     addUser : (data) => api.post("/userjoin", data),
     emailCheck : (email) => api.get("/duplicate", {params:{email}}),
-    modifyUser : (data) => api.patch("/usermodify", {data}),
+    // modifyUser : (data) => api.patch("/usermodify", {data}),
+    modifyUser : (data) => api.patch("/usermodify", data),
     deleteUser : (data) => api.delete("/userdelete", {data})
     
 
