@@ -18,6 +18,7 @@ import { oauthAPI } from './api/services/oauth';
 import { useEffect } from 'react';
 import { setCookie } from './utils/cookieUtil';
 import OAuthLogin from './components/auth/OAuthLogin';
+import Test from './components/common/Test';
 
 function App() {
 
@@ -28,6 +29,9 @@ function App() {
     <LoginContext.Provider value={auth}>
       <Layout>
         <Routes>
+
+          {/* 테스트 */}
+          <Route path='/test' element={<Test/>} />
 
           <Route path='/' element={<Home/>} />
           <Route path='/error' element={<Error/>} />

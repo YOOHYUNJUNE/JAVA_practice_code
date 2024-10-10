@@ -28,12 +28,14 @@ const Header = () => {
 
     // 메뉴 아이콘
     let allMenu = [
+        {path:'/', name:'HOME', auth:["ROLE_ADMIN", "ROLE_USER", "none"]},
         {path:'/userlist', name:'회원 관리', auth:["ROLE_ADMIN"]},
         {path:'/product', name:'상품 목록', auth:["ROLE_ADMIN", "ROLE_USER", "none"]},
         {path:'/userjoin', name:'회원가입', auth:["ROLE_ADMIN", "ROLE_USER", "none"]},
         {path:'/userlogin', name:'로그인', auth:["none"]},
         {path:'/logout', name:'로그아웃', auth:["ROLE_ADMIN", "ROLE_USER"]},
         {path:'/search', name:'검색', auth:["ROLE_ADMIN", "ROLE_USER", "none"]},
+        {path:'/test', name:'test', auth:["ROLE_ADMIN", "ROLE_USER", "none"]},        
     ]
 
     const [menu, setMenu] = useState([]);

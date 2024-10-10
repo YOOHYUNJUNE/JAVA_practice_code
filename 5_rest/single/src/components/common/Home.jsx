@@ -20,6 +20,21 @@ const StyledCalendarWrapper = styled.div`
     background-color: white;
   }`
 
+
+const WeekSummaryWrapper = styled.div`
+  width: 30%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #f9f9f9;
+  border-left: 1px solid #ccc;
+  box-shadow: -4px 2px 10px 0px rgba(0, 0, 0, 0.13);
+`;
+
+
+
 const StyledCalendar = styled(Calendar)``;
 
 const Home = () => {
@@ -67,27 +82,6 @@ const Home = () => {
         next2Label={null} // +1년 & +10년 이동 버튼 숨기기
         prev2Label={null} // -1년 & -10년 이동 버튼 숨기기
         minDetail="year" // 10년단위 년도 숨기기
-
-        tileClassName={({ date, view }) => {
-          let classes = '';
-
-          // 선택된 날짜에 테두리 스타일 적용
-          if (selectedDate && selectedDate.getTime() === date.getTime()) {
-            classes += 'selected-tile ';
-          }
-
-          // 일요일 빨간색
-          if (date.getDay() === 0) {
-            classes += 'sunday ';
-          }
-
-          // 토요일 파란색
-          if (date.getDay() === 6) {
-            classes += 'saturday ';
-          }
-
-          return classes;
-        }}
       />
       <style jsx>{`
         .selected-tile {
@@ -97,8 +91,19 @@ const Home = () => {
       `}</style>
     </StyledCalendarWrapper>
 
+
         </>
+
     );
+
+
+
+
+    
 }
+
+
+
+
  
 export default Home;
