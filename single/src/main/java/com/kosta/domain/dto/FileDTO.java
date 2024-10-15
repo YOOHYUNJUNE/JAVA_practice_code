@@ -15,7 +15,6 @@ public class FileDTO {
 	private String origin, saved, kbSize;
 	private Long size;
 	
-	// Post -> PostResponse 변환
 	public static FileDTO toDTO(ImageFile imageFile) {
 		if (imageFile == null) return null;
 		return FileDTO.builder()

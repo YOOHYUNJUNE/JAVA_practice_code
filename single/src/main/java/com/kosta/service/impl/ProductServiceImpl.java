@@ -80,7 +80,7 @@ public class ProductServiceImpl implements ProductService {
 		Product product = productRepository.findById(productDTO.getId())
 				.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 상품입니다."));		
 		if (!loginedUser.getRole().name().equals("ROLE_ADMIN")) {
-			throw new IllegalArgumentException("관리자만 삭제할 수 있습니다.");
+			throw new IllegalArgumentException("관리자만 수정할 수 있습니다.");
 		}
 		// 이미지 수정
 		ImageFile savedImage = imageFileService.saveImage(file);
